@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "expo": "~50.0.2",
-    "expo-dev-client": "^3.3.6",
+    "expo-dev-client": "~3.3.6",
     "expo-status-bar": "~1.11.1",
     "react": "18.2.0",
     "react-native": "0.73.2"
