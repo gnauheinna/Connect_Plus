@@ -3,6 +3,7 @@
     "name": "connect",
     "slug": "connect",
     "version": "1.0.0",
+    "scheme": "connect",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -11,9 +12,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.gnauheinna.connect"
@@ -25,12 +24,14 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
     },
     "extra": {
       "eas": {
         "projectId": "123b02bf-dbd5-4f15-8180-86c7a6e1c406"
       }
-    }
+    },
+    "plugins": ["expo-router"]
   }
 }
