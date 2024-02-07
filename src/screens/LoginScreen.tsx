@@ -4,7 +4,7 @@ import { StyleSheet, TextInput, Pressable } from "react-native";
 import { TouchableOpacity, ImageBackground } from "react-native";
 import { Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { FontFamily, Color, Border } from "../styles/GlobalStyles";
+import { FontFamily, Color, Border } from "../../styles/GlobalStyles";
 
 import {
   getAuth,
@@ -23,13 +23,13 @@ import {
   doc,
   getDoc,
 } from "firebase/firestore";
-//import { useUser } from "../context/UserContext";
+import { useUser } from "../context/UserContext";
 import * as Font from "expo-font";
-import { app } from "../firebase";
+import { app } from "../../firebase";
 
 export default function LoginScreen({ navigation }) {
   const db = getFirestore();
-  //const { user, setUser } = useUser();
+  const { user, setUser } = useUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState(null);
@@ -88,7 +88,7 @@ export default function LoginScreen({ navigation }) {
           studentLife: boolean;
         };
         console.log("Index UserDATA: ", userData);
-        // setUser(userData);
+        setUser(userData);
       } else {
         console.error("User is not logged in");
       }

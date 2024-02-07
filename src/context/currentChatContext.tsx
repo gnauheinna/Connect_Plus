@@ -1,7 +1,7 @@
 import React, { createContext, useState, ReactNode, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { initializeApp, getApps } from "firebase/app";
-import { firebaseConfig } from "../firebase";
+import { firebaseConfig } from "../../firebase";
 import { useContext } from "react";
 
 type CurrentChatContextType = {

@@ -9,7 +9,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { initializeApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDoc, doc } from "firebase/firestore";
 
-import { app, firebaseConfig } from "../firebase";
+import { app, firebaseConfig } from "../../firebase";
 export type UserContextType = {
   user: {
     name: string;
@@ -41,11 +41,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   console.log("in UserProvider");
-  if (getApps().length === 0) {
-    console.log("usercontext no firebase");
-    const app = initializeApp(firebaseConfig);
-  }
-  console.log(getApps());
+
   const auth = getAuth();
 
   const db = getFirestore();
