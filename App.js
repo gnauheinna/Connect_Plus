@@ -1,31 +1,23 @@
 import * as React from "react";
-import { getApps, initializeApp } from "firebase/app";
-import { firebaseConfig } from "./firebase";
 import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import LoginScreen from "./screens/LoginScreen";
+import { UserProvider } from "./context/UserContext";
+
+// Create a Stack navigator
+const Stack = createStackNavigator();
 
 export default function App() {
-  if (getApps().length == 0) {
-    const app = initializeApp(firebaseConfig);
-  }
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ title: "Welcome" }}
+          name="Login"
+          component={LoginScreen}
+          options={{ title: "login" }}
         />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
+        {/* Add more screens here as needed */}
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
