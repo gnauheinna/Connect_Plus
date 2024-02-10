@@ -138,7 +138,9 @@ export default function SignUpScreen({ navigation }) {
     }
   };
 
-  function directToIndex() {}
+  function directToIndex() {
+    navigation.navigate("Interest");
+  }
 
   return (
     <View style={styles.outterMostContainer}>

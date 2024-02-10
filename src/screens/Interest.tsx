@@ -9,18 +9,16 @@ import {
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
-import { useUser } from "./context/UserContext";
+import { useUser } from "../../app/context/UserContext";
 import { getFirestore, collection, doc, updateDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
-export default function interestScreen() {
+export default function InterestScreen({ navigation }) {
   const [AIsChecked, setAIsChecked] = React.useState(false);
   const [CIsChecked, setCIsChecked] = React.useState(false);
   const [FIsChecked, setFIsChecked] = React.useState(false);
   const [SIsChecked, setSIsChecked] = React.useState(false);
   const { user, setUser } = useUser();
-  const router = useRouter();
   const db = getFirestore();
   const auth = getAuth();
   const user1 = auth.currentUser;
@@ -56,7 +54,7 @@ export default function interestScreen() {
       studentLife: SIsChecked,
     };
     setUser(newUser);
-    router.push("/profile");
+    navigation.navigate("AddAvatar");
   }
 
   function AcademicChosen() {
@@ -88,7 +86,7 @@ export default function interestScreen() {
   }, [SIsChecked]);
 
   function directToAddAvatar() {
-    router.push("/addavatar");
+    navigation.navigate("AddAvatar");
   }
 
   return (

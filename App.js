@@ -13,6 +13,7 @@ import { firebaseConfig, app } from "./firebase";
 import { View, Text, useColorScheme } from "react-native";
 import * as Font from "expo-font";
 import SignUpScreen from "./src/screens/SignUp";
+import InterestScreen from "./src/screens/Interest";
 // Create a Stack navigator
 const Stack = createStackNavigator();
 SplashScreen.preventAutoHideAsync();
@@ -56,6 +57,11 @@ export default function App() {
           <Stack.Screen
             name="SignUp"
             component={SignUpScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Interest"
+            component={InterestScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

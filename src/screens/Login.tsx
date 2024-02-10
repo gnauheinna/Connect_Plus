@@ -64,7 +64,7 @@ export default function LoginScreen({ navigation }) {
   };
 
   function nextpage() {
-    //router.push("/profile");
+    navigation.navigate("Profile");
   }
   function createUser() {
     navigation.navigate("SignUp");
