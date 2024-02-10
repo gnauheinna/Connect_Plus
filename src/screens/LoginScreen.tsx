@@ -1,11 +1,11 @@
 import { View, Text, Button, TextField } from "react-native-ui-lib";
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, TextInput, Pressable } from "react-native";
-import { useRouter } from "expo-router";
 import { TouchableOpacity, ImageBackground } from "react-native";
-import { Image } from "expo-image";
+import { Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { FontFamily, Color, Border } from "./GlobalStyles";
+import { FontFamily, Color, Border } from "../../styles/GlobalStyles";
+
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -15,7 +15,6 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { getApps } from "firebase/app";
-import "expo-router/entry";
 import {
   getFirestore,
   collection,
@@ -24,13 +23,12 @@ import {
   doc,
   getDoc,
 } from "firebase/firestore";
-import { CheckBox } from "react-native-elements";
-import { AuthContext } from "./context/AuthContext";
-import { useUser } from "./context/UserContext";
-import * as Font from 'expo-font';
-import { usePostContext } from "./context/postContext";
+import { useUser } from "../context/UserContext";
+import * as Font from "expo-font";
+import { app } from "../../firebase";
 
-export default function Login() {
+export default function LoginScreen({ navigation }) {
+  console.log("HI in Login");
   const db = getFirestore();
   const { user, setUser } = useUser();
   const [email, setEmail] = useState("");
@@ -42,11 +40,9 @@ export default function Login() {
   const [userID, setUserID] = useState("");
 
   const provider = new GoogleAuthProvider();
-  const router = useRouter();
   const auth = getAuth();
-  const { setLoggedIn } = useContext(AuthContext);
 
-  const handleNewUserGoogle = async () => {  
+  const handleNewUserGoogle = async () => {
     // get a instance of Firebase db
 
     const userCollection = collection(db, "users");
@@ -69,10 +65,10 @@ export default function Login() {
   };
 
   function nextpage() {
-    router.push("/profile");
+    navigation.navigate("Profile");
   }
   function createUser() {
-    router.push("/signup");
+    navigation.navigate("SignUp");
   }
 
   useEffect(() => {
@@ -102,10 +98,6 @@ export default function Login() {
       updateUser();
     }
   }, [userID]);
-
-  useEffect(() => {
-    console.log("USER: ", user);
-  }, [user]);
 
   // useEffect(() => {
   //   if (user.name != "") {
@@ -160,18 +152,20 @@ export default function Login() {
         // ...
       });
   }
-  
+
   return (
     <View style={styles.outterMostContainer}>
       <ImageBackground
-            source={require("../assets/images/gradient/whiteGradientAskNShare.png")}
-            resizeMode="cover"
-            style={styles.gradientBackground}>
-              <View style={styles.logoContainer}>
-        <Image
-          style={styles.connectPlusLogo}
-          source={require("../assets/images/connectPlusLogo.png")}/>
-          </View>
+        source={require("../../assets/images/gradient/whiteGradientAskNShare.png")}
+        resizeMode="cover"
+        style={styles.gradientBackground}
+      >
+        <View style={styles.logoContainer}>
+          <Image
+            style={styles.connectPlusLogo}
+            source={require("../../assets/images/connectPlusLogo.png")}
+          />
+        </View>
       </ImageBackground>
 
       <View style={styles.container}>
@@ -187,23 +181,23 @@ export default function Login() {
         </View>
 
         <View style={[styles.inputContainer]}>
-            <Text style={styles.inputTitle}>Email</Text>
-            <TextInput
-              style={styles.input}
-              value={email}
-              onChangeText={(email) => setEmail(email)}
-            />
-          </View>
+          <Text style={styles.inputTitle}>Email</Text>
+          <TextInput
+            style={styles.input}
+            value={email}
+            onChangeText={(email) => setEmail(email)}
+          />
+        </View>
 
         <View style={[styles.inputContainer]}>
-            <Text style={styles.inputTitle}>Password</Text>
-            <TextInput
-              style={[styles.input]}
-              secureTextEntry
+          <Text style={styles.inputTitle}>Password</Text>
+          <TextInput
+            style={[styles.input]}
+            secureTextEntry
             value={password}
             onChangeText={(password) => setPassword(password)}
-            />
-          </View>
+          />
+        </View>
 
         {/* Sign In Button */}
         <View style={styles.signInBtn}>
@@ -224,7 +218,7 @@ export default function Login() {
           <View>
             <TouchableOpacity onPress={GoogleLogin}>
               <Image
-                source={require("../assets/images/googleLogo.png")}
+                source={require("../../assets/images/googleLogo.png")}
                 style={[styles.thirdPartyIcon]}
               />
             </TouchableOpacity>
@@ -234,7 +228,7 @@ export default function Login() {
           <View>
             <TouchableOpacity>
               <Image
-                source={require("../assets/images/kerberosLogo.png")}
+                source={require("../../assets/images/kerberosLogo.png")}
                 style={[styles.thirdPartyIcon]}
               />
             </TouchableOpacity>
@@ -245,7 +239,9 @@ export default function Login() {
         <View style={styles.switchToSignUp}>
           <Text style={styles.switchToSignUpText}>Don't have an account? </Text>
           <TouchableOpacity onPress={createUser}>
-            <Text style={{ fontFamily: 'Stolzl Medium', fontSize: 16 }}>Sign Up</Text>
+            <Text style={{ fontFamily: "Stolzl Medium", fontSize: 16 }}>
+              Sign Up
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -272,7 +268,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9F6FF",
     zIndex: 2,
   },
-  logoContainer:{
+  logoContainer: {
     zIndex: 2,
     marginTop: 48,
   },
@@ -291,16 +287,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "#453b4f",
     textAlign: "center",
-    fontFamily: 'Stolzl Bold',
+    fontFamily: "Stolzl Bold",
   },
   inputTitle: {
     color: "black",
     fontSize: 14,
     marginBottom: 2,
-    fontFamily: 'Stolzl Regular',
+    fontFamily: "Stolzl Regular",
   },
-  inputContainer: {
-  },
+  inputContainer: {},
   input: {
     borderRadius: 10,
     width: "100%",
@@ -346,7 +341,7 @@ const styles = StyleSheet.create({
   createAccountText: {
     fontSize: 18,
     alignSelf: "center",
-    fontFamily: 'Stolzl Regular',
+    fontFamily: "Stolzl Regular",
   },
   orDivider: {
     flexDirection: "row",
@@ -369,7 +364,7 @@ const styles = StyleSheet.create({
   orText: {
     color: "#8F8F8F",
     fontSize: 12,
-    fontFamily: 'Stolzl Regular',
+    fontFamily: "Stolzl Regular",
   },
   thirdPartyLogIn: {
     flexDirection: "row",
@@ -393,6 +388,6 @@ const styles = StyleSheet.create({
   },
   switchToSignUpText: {
     fontSize: 16,
-    fontFamily: 'Stolzl Regular',
+    fontFamily: "Stolzl Regular",
   },
 });

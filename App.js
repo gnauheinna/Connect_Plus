@@ -3,7 +3,7 @@ import { useFonts } from "expo-font";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import LoginScreen from "./src/screens/Login";
+
 import { UserProvider } from "./src/context/UserContext";
 import { useEffect, useState } from "react";
 import * as SplashScreen from "expo-splash-screen";
@@ -12,11 +12,13 @@ import { useCallback } from "react";
 import { firebaseConfig, app } from "./firebase";
 import { View, Text, useColorScheme } from "react-native";
 import * as Font from "expo-font";
-import SignUpScreen from "./src/screens/SignUp";
-import InterestScreen from "./src/screens/Interest";
+import LoginScreen from "./src/screens/LoginScreen";
+import SignUpScreen from "./src/screens/SignUpScreen";
+import InterestScreen from "./src/screens/InterestScreen";
+import AddAvatarScreen from "./src/screens/AddAvatarScreen";
 // Create a Stack navigator
 const Stack = createStackNavigator();
-SplashScreen.preventAutoHideAsync();
+//SplashScreen.preventAutoHideAsync();
 export default function App() {
   console.log("rootlayout");
   const [fontsLoaded, fontError] = useFonts({
@@ -62,6 +64,11 @@ export default function App() {
           <Stack.Screen
             name="Interest"
             component={InterestScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="AddAvatar"
+            component={AddAvatarScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

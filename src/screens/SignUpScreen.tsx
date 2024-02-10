@@ -25,6 +25,7 @@ import { Image } from "react-native";
 import { useUser } from "../context/UserContext";
 
 export default function SignUpScreen({ navigation }) {
+  console.log("HI in SignUP");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -129,6 +130,7 @@ export default function SignUpScreen({ navigation }) {
         // Passwords match
         await SignUp();
         await handleNewUserEmail();
+        directToAvatar();
       } else {
         // Passwords don't match
         Alert.alert("Error", "Passwords do not match");
@@ -139,7 +141,10 @@ export default function SignUpScreen({ navigation }) {
   };
 
   function directToIndex() {
-    navigation.navigate("Interest");
+    navigation.goBack();
+  }
+  function directToAvatar() {
+    navigation.navigate("AddAvatar");
   }
 
   return (

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { View, Text, StyleSheet, ImageBackground } from "react-native";
-import { useRouter } from "expo-router";
 import { TouchableOpacity } from "react-native";
 import firebase from "firebase/app";
 import {
@@ -22,16 +21,15 @@ import {
 } from "firebase/firestore";
 import { LinearGradient } from "expo-linear-gradient";
 import { Image } from "react-native";
-import { useUser } from "./context/UserContext";
+import { useUser } from "../context/UserContext";
 
-const AddAvatar = () => {
+export default function AddAvatarScreen({ navigation }) {
+  console.log("HI in AddAvatar");
   const [selectedAvatar, setSelectedAvatar] = useState("");
   const auth = getAuth();
 
   const { user, setUser } = useUser();
   const userId = auth.currentUser?.uid;
-
-  const router = useRouter();
 
   const directToInterest = async (avatarName: string) => {
     if (!userId) {
@@ -46,7 +44,7 @@ const AddAvatar = () => {
     } catch (error) {
       console.error("Error adding avatar: ", error);
     }
-    router.push("/interest");
+    navigation.navigate("Interest");
   };
 
   const avatarSelected = async (avatarName: string) => {
@@ -67,14 +65,14 @@ const AddAvatar = () => {
   };
 
   function directToSignUp() {
-    router.push("/signup");
+    navigation.goBack();
   }
 
   return (
     // <LinearGradient locations={[0, 1]} colors={["#fff9e9", "#fff"]} style={styles.container}>
     <View style={styles.outterMostContainer}>
       <ImageBackground
-        source={require("../assets/images/gradient/whiteGradientAskNShare.png")}
+        source={require("../../assets/images/gradient/whiteGradientAskNShare.png")}
         resizeMode="cover"
         style={styles.gradientBackground}
       >
@@ -83,7 +81,7 @@ const AddAvatar = () => {
           <TouchableOpacity style={styles.backBtn} onPress={directToSignUp}>
             <Image
               style={styles.backBtnImg}
-              source={require("../assets/images/icons/blackBack.png")}
+              source={require("../../assets/images/icons/blackBack.png")}
             />
           </TouchableOpacity>
         </View>
@@ -101,8 +99,8 @@ const AddAvatar = () => {
                 style={[styles.avatar]}
                 source={
                   selectedAvatar === "avatar1"
-                    ? require("../assets/images/avatars/avatar1Selected.png")
-                    : require("../assets/images/avatars/avatar1.png")
+                    ? require("../../assets/images/avatars/avatar1Selected.png")
+                    : require("../../assets/images/avatars/avatar1.png")
                 }
               />
             </TouchableOpacity>
@@ -113,8 +111,8 @@ const AddAvatar = () => {
                 style={[styles.avatar]}
                 source={
                   selectedAvatar === "avatar2"
-                    ? require("../assets/images/avatars/avatar2Selected.png")
-                    : require("../assets/images/avatars/avatar2.png")
+                    ? require("../../assets/images/avatars/avatar2Selected.png")
+                    : require("../../assets/images/avatars/avatar2.png")
                 }
               />
             </TouchableOpacity>
@@ -125,8 +123,8 @@ const AddAvatar = () => {
                 style={[styles.avatar]}
                 source={
                   selectedAvatar === "avatar3"
-                    ? require("../assets/images/avatars/avatar3Selected.png")
-                    : require("../assets/images/avatars/avatar3.png")
+                    ? require("../../assets/images/avatars/avatar3Selected.png")
+                    : require("../../assets/images/avatars/avatar3.png")
                 }
               />
             </TouchableOpacity>
@@ -137,8 +135,8 @@ const AddAvatar = () => {
                 style={[styles.avatar]}
                 source={
                   selectedAvatar === "avatar4"
-                    ? require("../assets/images/avatars/avatar4Selected.png")
-                    : require("../assets/images/avatars/avatar4.png")
+                    ? require("../../assets/images/avatars/avatar4Selected.png")
+                    : require("../../assets/images/avatars/avatar4.png")
                 }
               />
             </TouchableOpacity>
@@ -149,8 +147,8 @@ const AddAvatar = () => {
                 style={[styles.avatar]}
                 source={
                   selectedAvatar === "avatar5"
-                    ? require("../assets/images/avatars/avatar5Selected.png")
-                    : require("../assets/images/avatars/avatar5.png")
+                    ? require("../../assets/images/avatars/avatar5Selected.png")
+                    : require("../../assets/images/avatars/avatar5.png")
                 }
               />
             </TouchableOpacity>
@@ -161,8 +159,8 @@ const AddAvatar = () => {
                 style={[styles.avatar]}
                 source={
                   selectedAvatar === "avatar6"
-                    ? require("../assets/images/avatars/avatar6Selected.png")
-                    : require("../assets/images/avatars/avatar6.png")
+                    ? require("../../assets/images/avatars/avatar6Selected.png")
+                    : require("../../assets/images/avatars/avatar6.png")
                 }
               />
             </TouchableOpacity>
@@ -173,8 +171,8 @@ const AddAvatar = () => {
                 style={[styles.avatar]}
                 source={
                   selectedAvatar === "avatar7"
-                    ? require("../assets/images/avatars/avatar7Selected.png")
-                    : require("../assets/images/avatars/avatar7.png")
+                    ? require("../../assets/images/avatars/avatar7Selected.png")
+                    : require("../../assets/images/avatars/avatar7.png")
                 }
               />
             </TouchableOpacity>
@@ -185,8 +183,8 @@ const AddAvatar = () => {
                 style={[styles.avatar]}
                 source={
                   selectedAvatar === "avatar8"
-                    ? require("../assets/images/avatars/avatar8Selected.png")
-                    : require("../assets/images/avatars/avatar8.png")
+                    ? require("../../assets/images/avatars/avatar8Selected.png")
+                    : require("../../assets/images/avatars/avatar8.png")
                 }
               />
             </TouchableOpacity>
@@ -197,8 +195,8 @@ const AddAvatar = () => {
                 style={[styles.avatar]}
                 source={
                   selectedAvatar === "avatar9"
-                    ? require("../assets/images/avatars/avatar9Selected.png")
-                    : require("../assets/images/avatars/avatar9.png")
+                    ? require("../../assets/images/avatars/avatar9Selected.png")
+                    : require("../../assets/images/avatars/avatar9.png")
                 }
               />
             </TouchableOpacity>
@@ -224,7 +222,7 @@ const AddAvatar = () => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   outterMostContainer: {
@@ -305,5 +303,3 @@ const styles = StyleSheet.create({
     fontFamily: "Stolzl Regular",
   },
 });
-
-export default AddAvatar;

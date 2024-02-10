@@ -9,11 +9,12 @@ import {
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { TouchableOpacity } from "react-native";
-import { useUser } from "../../app/context/UserContext";
+import { useUser } from "../context/UserContext";
 import { getFirestore, collection, doc, updateDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 export default function InterestScreen({ navigation }) {
+  console.log("HI in Interest");
   const [AIsChecked, setAIsChecked] = React.useState(false);
   const [CIsChecked, setCIsChecked] = React.useState(false);
   const [FIsChecked, setFIsChecked] = React.useState(false);
@@ -54,7 +55,7 @@ export default function InterestScreen({ navigation }) {
       studentLife: SIsChecked,
     };
     setUser(newUser);
-    navigation.navigate("AddAvatar");
+    //navigation.navigate("Profile");
   }
 
   function AcademicChosen() {
@@ -86,13 +87,13 @@ export default function InterestScreen({ navigation }) {
   }, [SIsChecked]);
 
   function directToAddAvatar() {
-    navigation.navigate("AddAvatar");
+    navigation.goBack();
   }
 
   return (
     <View style={styles.outterMostContainer}>
       <ImageBackground
-        source={require("../assets/images/gradient/whiteGradientAskNShare.png")}
+        source={require("../../assets/images/gradient/whiteGradientAskNShare.png")}
         resizeMode="cover"
         style={styles.gradientBackground}
       >
@@ -101,7 +102,7 @@ export default function InterestScreen({ navigation }) {
           <TouchableOpacity style={styles.backBtn} onPress={directToAddAvatar}>
             <Image
               style={styles.backBtnImg}
-              source={require("../assets/images/icons/blackBack.png")}
+              source={require("../../assets/images/icons/blackBack.png")}
             />
           </TouchableOpacity>
         </View>
@@ -122,7 +123,7 @@ export default function InterestScreen({ navigation }) {
             >
               <Image
                 style={styles.interestIcons}
-                source={require("../assets/images/interestIcons/academic.png")}
+                source={require("../../assets/images/interestIcons/academic.png")}
               />
               <Text style={styles.interestText}>Academics</Text>
             </TouchableOpacity>
@@ -134,7 +135,7 @@ export default function InterestScreen({ navigation }) {
             >
               <Image
                 style={styles.interestIcons}
-                source={require("../assets/images/interestIcons/academic.png")}
+                source={require("../../assets/images/interestIcons/academic.png")}
               />
               <Text style={styles.interestText}>Academics</Text>
             </TouchableOpacity>
@@ -149,7 +150,7 @@ export default function InterestScreen({ navigation }) {
             >
               <Image
                 style={styles.interestIcons}
-                source={require("../assets/images/interestIcons/career.png")}
+                source={require("../../assets/images/interestIcons/career.png")}
               />
               <Text style={styles.interestText}>Career</Text>
             </TouchableOpacity>
@@ -158,7 +159,7 @@ export default function InterestScreen({ navigation }) {
             <TouchableOpacity style={styles.interestBox} onPress={CareerChosen}>
               <Image
                 style={styles.interestIcons}
-                source={require("../assets/images/interestIcons/career.png")}
+                source={require("../../assets/images/interestIcons/career.png")}
               />
               <Text style={styles.interestText}>Career</Text>
             </TouchableOpacity>
@@ -173,7 +174,7 @@ export default function InterestScreen({ navigation }) {
             >
               <Image
                 style={styles.interestIcons}
-                source={require("../assets/images/interestIcons/financial.png")}
+                source={require("../../assets/images/interestIcons/financial.png")}
               />
               <Text style={styles.interestText}>Financial</Text>
             </TouchableOpacity>
@@ -185,7 +186,7 @@ export default function InterestScreen({ navigation }) {
             >
               <Image
                 style={styles.interestIcons}
-                source={require("../assets/images/interestIcons/financial.png")}
+                source={require("../../assets/images/interestIcons/financial.png")}
               />
               <Text style={styles.interestText}>Financial</Text>
             </TouchableOpacity>
@@ -200,7 +201,7 @@ export default function InterestScreen({ navigation }) {
             >
               <Image
                 style={styles.interestIcons}
-                source={require("../assets/images/interestIcons/stulife.png")}
+                source={require("../../assets/images/interestIcons/stulife.png")}
               />
               <Text style={styles.interestText}>Student Life</Text>
             </TouchableOpacity>
@@ -212,7 +213,7 @@ export default function InterestScreen({ navigation }) {
             >
               <Image
                 style={styles.interestIcons}
-                source={require("../assets/images/interestIcons/stulife.png")}
+                source={require("../../assets/images/interestIcons/stulife.png")}
               />
               <Text style={styles.interestText}>Student Life</Text>
             </TouchableOpacity>
