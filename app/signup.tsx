@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Button, StyleSheet, Alert } from "react-native";
 import { TextInput } from "react-native";
-
+import { useRouter } from "expo-router";
 import { TouchableOpacity, ImageBackground } from "react-native";
 import firebase from "firebase/app";
 import {
@@ -22,9 +22,9 @@ import {
 } from "firebase/firestore";
 import { LinearGradient } from "expo-linear-gradient";
 import { Image } from "react-native";
-import { useUser } from "../context/UserContext";
+import { useUser } from "./context/UserContext";
 
-export default function SignUpScreen({ navigation }) {
+const SignupForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,6 +41,7 @@ export default function SignUpScreen({ navigation }) {
   const [studentLife, setStudentLife] = useState(false);
   const [career, setCareer] = useState(false);
 
+  const router = useRouter();
   const auth = getAuth();
   const curuser = auth.currentUser;
 
@@ -129,6 +130,7 @@ export default function SignUpScreen({ navigation }) {
         // Passwords match
         await SignUp();
         await handleNewUserEmail();
+        router.push("/addavatar");
       } else {
         // Passwords don't match
         Alert.alert("Error", "Passwords do not match");
@@ -138,12 +140,14 @@ export default function SignUpScreen({ navigation }) {
     }
   };
 
-  function directToIndex() {}
+  function directToIndex() {
+    router.push("/");
+  }
 
   return (
     <View style={styles.outterMostContainer}>
       <ImageBackground
-        source={require("../../assets/images/gradient/whiteGradientAskNShare.png")}
+        source={require("../assets/images/gradient/whiteGradientAskNShare.png")}
         resizeMode="cover"
         style={styles.gradientBackground}
       >
@@ -152,7 +156,7 @@ export default function SignUpScreen({ navigation }) {
           <TouchableOpacity style={styles.backBtn} onPress={directToIndex}>
             <Image
               style={styles.backBtnImg}
-              source={require("../../assets/images/icons/blackBack.png")}
+              source={require("../assets/images/icons/blackBack.png")}
             />
           </TouchableOpacity>
         </View>
@@ -165,7 +169,7 @@ export default function SignUpScreen({ navigation }) {
         <View style={[styles.inputContainer]}>
           <Image
             style={[styles.signUpIcons]}
-            source={require("../../assets/images/signUpIcons/name.png")}
+            source={require("../assets/images/signUpIcons/name.png")}
           />
           <TextInput
             placeholder="Name"
@@ -181,7 +185,7 @@ export default function SignUpScreen({ navigation }) {
           <View style={[styles.inputContainer]}>
             <Image
               style={[styles.signUpIcons]}
-              source={require("../../assets/images/signUpIcons/email.png")}
+              source={require("../assets/images/signUpIcons/email.png")}
             />
             <TextInput
               placeholder="Email"
@@ -197,7 +201,7 @@ export default function SignUpScreen({ navigation }) {
           <View style={[styles.inputContainer]}>
             <Image
               style={[styles.signUpIcons]}
-              source={require("../../assets/images/signUpIcons/password.png")}
+              source={require("../assets/images/signUpIcons/password.png")}
             />
             <TextInput
               placeholder="Password"
@@ -213,7 +217,7 @@ export default function SignUpScreen({ navigation }) {
           <View style={[styles.inputContainer]}>
             <Image
               style={[styles.signUpIcons]}
-              source={require("../../assets/images/signUpIcons/password.png")}
+              source={require("../assets/images/signUpIcons/password.png")}
             />
             <TextInput
               placeholder="Confirm Password"
@@ -231,7 +235,7 @@ export default function SignUpScreen({ navigation }) {
           <View style={[styles.inputContainer]}>
             <Image
               style={[styles.signUpIcons]}
-              source={require("../../assets/images/signUpIcons/major.png")}
+              source={require("../assets/images/signUpIcons/major.png")}
             />
             <TextInput
               placeholder="Major"
@@ -247,7 +251,7 @@ export default function SignUpScreen({ navigation }) {
           <View style={[styles.inputContainer]}>
             <Image
               style={[styles.signUpIcons]}
-              source={require("../../assets/images/signUpIcons/year.png")}
+              source={require("../assets/images/signUpIcons/year.png")}
             />
             <TextInput
               placeholder="Year"
@@ -267,7 +271,7 @@ export default function SignUpScreen({ navigation }) {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   outterMostContainer: {
@@ -366,3 +370,5 @@ const styles = StyleSheet.create({
     fontFamily: "Stolzl Regular",
   },
 });
+
+export default SignupForm;
