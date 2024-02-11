@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.gnauheinna.connectp"
@@ -25,9 +27,12 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "plugins": [
+      "expo-font"
+    ],
     "extra": {
       "eas": {
-        "projectId": "40af8eeb-d62c-4996-a08c-2c5da4cef08c"
+        "projectId": "08422169-ea0c-480b-acd7-db0651dd2010"
       }
     }
   }
