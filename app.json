@@ -14,7 +14,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.nauheina.Connect+"
+      "bundleIdentifier": "com.gnauheinna.connectp"
     },
     "android": {
       "adaptiveIcon": {
