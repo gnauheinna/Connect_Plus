@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "connectp",
-    "slug": "connectp",
+    "name": "connect+",
+    "slug": "connect+",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,12 +11,10 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.gnauheinna.connectp"
+      "bundleIdentifier": "com.nauheina.Connect+"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,9 +25,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      "expo-font"
-    ],
+    "plugins": ["expo-font"],
     "extra": {
       "eas": {
         "projectId": "08422169-ea0c-480b-acd7-db0651dd2010"
