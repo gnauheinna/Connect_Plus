@@ -5,6 +5,8 @@ import { TouchableOpacity, ImageBackground } from "react-native";
 import { Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontFamily, Color, Border } from "../../styles/GlobalStyles";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 import {
   getAuth,
@@ -38,6 +40,19 @@ export default function LoginScreen({ navigation }) {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userID, setUserID] = useState("");
+
+  useEffect(() => {
+    const checkStoredUser = async () => {
+      const storedUserID = await AsyncStorage.getItem('userUID');
+      console.log("Stored User ID: ", storedUserID);
+      if (storedUserID) {
+        setUserID(storedUserID);
+        setIsLoggedIn(true);
+      }
+    };
+
+    checkStoredUser();
+  }, []);
 
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
@@ -114,6 +129,7 @@ export default function LoginScreen({ navigation }) {
         setLoginError(null);
         setUserID(user.uid);
         setIsLoggedIn(true);
+        AsyncStorage.setItem('userUID', user.uid); // Store user UID in AsyncStorage
         nextpage();
       })
       .catch((error) => {
