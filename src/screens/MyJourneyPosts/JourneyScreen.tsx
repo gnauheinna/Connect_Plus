@@ -19,15 +19,16 @@ import { useSavedJourneyContext } from "../../context/savedJourneyContext";
 import { useUser } from "../../context/UserContext";
 import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
 
-export default function NeriScreen({ route, navigation }) {
+export default function JourneyScreen({ route, navigation }) {
   const [isSaved, setIsSaved] = useState(false);
   const { user, setUser } = useUser();
   const currentUserID = user.userID;
   const db = getFirestore();
-
-
   const authId = route.params.user;
-  
+
+// for the background & profile image
+  let backImg;  
+  let profileImg
 //   console.log(authId);
 // //   this gives the entire object
   const journeyInfo = journeys[authId];
@@ -175,11 +176,28 @@ export default function NeriScreen({ route, navigation }) {
     []
   );
 
+  switch (journeyInfo?.author.photoName) {
+    case "neri":
+        backImg = require(`../../../assets/images/journeyPostsGradients/neri.png`);
+        profileImg = require(`../../../assets/images/mentorProfilePics/neri.png`);
+        break;
+    case "rachel":
+        backImg = require(`../../../assets/images/journeyPostsGradients/rachel.png`);
+        profileImg = require(`../../../assets/images/mentorProfilePics/rachel.png`);
+        break;
+    case "shateva":
+        backImg = require(`../../../assets/images/journeyPostsGradients/shatevaFeatured.png`);
+        profileImg = require(`../../../assets/images/mentorProfilePics/shateva.png`);
+        break;
+    case "julia":
+        backImg = require(`../../../assets/images/journeyPostsGradients/julia.png`);
+        profileImg = require(`../../../assets/images/mentorProfilePics/julia.png`); 
+  } 
   return (
     <View style={styles.outterContainer}>
       <View style={styles.container}>
         <ImageBackground
-          source={require(`../../../assets/images/journeyPostsGradients/neri.png`)}
+          source={backImg}
           resizeMode="cover"
           style={styles.gradientBackground}
         >
@@ -234,7 +252,7 @@ export default function NeriScreen({ route, navigation }) {
           <View style={styles.authorInfoContainer}>
             <Image
               style={styles.profileImg}
-              source={require("../../../assets/images/mentorProfilePics/neri.png")}
+              source={profileImg}
             />
             <View style={styles.userNameAndIntro}>
               <Text style={styles.userName}>{ journeyInfo?.author.authorName}</Text>
@@ -293,6 +311,20 @@ export default function NeriScreen({ route, navigation }) {
                 </Text>
               </View>
             </View>
+            {/*    EXPERIENCE */}
+            {journeyInfo?.experience.experience1 && (
+                <View style={styles.individualStep}>
+                <View style={styles.subtitleContainer}>
+                  <Text style={styles.subtitleText}>Experience</Text>
+                </View>
+                <View style={styles.regularContentContainer}>
+                  <Text style={styles.regularContentText}>
+                    {journeyInfo?.experience.experience1}
+                  </Text>
+                </View>
+              </View>
+
+            )}
             {/* 3rd Step - challenges */}
             <View style={styles.individualStep}>
               <View style={styles.subtitleContainer}>
@@ -309,6 +341,7 @@ export default function NeriScreen({ route, navigation }) {
             </View>
 
             {/* 4th Step - takeaways */}
+            {journeyInfo?.takeaways.takeaway1 && (
             <View style={styles.individualStep}>
               <View style={styles.subtitleContainer}>
                 <Text style={styles.subtitleText}>Takeaways</Text>
@@ -326,9 +359,11 @@ export default function NeriScreen({ route, navigation }) {
                     </Text>
                 )}
               </View>
-            </View>
+            </View>)}
 
+            
             {/* 5th Step - resources */}
+            {journeyInfo?.resources.resource1 && (
             <View style={styles.individualStep}>
               <View style={styles.subtitleContainer}>
                 <Text style={styles.subtitleText}>Resources</Text>
@@ -366,6 +401,7 @@ export default function NeriScreen({ route, navigation }) {
                 </Text>
               </View>
             </View>
+            )}
 
            
             {/* 6th Step - additional groups*/}
