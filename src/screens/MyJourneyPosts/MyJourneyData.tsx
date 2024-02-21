@@ -1,11 +1,3 @@
-// export interface JourneyData {
-//     journeyTitle: string;
-//     authorName: string;
-//     journeyID: string;
-//     intro: string;
-
-// }
-// to make certain words bold, use .replace(the word I want to make bold, )
 export interface Journey {
     [id : string] : {
         author: {
@@ -108,8 +100,8 @@ export const journeys: Journey = {
             takeaway3: "",
         },
         resources: {
-            resource1: " Make sure you click to learn more about Diversity and Inclusion at BU",
-            resource2: "Click here to view all BU clubs and organizations",
+            resource1: "Diversity and Inclusion at BU",
+            resource2: "BU clubs and organizations",
             resource3: "",
         },
         experience: {
@@ -382,17 +374,92 @@ export const journeys: Journey = {
     },
     // },
     // // Rachel Featured
-    // '6' : {
-    //     user : {
-    //         journeyTitle:
-    //         "Volunteering in Florida Natural Reserve - Alternative Service Break",
-    //         authorName: "Rachel Li",
-    //         journeyID: "Q9heA4AhlceX6jxsBgbEezCsZV4mYk6f",
-    //         intro: "Class of 2024, Data Science Major",},
-    //     header: {
-    //         heading: "I’ve learned a lot in my career, but these are the most important lessons I’ve learned.",
-    //     },
-    // },
+    '6' : {
+        author : {
+            journeyTitle:
+            "Volunteering in Florida Natural Reserve - Alternative Service Break",
+            authorName: "Rachel Li",
+            journeyID: "Q9heA4AhlceX6jxsBgbEezCsZV4mYk6f",
+            intro: "Class of 2024, Data Science Major",
+            date: "Dec 1st 2023",
+            photoName: "rachelFeatured",
+        },
+        header: {
+            heading: "This March, I had the incredible opportunity to participate in " +
+            "a week-long volunteering program, facilitated by the Center of " +
+            "Community Service at BU. Alongside 14 other students, I " +
+            "journeyed to Hobe Sound, Florida, with all expenses covered by " +
+            "the program. I came across this opportunity on Instagram " +
+            "during the winter break and I applied for it. They offer scholarships for people who have financial needs. " +
+            "Last time there were five cities to choose from, each with " +
+            "different volunteering activities. In the application, there " +
+            "are two questions to answer: why do you want to participate, " +
+            "and describe your financial situation. About two weeks before " +
+            "our departure, we had a comprehensive briefing with the " +
+            "program coordinator and trip leads, which prepared us for the " +
+            "trip and outlined safety protocols."
+        },
+        process: {
+            step1: "",
+            step2: "",
+            step3: "",
+            step4: "",
+        },
+        additionalInfo: {
+            info1: "",
+            info2: "",
+            info3: "",
+            info4: "",
+        },
+        challenges: {
+            challenge1: "One of the challenges I faced was adapting to the living " +
+            "conditions. We shared an apartment with around 10 other " +
+            "people, equipped with bunk beds and a single bathroom. " +
+            "Sometimes we waited in long lines, but those moments when we " +
+            "were cooking in the kitchen together, singing songs were what " +
+            "made everything worthwhile. ",
+            challenge2: "",
+            challenge3: "",
+        },
+        takeaways: {
+            takeaway1: "This experience was eye-opening, fun, challenging, and " +
+            "meaningful. From being strangers at the outset to forging " +
+            "meaningful connections, I returned with 14 newfound friends. " +
+            "We learned teamwork, how to survive in a foreign place, how to " +
+            "take care of each other, and how to effectively communicate.", 
+            takeaway2: "",
+            takeaway3: "",
+        },
+        resources: {
+            resource1: "",
+            resource2: "",
+            resource3: "",
+        },
+        experience: {
+            experience1: "On the day of departure, the morning began early at 5 am as we " +
+            "gathered at GSU and boarded a bus bound for Logan Airport off " +
+            "to Florida! For the first four days, we volunteered from 9 am to 4 pm with" + 
+            "different activities throughout the day. We would go to the " +
+            "beach and explore the city every day after work. The last day " +
+            "was a fun day, we drove to Miami!"
+        },
+        additionalGroups: {
+            group1: "",
+            group2: "",
+            group3: "",
+        },
+        groupInfo: {
+            groupInfo1: "",
+            groupInfo2: "",
+            groupInfo3:  "",
+        },
+        links: {
+            link1: '',
+            link2: "",
+            link3: "",
+        
+        }
+    },
     // Shateva
     '7' : {
         author : {

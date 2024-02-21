@@ -148,8 +148,9 @@ export default function App() {
                   />
                   <Stack.Screen
                     name="rachelFeatured"
-                    component={RachelFeaturedScreen}
+                    component={JourneyScreen}
                     options={{ headerShown: false }}
+                    initialParams={{ user: "6", }}
                   />
                   <Stack.Screen
                     name="shateva"

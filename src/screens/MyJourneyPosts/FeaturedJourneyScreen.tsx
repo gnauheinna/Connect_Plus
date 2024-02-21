@@ -19,7 +19,7 @@ import { useSavedJourneyContext } from "../../context/savedJourneyContext";
 import { useUser } from "../../context/UserContext";
 import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
 
-export default function JourneyScreen({ route, navigation }) {
+export default function FeaturedJourneyScreen({ route, navigation }) {
   const [isSaved, setIsSaved] = useState(false);
   const { user, setUser } = useUser();
   const currentUserID = user.userID;
@@ -185,10 +185,6 @@ export default function JourneyScreen({ route, navigation }) {
     case "julia":
         backImg = require(`../../../assets/images/journeyPostsGradients/julia.png`);
         profileImg = require(`../../../assets/images/mentorProfilePics/julia.png`); 
-    case "rachelFeatured":
-        backImg = require(`../../../assets/images/journeyPostsGradients/rachelFeatured.png`);
-        profileImg = require(`../../../assets/images/mentorProfilePics/rachel.png`);
-        break;
   } 
   return (
     <View style={styles.outterContainer}>
@@ -272,7 +268,7 @@ export default function JourneyScreen({ route, navigation }) {
               </View>
             </View>
             {/* 2nd Step */}
-            {journeyInfo?.process.step1 && (<View style={styles.individualStep}>
+            <View style={styles.individualStep}>
               <View style={styles.subtitleContainer}>
                 <Text style={styles.subtitleText}>Processes</Text>
               </View>
@@ -288,7 +284,6 @@ export default function JourneyScreen({ route, navigation }) {
                 </Text>
               </View>
             </View>
-            )}
             {/*    EXPERIENCE */}
             {journeyInfo?.experience.experience1 && (
                 <View style={styles.individualStep}>
@@ -355,36 +350,6 @@ export default function JourneyScreen({ route, navigation }) {
                 </Text>
                 <Text style={styles.regularContentText}>
                     {journeyInfo?.resources.resource3}
-                </Text>
-              </View>
-            </View>
-            )}
-
-            {journeyInfo?.author.photoName === "rachelFeatured" && (
-              <View style={styles.individualStep}>
-              <View style={styles.subtitleContainer}>
-                <Text style={styles.subtitleText}>Resources</Text>
-              </View>
-              <View style={styles.regularContentContainer}>
-                <Text style={styles.regularContentText}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      Linking.openURL(
-                        "https://www.bu.edu/articles/2023/photo-gallery-asb-terriers-volunteer-for-spring-break/"
-                      )
-                    }
-                  >
-                    <Text style={styles.linkText}>Our story on BU Today</Text>
-                  </TouchableOpacity>
-                </Text>
-                <Text style={styles.regularContentText}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      Linking.openURL("https://www.bu.edu/csc/programs/asb/")
-                    }
-                  >
-                    <Text style={styles.linkText}>Program Details</Text>
-                  </TouchableOpacity>
                 </Text>
               </View>
             </View>
