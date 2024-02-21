@@ -29,17 +29,10 @@ export default function JourneyScreen({ route, navigation }) {
 // for the background & profile image
   let backImg;  
   let profileImg
-//   console.log(authId);
-// //   this gives the entire object
+
+// this gives the entire object
   const journeyInfo = journeys[authId];
-    // console.log(journeyInfo.length);
 
-
-//   console.log(journeyInfo.author);
-//   console.log(journeyInfo.header.heading);
-//   console.log(journeyInfo?.author.authorName);
-
-//   console.log(author);
   const { savedJourneys, setSavedJourneys, setLoading, loading } =
     useSavedJourneyContext();
 
@@ -281,32 +274,12 @@ export default function JourneyScreen({ route, navigation }) {
               </View>
               <View style={styles.regularContentContainer}>
                 <Text style={styles.regularContentText}>
-                  {/* {"1. You can visit "}
-                  <TouchableOpacity
-                    onPress={() =>
-                      Linking.openURL("https://bu.campuslabs.com/engage/")
-                    }
-                  >
-                    <Text style={styles.linkText}>Terrier Central</Text>
-                  </TouchableOpacity>
-                  {" to learn more about the hundreds of clubs on campus."} */}
                   {journeyInfo?.process.step1}
                 </Text>
                 <Text style={styles.regularContentText}>
                 {journeyInfo?.process.step2}
                 </Text>
                 <Text style={styles.regularContentText}>
-                  {/* {"3. Visit "}
-                  <TouchableOpacity
-                    onPress={() =>
-                      Linking.openURL(
-                        "https://www.bu.edu/articles/2023/everything-you-need-to-know-about-boston-university-splash/"
-                      )
-                    }
-                  >
-                    <Text style={styles.linkText}>Splash</Text>
-                  </TouchableOpacity>
-                  {" that happens at the start of every semester!"} */}
                   {journeyInfo?.process.step3}
                 </Text>
               </View>
@@ -370,34 +343,13 @@ export default function JourneyScreen({ route, navigation }) {
               </View>
               <View style={styles.regularContentContainer}>
                 <Text style={styles.regularContentText}>
-                  {/* {"- Make sure you click to learn more about "}
-                  <TouchableOpacity
-                    onPress={() =>
-                      Linking.openURL(
-                        "https://www.bu.edu/diversity/our-communities/"
-                      )
-                    }
-                  >
-                    <Text style={styles.linkText}>
-                      Diversity and Inclusion at BU
-                    </Text>
-                  </TouchableOpacity> */}
                   {journeyInfo?.resources.resource1}
                 </Text>
                 <Text style={styles.regularContentText}>
-                  {/* {"- Click here to view all "}
-                  <TouchableOpacity
-                    onPress={() =>
-                      Linking.openURL(
-                        "https://bu.campuslabs.com/engage/organizations"
-                      )
-                    }
-                  >
-                    <Text style={styles.linkText}>
-                      BU Clubs and Organizations
-                    </Text>
-                  </TouchableOpacity> */}
                     {journeyInfo?.resources.resource2}
+                </Text>
+                <Text style={styles.regularContentText}>
+                    {journeyInfo?.resources.resource3}
                 </Text>
               </View>
             </View>
@@ -461,6 +413,7 @@ export default function JourneyScreen({ route, navigation }) {
                 </Text>
               </View>
             </View>)}
+
           </View>
         </View>
       </ScrollView>

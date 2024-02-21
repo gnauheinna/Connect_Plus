@@ -126,8 +126,8 @@ export const journeys: Journey = {
             groupInfo3: "This is a place where cultural expression in all of its forms is embraced and encouraged.",
         },
         links: {
-            link1: '',
-            link2: "https://www.bu.edu/sao/get-involved/student-organizations/",
+            link1: 'https://www.bu.edu/sao/get-involved/student-organizations/',
+            link2: "",
             link3: "",
         
         }
@@ -224,7 +224,7 @@ export const journeys: Journey = {
             "something new and develop your skill set! ",
         },
         process: {
-            step1: "1. Figure out what you can do: \n\n" +
+            step1: "1. Figure out what you can do: \n" +
             "For international students: You can only work on-campus for " +
                     "your first year. After one full year of education, however, " +
                     "you can expand to off-campus positions that sponsor a work " +
@@ -232,7 +232,7 @@ export const journeys: Journey = {
             "For U.S. Citizens: You can already go off-campus as a first-year. " +
             "There is also a work-study award available if you are a U.S. citizen that " +
                    " automatically deposits your salary into your Student Account. ",
-            step2: "2. Search for available opportunities: Utilize Student Link: You can find a list "+ 
+            step2: "2. Search for available opportunities: Utilize Student Link! You can find a list "+ 
             "of On/Off-campus Part-time positions or Quick Jobs (one-time jobs) listed under the “Job and " +
             "Career” tab with the eligibilities, pay rates, and contact " +
             "information. You can then email the person(s) in charge of " +
@@ -248,7 +248,7 @@ export const journeys: Journey = {
             "currently working in a position or organization that you are " +
            " interested in and they can let you know if they are recruiting. ",
 
-            step3: "3. Apply\n" + "• Resume, Cover letter, and Application form: Most Quick " +
+            step3: "\n3. Apply\n" + "• Resume, Cover letter, and Application form: Most Quick " +
             "Jobs don’t require any of these, but Part-time Jobs usually " +
             "require a Resume. Use the Career Development Center (CDC) " +
             "to help you polish your documents! " + 
@@ -289,7 +289,7 @@ export const journeys: Journey = {
         },
         resources: {
             resource1: "Student Employment Office ",
-            resource2: "Student Employment Instagram ",
+            resource2: "Student Employment Instagram (@bostonuseo) ",
             resource3: "International Students & Scholars Office ",
         },
         experience: {
@@ -500,7 +500,7 @@ export const journeys: Journey = {
             takeaway3: "",
         },
         resources: {
-            resource1: " Make sure you click to learn more about Diversity and Inclusion at BU",
+            resource1: "Make sure you click to learn more about Diversity and Inclusion at BU",
             resource2: "Click here to view all BU clubs and organizations",
             resource3: "",
         },
