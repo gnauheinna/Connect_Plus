@@ -1,7 +1,4 @@
 {
-  "cli": {
-    "version": ">= 7.0.0"
-  },
   "build": {
     "development": {
       "developmentClient": true,
@@ -10,9 +7,6 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": {}
-  },
-  "submit": {
     "production": {}
   }
 }
