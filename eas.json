@@ -3,11 +3,19 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "image": "macos-ventura-13.6-xcode-15.2"
+      "ios": {
+        "image": "latest",
+        "env": {
+          "PLATFORM": "ios"
+        }
     },
     "preview": {
       "distribution": "internal",
-      "image": "macos-ventura-13.6-xcode-15.2"
+      "ios": {
+        "image": "latest",
+        "env": {
+          "PLATFORM": "ios"
+        }
     },
     "production": {}
   }
