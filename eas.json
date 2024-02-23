@@ -9,8 +9,7 @@
     },
     "preview": {
       "distribution": "internal"
-    },
-    "production": {}
+    }
   },
   "submit": {
     "production": {}
