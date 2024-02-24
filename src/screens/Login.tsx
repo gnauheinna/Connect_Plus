@@ -1,12 +1,16 @@
 import { View, Text, Button, TextField } from "react-native-ui-lib";
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, TextInput, Pressable } from "react-native";
-import { TouchableOpacity, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  Pressable,
+  TouchableOpacity,
+  ImageBackground,
+} from "react-native";
 import { Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontFamily, Color, Border } from "../../styles/GlobalStyles";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import {
   getAuth,
@@ -30,7 +34,6 @@ import * as Font from "expo-font";
 import { app } from "../../firebase";
 
 export default function LoginScreen({ navigation }) {
-  console.log("HI in Login");
   const db = getFirestore();
   const { user, setUser } = useUser();
   const [email, setEmail] = useState("");
@@ -43,7 +46,7 @@ export default function LoginScreen({ navigation }) {
 
   useEffect(() => {
     const checkStoredUser = async () => {
-      const storedUserID = await AsyncStorage.getItem('userUID');
+      const storedUserID = await AsyncStorage.getItem("userUID");
       console.log("Stored User ID: ", storedUserID);
       if (storedUserID) {
         setUserID(storedUserID);
@@ -129,7 +132,7 @@ export default function LoginScreen({ navigation }) {
         setLoginError(null);
         setUserID(user.uid);
         setIsLoggedIn(true);
-        AsyncStorage.setItem('userUID', user.uid); // Store user UID in AsyncStorage
+        AsyncStorage.setItem("userUID", user.uid); // Store user UID in AsyncStorage
         nextpage();
       })
       .catch((error) => {
