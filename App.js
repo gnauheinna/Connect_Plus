@@ -38,7 +38,6 @@ import JourneyScreen from "./src/screens/MyJourneyPosts/JourneyScreen";
 const Stack = createStackNavigator();
 //SplashScreen.preventAutoHideAsync();
 export default function App() {
-  console.log("rootlayout");
   const [fontsLoaded, fontError] = useFonts({
     "Stolzl Bold": require("./assets/fonts/stolzlBold.ttf"),
     "Stolzl Medium": require("./assets/fonts/stolzlMedium.otf"),
@@ -47,7 +46,6 @@ export default function App() {
     ...FontAwesome.font,
   });
   if (getApps() == null) {
-    console.log("rootlayout no firebase");
     const app = initializeApp(firebaseConfig);
     if (!app) return <View />;
   }
@@ -122,7 +120,7 @@ export default function App() {
                     name="neri"
                     component={JourneyScreen}
                     options={{ headerShown: false }}
-                    initialParams={{ user: "1", }}
+                    initialParams={{ user: "1" }}
                   />
                   <Stack.Screen
                     name="bailey"
@@ -138,25 +136,25 @@ export default function App() {
                     name="julia"
                     component={JourneyScreen}
                     options={{ headerShown: false }}
-                    initialParams={{ user: "4", }}
+                    initialParams={{ user: "4" }}
                   />
                   <Stack.Screen
                     name="rachel"
                     component={JourneyScreen}
                     options={{ headerShown: false }}
-                    initialParams={{ user: "5", }}
+                    initialParams={{ user: "5" }}
                   />
                   <Stack.Screen
                     name="rachelFeatured"
                     component={JourneyScreen}
                     options={{ headerShown: false }}
-                    initialParams={{ user: "6", }}
+                    initialParams={{ user: "6" }}
                   />
                   <Stack.Screen
                     name="shateva"
                     component={JourneyScreen}
                     options={{ headerShown: false }}
-                    initialParams={{ user: "7", }}
+                    initialParams={{ user: "7" }}
                   />
                   <Stack.Screen
                     name="shatevaFeatured"
