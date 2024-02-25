@@ -89,11 +89,8 @@ export default function MessageScreen({ navigation }) {
   useEffect(() => {
     const fetchUserChats = async () => {
       try {
-        console.log("current user:  ", currentUserID);
         const userChatDocRef = doc(db, "userChats", currentUserID);
-        console.log("chatdocref ", userChatDocRef);
         const userChatDocSnapshot = await getDoc(userChatDocRef);
-        console.log("chatdocsnap ", userChatDocSnapshot);
         const userChatsData: UserChat[] = [];
         // we if the current userChat exists
         if (userChatDocSnapshot.exists()) {

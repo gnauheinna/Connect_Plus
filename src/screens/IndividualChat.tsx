@@ -33,7 +33,8 @@ type Chats = {
   senderID: string;
   text: string;
 };
-export default function IndividualChatScreen({ navigation }) {
+export default function IndividualChatScreen({ navigation, route }) {
+  const chatID = route.params;
   const db = getFirestore();
   const { user, setUser } = useUser();
   const currentUserID = user.userID;
@@ -47,7 +48,7 @@ export default function IndividualChatScreen({ navigation }) {
     currentChatUserID,
     setCurrentChatUserID,
   } = useCurrentChat();
-
+  setCurrentChatID(chatID);
   const [chats, setChats] = useState<Chats[]>([]);
   const [inputText, setInputText] = useState("");
 
