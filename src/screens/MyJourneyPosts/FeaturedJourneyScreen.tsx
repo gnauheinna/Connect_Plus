@@ -170,21 +170,18 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
   );
 
   switch (journeyInfo?.author.photoName) {
-    case "neri":
-        backImg = require(`../../../assets/images/journeyPostsGradients/neri.png`);
-        profileImg = require(`../../../assets/images/mentorProfilePics/neri.png`);
+    case "nana":
+        backImg = require(`../../../assets/images/journeyPostsGradients/nana.png`);
+        profileImg = require(`../../../assets/images/mentorProfilePics/nana.png`);
         break;
-    case "rachel":
+    case "bailey":
         backImg = require(`../../../assets/images/journeyPostsGradients/rachel.png`);
-        profileImg = require(`../../../assets/images/mentorProfilePics/rachel.png`);
+        profileImg = require(`../../../assets/images/mentorProfilePics/bailey.png`);
         break;
     case "shateva":
         backImg = require(`../../../assets/images/journeyPostsGradients/shatevaFeatured.png`);
         profileImg = require(`../../../assets/images/mentorProfilePics/shateva.png`);
         break;
-    case "julia":
-        backImg = require(`../../../assets/images/journeyPostsGradients/julia.png`);
-        profileImg = require(`../../../assets/images/mentorProfilePics/julia.png`); 
   } 
   return (
     <View style={styles.outterContainer}>
@@ -222,7 +219,7 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
             <View style={styles.postTitleContainer}>
               <View style={styles.timeAndSaveContainer}>
                 {/* Timestamp */}
-                <Text style={styles.postDate}>{ journeyInfo?.author.date}</Text>
+                <Text style={styles.postDate}>{journeyInfo?.author.date}</Text>
                 {/* Save Button */}
                 <TouchableOpacity onPress={() => handleClick()}>
                   <Image
@@ -237,7 +234,7 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
               </View>
               {/* Title */}
               <Text style={styles.postTitle}>
-                { journeyInfo?.author.journeyTitle}
+              { journeyInfo?.author.journeyTitle}
               </Text>
             </View>
           </View>
@@ -250,174 +247,227 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
             <View style={styles.userNameAndIntro}>
               <Text style={styles.userName}>{ journeyInfo?.author.authorName}</Text>
               <Text style={styles.userIntro}>
-                {journeyInfo?.author.intro}
+              {journeyInfo?.author.intro}
               </Text>
             </View>
           </View>
         </View>
 
-        {/* Processes Content */}
         <View style={styles.postContentContainer}>
           <View style={styles.postContentMainContainer}>
             {/* 1st Step */}
             <View style={styles.individualStep}>
+              <View style={styles.subtitleContainer}>
+                {/* STOPPPED HERE */}
+                <Text style={styles.subtitleText}>College Experience</Text>
+              </View>
               <View style={styles.regularContentContainer}>
+                <Text style={styles.regularContentTextBolded}>
+                  Q: When did you start to be aware of your first-gen identity?
+                  What does that mean to you?
+                </Text>
                 <Text style={styles.regularContentText}>
-                  { journeyInfo?.header.heading}
+                  <Text style={styles.underlinedText}>
+                    My first-gen identity for me means independence.{" "}
+                  </Text>
+                  In high school I realized that there were a lot of steps I
+                  needed to take that other students had laid out in front of
+                  them.{" "}
+                  <Text style={styles.underlinedText}>
+                    First-gen identity taught me to actively pursue my
+                    opportunities though and appreciate the ones I found even
+                    more so.{" "}
+                  </Text>
+                </Text>
+              </View>
+
+              <View style={styles.regularContentContainer}>
+                <Text style={styles.regularContentTextBolded}>
+                  Q: What were some of the challenges you encountered during
+                  your computer science studies, and how did you overcome them?
+                </Text>
+                <Text style={styles.regularContentText}>
+                  A lot of the curriculum can be extremely difficult but the
+                  biggest challenge I faced though was the more social aspect of
+                  going into each of my classes without a support network to
+                  help push me. Meeting new people can be incredibly terrifying
+                  but if you can push yourself to make those connections then
+                  going through a CS course with friends who are understanding
+                  and willing to help each other when they’re struggling makes
+                  the experience so much better.
                 </Text>
               </View>
             </View>
             {/* 2nd Step */}
             <View style={styles.individualStep}>
               <View style={styles.subtitleContainer}>
-                <Text style={styles.subtitleText}>Processes</Text>
+                <Text style={styles.subtitleText}>Professional Experience</Text>
               </View>
               <View style={styles.regularContentContainer}>
-                <Text style={styles.regularContentText}>
-                  {journeyInfo?.process.step1}
+                <Text style={styles.regularContentTextBolded}>
+                  Q: Could you share more about your career journey?
                 </Text>
                 <Text style={styles.regularContentText}>
-                {journeyInfo?.process.step2}
+                  My first full time role was with IBM as a Software Engineer in
+                  San Jose, which I had interned for the summer before. I
+                  transitioned to my full time role during Covid. One year into
+                  my role I realized how unhappy I was due to the limited social
+                  aspect and the nature of the role. That's when I joined
+                  Capital One in Boston.{" "}
                 </Text>
                 <Text style={styles.regularContentText}>
-                  {journeyInfo?.process.step3}
+                  <Text style={styles.underlinedText}>
+                    My transition was a little rough.{" "}
+                  </Text>
+                  It was a new department and we were low on staff at the time
+                  so I had to learn on the fly.{" "}
+                  <Text style={styles.underlinedText}>
+                    My organization had awesome people I could lean on for
+                    support and helped me keep my head above water{" "}
+                  </Text>
+                  until I could support myself and the rest of my team.
                 </Text>
               </View>
-            </View>
-            {/*    EXPERIENCE */}
-            {journeyInfo?.experience.experience1 && (
-                <View style={styles.individualStep}>
+
+              <View style={styles.regularContentContainer}>
+                <Text style={styles.regularContentTextBolded}>
+                  Q: Can you share your experience in searching for software
+                  engineering internships?
+                </Text>
+                <Text style={styles.regularContentText}>
+                  <Text style={styles.underlinedText}>
+                    Be on the lookout for opportunities to connect with people
+                    with similar backgrounds or interests,{" "}
+                  </Text>
+                  like recruitment events catered for LGBT folks, women in STEM,
+                  video game developer conferences,etc.{" "}
+                  <Text style={styles.underlinedText}>
+                    In person networking events are an amazing way to stand out.{" "}
+                  </Text>
+                  Remember that a lot of recruiters aren’t looking for your
+                  technical skills or brainpower doing events, they already know
+                  that the interview process will take care of that.{" "}
+                  <Text style={styles.underlinedText}>
+                    Focus on showing them your enthusiasm and drive instead and
+                    you’ll make a much more lasting impression.{" "}
+                  </Text>
+                  It doesn’t even need to be job related, just find a way to
+                  steer the conversation to something you’ve been obsessing over
+                  or a long term passion you’ve always had and they’ll recognize
+                  that you can bring that energy into the office too.
+                </Text>
+              </View>
+
+              <View style={styles.regularContentContainer}>
+                <Text style={styles.regularContentTextBolded}>
+                  Q: Were there particular skills or experiences that helped you
+                  to navigate the workforce as a young professional?
+                </Text>
+                <Text style={styles.regularContentText}>
+                  I fully believe that{" "}
+                  <Text style={styles.underlinedText}>
+                    the most crucial skill you can refine in any type of career
+                    is your listening ability{" "}
+                  </Text>
+                  Misunderstandings happen all the time and in a remote or
+                  hybrid workforce where avenues of communication are limited,
+                  making sure you’re actively processing the information thrown
+                  at you is critical to prevent major errors and missteps.
+                </Text>
+              </View>
+
+              {/* 3rd Step */}
+              <View style={styles.individualStep}>
                 <View style={styles.subtitleContainer}>
-                  <Text style={styles.subtitleText}>Experience</Text>
+                  <Text style={styles.subtitleText}>Tips and Advice</Text>
                 </View>
                 <View style={styles.regularContentContainer}>
+                  <Text style={styles.regularContentTextBolded}>
+                    Q: What factors do you believe contributed most to your
+                    success?
+                  </Text>
                   <Text style={styles.regularContentText}>
-                    {journeyInfo?.experience.experience1}
+                    It sounds corny but{" "}
+                    <Text style={styles.underlinedText}>
+                      a positive attitude takes you a super long way.{" "}
+                    </Text>
+                    Life gets rough, work gets rough, sometimes your team will
+                    have a super tight deadline or home life will compound with
+                    work stress, but trying to keep a positive perspective
+                    genuinely helps you and the people you work with get through
+                    those days.{" "}
+                    <Text style={styles.underlinedText}>
+                      You’ll always be remembered and appreciated for bringing
+                      that light to the people around you, and nothing feels
+                      better than helping someone else get through a hard day
+                      too.{" "}
+                    </Text>
+                  </Text>
+                </View>
+
+                <View style={styles.regularContentContainer}>
+                  <Text style={styles.regularContentTextBolded}>
+                    Q: How do you think students can benefit from peer-to-peer
+                    relationships?
+                  </Text>
+                  <Text style={styles.regularContentText}>
+                    <Text style={styles.underlinedText}>
+                      Mutual Support and shared resources are both really
+                      important{" "}
+                    </Text>
+                    things I think Connect+ could provide for first-gen
+                    students. A lot of students just don’t know about all the
+                    amazing opportunities that Boston holds. Having a place to
+                    share information about those opportunities is super useful.
+                    Even having the ability to do something as simple as “Hey I
+                    found a cool AI conference that so-and-so is holding, would
+                    anyone want to go together?” can be really useful for a
+                    first-gen student who might be nervous about entering the
+                    professional world.
+                  </Text>
+                </View>
+
+                <View style={styles.regularContentContainer}>
+                  <Text style={styles.regularContentTextBolded}>
+                    Q: For students who are about to graduate and start their
+                    early careers, what are the top 3 advice you have for them?
+                  </Text>
+                  <Text style={styles.regularContentText}>
+                    1.{" "}
+                    <Text style={styles.underlinedText}>
+                      Alway prioritize a job where you feel happy{" "}
+                    </Text>
+                    with your role rather than chasing a higher paycheck.
+                    Burnout is so real and happens even faster when you’re
+                    miserable in your job.
+                  </Text>
+                  <Text style={styles.regularContentText}>
+                    2.{" "}
+                    <Text style={styles.underlinedText}>
+                      Don’t feel ashamed of your knowledge gaps.{" "}
+                    </Text>
+                    No one is expecting you to know everything and a leader
+                    always appreciates questions and engagement more than zoom
+                    silence.
+                  </Text>
+                  <Text style={styles.regularContentText}>
+                    3.{" "}
+                    <Text style={styles.underlinedText}>
+                      Never compare your journey to someone else’s.{" "}
+                    </Text>
+                    You’re living a life, not checking a bunch of boxes on a
+                    list.{" "}
+                    <Text style={styles.underlinedText}>
+                      There’s no “right” way to be you.{" "}
+                    </Text>
                   </Text>
                 </View>
               </View>
-
-            )}
-            {/* 3rd Step - challenges */}
-            <View style={styles.individualStep}>
-              <View style={styles.subtitleContainer}>
-                <Text style={styles.subtitleText}>Challenges</Text>
-              </View>
-              <View style={styles.regularContentContainer}>
-                <Text style={styles.regularContentText}>
-                   {journeyInfo?.challenges.challenge1}
-                </Text>
-                <Text style={styles.regularContentText}>
-                  {journeyInfo?.challenges.challenge2}
-                </Text>
-              </View>
             </View>
-
-            {/* 4th Step - takeaways */}
-            {journeyInfo?.takeaways.takeaway1 && (
-            <View style={styles.individualStep}>
-              <View style={styles.subtitleContainer}>
-                <Text style={styles.subtitleText}>Takeaways</Text>
-              </View>
-              <View style={styles.regularContentContainer}>
-                <Text style={styles.regularContentText}>
-                  {journeyInfo?.takeaways.takeaway1}
-                </Text>
-                <Text style={styles.regularContentText}>
-                  {journeyInfo?.takeaways.takeaway2}
-                </Text>
-                {journeyInfo?.takeaways.takeaway3 && (
-                    <Text style={styles.regularContentText}>
-                        {journeyInfo?.takeaways.takeaway3}
-                    </Text>
-                )}
-              </View>
-            </View>)}
-
-            
-            {/* 5th Step - resources */}
-            {journeyInfo?.resources.resource1 && (
-            <View style={styles.individualStep}>
-              <View style={styles.subtitleContainer}>
-                <Text style={styles.subtitleText}>Resources</Text>
-              </View>
-              <View style={styles.regularContentContainer}>
-                <Text style={styles.regularContentText}>
-                  {journeyInfo?.resources.resource1}
-                </Text>
-                <Text style={styles.regularContentText}>
-                    {journeyInfo?.resources.resource2}
-                </Text>
-                <Text style={styles.regularContentText}>
-                    {journeyInfo?.resources.resource3}
-                </Text>
-              </View>
-            </View>
-            )}
-
-           
-            {/* 6th Step - additional groups*/}
-            {journeyInfo?.additionalGroups.group1 &&
-            (<View style={styles.individualStep}>
-              <View style={styles.subtitleContainer}>
-                <Text style={styles.subtitleText}>Additional Groups</Text>
-              </View>
-              <View style={styles.regularContentContainer}>
-                <Text style={styles.regularContentText}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      Linking.openURL(
-                        "https://www.bu.edu/questrom/diversity-and-inclusion/"
-                      )
-                    }
-                  >
-                    <Text style={styles.linkText}>
-                      {journeyInfo?.additionalGroups.group1}
-                    </Text>
-                  </TouchableOpacity>
-                  <View style={styles.indentedContentContainer}>
-                    <Text style={styles.regularContentText}>
-                      {journeyInfo?.groupInfo.groupInfo1}
-                    </Text>
-                  </View>
-                </Text>
-                <Text style={styles.regularContentText}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      Linking.openURL(
-                        "https://www.bu.edu/newbury-center/about/"
-                      )
-                    }
-                  >
-                    <Text style={styles.linkText}>{journeyInfo.additionalGroups.group2}</Text>
-                  </TouchableOpacity>
-                  <View style={styles.indentedContentContainer}>
-                    <Text style={styles.regularContentText}>
-                      {journeyInfo.groupInfo.groupInfo2}
-                    </Text>
-                  </View>
-                </Text>
-                <Text style={styles.regularContentText}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      Linking.openURL("https://www.bu.edu/thurman/programs/")
-                    }
-                  >
-                    <Text style={styles.linkText}>{journeyInfo.additionalGroups.group3}</Text>
-                  </TouchableOpacity>
-                  <View style={styles.indentedContentContainer}>
-                    <Text style={styles.regularContentText}>
-                      {journeyInfo.groupInfo.groupInfo3}
-                    </Text>
-                  </View>
-                </Text>
-              </View>
-            </View>)}
-
           </View>
         </View>
       </ScrollView>
-      {/* )} */}
+
       <View style={styles.progressBarContainer}>
         <View
           style={
@@ -434,18 +484,7 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
             verticalLine3 ? styles.verticalLine3Active : styles.verticalLine3
           }
         ></View>
-        <View
-          style={
-            verticalLine4 ? styles.verticalLine4Active : styles.verticalLine4
-          }
-        ></View>
-        <View
-          style={
-            verticalLine5 ? styles.verticalLine5Active : styles.verticalLine5
-          }
-        ></View>
       </View>
-      {/* </View>)} */}
     </View>
   );
 }

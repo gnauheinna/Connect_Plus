@@ -126,11 +126,13 @@ export default function App() {
                     name="bailey"
                     component={BaileyScreen}
                     options={{ headerShown: false }}
+                    initialParams={{ user: "2" }}
                   />
                   <Stack.Screen
                     name="nana"
                     component={NanaScreen}
                     options={{ headerShown: false }}
+                    initialParams={{ user: "3" }}
                   />
                   <Stack.Screen
                     name="julia"
@@ -160,6 +162,7 @@ export default function App() {
                     name="shatevaFeatured"
                     component={ShatevaFeaturedScreen}
                     options={{ headerShown: false }}
+                    initialParams={{ user: "8" }}
                   />
                 </Stack.Navigator>
               </NavigationContainer>
