@@ -1,4 +1,4 @@
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet, Image } from "react-native";
 import { useState } from "react";
 
 function MessageButton({ navigation }) {
@@ -22,10 +22,13 @@ function MessageButton({ navigation }) {
       onPress={handlePress}
     >
       <Text style={styles.buttonText}>Message</Text>
+      <Image
+        source={require("../../assets/images/MessageButton.png")}
+        style={styles.icon}
+      />
     </Pressable>
   );
 }
-
 const styles = StyleSheet.create({
   button: {
     backgroundColor: "white",
@@ -36,17 +39,23 @@ const styles = StyleSheet.create({
     width: 148,
     alignItems: "center",
     justifyContent: "center",
+    flexDirection: "row",
   },
   buttonText: {
     color: "#8E71BE",
+    marginRight: 10,
     fontSize: 16,
   },
+  icon: {
+    width: 15,
+    height: 15,
+    resizeMode: "contain",
+  },
   buttonPressed: {
-    opacity: 0.5, // Lower opacity when pressed
+    opacity: 0.5,
   },
   clickedButton: {
-    backgroundColor: "white", // Change color when clicked
+    backgroundColor: "white",
   },
 });
-
 export default MessageButton;
