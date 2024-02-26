@@ -80,10 +80,9 @@ export default function MessageScreen({ navigation }) {
     setCurrentChatName(name);
     setCurrentChatUserID(userID);
     setCurrentChatAvatar(avatar);
-    navigation.navigate("IndividualChat");
   }
   useEffect(() => {
-    console.log("currentChatID:   ", currentChatID);
+    navigation.navigate("IndividualChat", { chatID: currentChatID });
   }, [currentChatID]);
 
   useEffect(() => {

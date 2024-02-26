@@ -34,7 +34,8 @@ type Chats = {
   text: string;
 };
 export default function IndividualChatScreen({ navigation, route }) {
-  const chatID = route.params;
+  console.log("route.params " + route.params.chatID);
+  const chatID = route.params.chatID;
   const db = getFirestore();
   const { user, setUser } = useUser();
   const currentUserID = user.userID;
