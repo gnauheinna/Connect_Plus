@@ -33,6 +33,7 @@ import RachelFeaturedScreen from "./src/screens/MyJourneyPosts/RachelFeatured";
 import ShatevaScreen from "./src/screens/MyJourneyPosts/Shateva";
 import ShatevaFeaturedScreen from "./src/screens/MyJourneyPosts/ShatevaFeatured";
 import JourneyScreen from "./src/screens/MyJourneyPosts/JourneyScreen";
+import FeaturedJourneyScreen from "./src/screens/MyJourneyPosts/FeaturedJourneyScreen";
 
 // Create a Stack navigator
 const Stack = createStackNavigator();
@@ -124,7 +125,7 @@ export default function App() {
                   />
                   <Stack.Screen
                     name="bailey"
-                    component={BaileyScreen}
+                    component={FeaturedJourneyScreen}
                     options={{ headerShown: false }}
                     initialParams={{ user: "2" }}
                   />

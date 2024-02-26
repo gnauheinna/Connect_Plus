@@ -8,6 +8,15 @@ export interface FeaturedJourney {
             date: string;
             photoName: string;
         };
+        header: {
+            message: string;
+        };
+
+        titles: {
+            t1: string;
+            t2: string;
+            t3: string;
+        },
         question: {
             q1: string;
             q2: string;
@@ -33,7 +42,7 @@ export interface FeaturedJourney {
 }
 
 
-export const FeatJourneys: FeaturedJourney = {
+export const featJourneys: FeaturedJourney = {
     // // Bailey
     '2' : {
         author: {
@@ -45,10 +54,19 @@ export const FeatJourneys: FeaturedJourney = {
             photoName: "bailey",
         },
     
+        header: {
+            message: "",
+        }, 
+
+        titles: {
+            t1: "College Experience",
+            t2: "Professional Experience",
+            t3: "Tips and Advice",
+        },
         question: {
             q1: "Q: When did you start to be aware of your first-gen identity?" +
-            "What does that mean to you?",
-            q2: "Q: What were some of the challenges you encountered during" +
+            " What does that mean to you?",
+            q2: "Q: What were some of the challenges you encountered during " +
             "your computer science studies, and how did you overcome them?",
             q3: "Q: Could you share more about your career journey?",
             q4: "Q: Can you share your experience in searching for software engineering internships?",
@@ -61,8 +79,8 @@ export const FeatJourneys: FeaturedJourney = {
         },
         answer: {
             a1: "My first-gen identity for me means independence." + 
-            "In high school I realized that there were a lot of steps I" +
-            "needed to take that other students had laid out in front of them. First-gen identity taught me to actively pursue my" +
+            " In high school I realized that there were a lot of steps I" +
+            "needed to take that other students had laid out in front of them. First-gen identity taught me to actively pursue my " +
             "opportunities though and appreciate the ones I found even more so.",
             a2: " A lot of the curriculum can be extremely difficult but the" +
             "biggest challenge I faced though was the more social aspect of" +
@@ -77,7 +95,7 @@ export const FeatJourneys: FeaturedJourney = {
             "transitioned to my full time role during Covid. One year into" + 
             "my role I realized how unhappy I was due to the limited social" +
             "aspect and the nature of the role. That's when I joined" +
-            "Capital One in Boston. My transition was a little rough." +
+            " Capital One in Boston. \n\n My transition was a little rough." +
             "It was a new department and we were low on staff at the time" +
             "so I had to learn on the fly.  My organization had awesome people I could lean on for" + 
             "support and helped me keep my head above water until I could support myself and the rest of my team.",
@@ -104,8 +122,21 @@ export const FeatJourneys: FeaturedJourney = {
             "those days. You’ll always be remembered and appreciated for bringing" +
            " that light to the people around you, and nothing feels" +
             "better than helping someone else get through a hard day too.",
-            a7: "",
-            a8: "",
+            a7: "Mutual Support and shared resources are both really important" +
+            "things I think Connect+ could provide for first-gen" +
+            "students. A lot of students just don’t know about all the" +
+            " amazing opportunities that Boston holds. Having a place to" +
+           "share information about those opportunities is super useful." +
+            "Even having the ability to do something as simple as “Hey I" +
+            "found a cool AI conference that so-and-so is holding, would" +
+            "anyone want to go together?” can be really useful for a" +
+            "first-gen student who might be nervous about entering the professional world.",
+            a8: "1.Alway prioritize a job where you feel happy with your role "+ 
+            "rather than chasing a higher paycheck. Burnout is so real and happens" +
+            " even faster when you're miserable in your job. \n 2. Don’t feel ashamed of your knowledge gaps. " +
+            "No one is expecting you to know everything and a leader" + 
+            " always appreciates questions and engagement more than zoom silence. \n 3. Never compare your journey to someone else’s." +
+            "You’re living a life, not checking a bunch of boxes on a list. There’s no “right” way to be you.",
         },
     },
     // Nana
@@ -118,6 +149,19 @@ export const FeatJourneys: FeaturedJourney = {
             date: "Dec 4th 2023",
             photoName: "nana",
         },
+        header: {
+            message: "Message for the readers: \nYou started a journey that is so important for your future" +
+            "generations, and know that you aren't the only one and that" +
+            "there is a big community that is experiencing the same thing." +
+            "As much as possible, tap into your community and learn from them.",
+        },
+
+        titles: {
+            t1: "College Experience",
+            t2: "Tips and Advice",
+            t3: "",
+        },
+
         question: {
             q1: "Q: What does first-gen mean to you?",
             q2: "Q: How does your first gen identity make you who you are today?",
@@ -150,6 +194,17 @@ export const FeatJourneys: FeaturedJourney = {
             date: "Nov 2nd 2023",
             photoName: "shateva",
         },
+
+        header: {
+            message: "",
+        },
+
+        titles: {
+            t1: "Internship Experience",
+            t2: "Adulting & Professional Experience",
+            t3: "Tips and Advice",
+        }, 
+
         question: {
             q1: "Q: What are the three words for our students to quickly get to know you?",
             q2: "Q: How do you understand your first-gen identity?",
