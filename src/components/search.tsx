@@ -21,50 +21,52 @@ import { useUser } from "../context/UserContext";
 export default function Search({ navigation }) {
   // the user we're searching
   const { user, setUser } = useUser();
-  const [inputName, setInputName] = useState("");
-  const [searchUser, setSearchUser] = useState<DocumentData | null>(null);
-  const [err, setErr] = useState(false);
-  const [lastMessage, setLastMessage] = useState("");
-  const db = getFirestore();
+  const [inputName, setInputName] = useState(""); // Input field value
+  const [searchUser, setSearchUser] = useState<DocumentData | null>(null); // User data from search
+  const [err, setErr] = useState(false); // Flag for user not found error
+  const [lastMessage, setLastMessage] = useState(""); // Last message in chat
+  const db = getFirestore(); // Firestore instance
 
+  // Navigate to individual chat screen
   const directToChatBox = () => {
-    navigation.navigate("IndividualChat");
+    navigation.navigate("IndividualChat", { ChatID: "chatID" });
   };
+
+  // Handle search button press
   const handleSearch = async () => {
-    console.log("handling search!!");
-    // searches for target user from database
-    const q = query(collection(db, "users"), where("name", "==", inputName));
-    console.log(q);
+    // Handles substring search
+    const nameSubstrings = inputName.toLowerCase().split(" ");
+    // Searches for target user from database
+    const q = query(
+      collection(db, "users"),
+      where("nameSubstrings", "array-contains", nameSubstrings[0])
+    );
     try {
-      console.log("try block");
       const querySnapshot = await getDocs(q);
       if (querySnapshot.empty) {
         // User not found
-        console.log("empty query!!");
         setErr(true);
       } else {
         // Search User exists
-        console.log("quersnapshot: ", querySnapshot);
         querySnapshot.forEach((doc) => {
           setSearchUser(doc.data());
         });
       }
     } catch (err) {
-      // searched user doesn't exist
-      console.log("err == true: ", err);
+      // Searched user doesn't exist
       setErr(true);
     }
   };
 
+  // Load chat data when search user changes
   useEffect(() => {
     LoadChat();
   }, [searchUser]);
 
+  // Load chat data
   const LoadChat = async () => {
-    console.log("Err at handleSelect: ", err);
-    console.log("searchUser: ", searchUser);
-    //check whether the group(chats in firestore) exists, if not create
     if (user != null && searchUser != null) {
+      // Combine user IDs to form chat ID
       const combinedId =
         user.userID > searchUser.userID
           ? user.userID + searchUser.userID
@@ -72,34 +74,24 @@ export default function Search({ navigation }) {
 
       try {
         const res = await getDoc(doc(db, "chats", combinedId));
-        console.log("chat for: ", combinedId);
-        console.log("chat data: ", res.data);
         if (!res.exists()) {
-          // check if the chat exists
-          console.log("chat doesn't exist");
-          //create a chat in chats collection
-          //await setDoc(doc(db, "chats", combinedId), { messages: [] });
-
-          //   //create user chats (for currentuser)
-          //   await updateDoc(doc(db, "userChats", user.userID), {
-          //     [combinedId + ".userInfo"]: {
-          //       userID: searchUser.userID,
-          //       name: searchUser.name,
-          //       //photo: searchUser.photoURL,
-          //     },
-          //     [combinedId + ".date"]: serverTimestamp(),
-          // });
-
-          //create user chats (for targetuser)
-          //   await updateDoc(doc(db, "userChats", searchUser.userID), {
-          //     [combinedId + ".userInfo"]: {
-          //       userID: user.userID,
-          //       name: user.name,
-          //       //photoURL: user.photoURL,
-          //     },
-          //     [combinedId + ".date"]: serverTimestamp(),
-          //  });
+          // Create chat if it doesn't exist
+          await updateDoc(doc(db, "userChats", user.userID), {
+            [combinedId + ".userInfo"]: {
+              userID: searchUser.userID,
+              name: searchUser.name,
+            },
+            [combinedId + ".date"]: serverTimestamp(),
+          });
+          await updateDoc(doc(db, "userChats", searchUser.userID), {
+            [combinedId + ".userInfo"]: {
+              userID: user.userID,
+              name: user.name,
+            },
+            [combinedId + ".date"]: serverTimestamp(),
+          });
         } else {
+          // Load last message if chat exists
           const chatData = res.data();
           setLastMessage(chatData.messages[chatData.messages.length - 1]);
         }
