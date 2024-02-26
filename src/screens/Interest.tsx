@@ -59,30 +59,17 @@ export default function InterestScreen({ navigation }) {
     navigation.navigate("Tabs");
   }
 
-  useEffect(() => {
-    console.log("Financial: ", FIsChecked);
-  }, [FIsChecked]);
-
   function CareerChosen() {
     setCIsChecked(!CIsChecked);
   }
-  useEffect(() => {
-    console.log("Career: ", CIsChecked);
-  }, [CIsChecked]);
 
   function StuLifeChosen() {
     setSIsChecked(!SIsChecked);
   }
-  useEffect(() => {
-    console.log("Student Life: ", SIsChecked);
-  }, [SIsChecked]);
 
   function AcademicChosen() {
     setAIsChecked(!AIsChecked);
   }
-  useEffect(() => {
-    console.log("Academic: ", AIsChecked);
-  }, [AIsChecked]);
 
   function FinancialChosen() {
     setFIsChecked(!FIsChecked);

@@ -34,7 +34,6 @@ import { Image } from "react-native";
 import { useUser } from "../context/UserContext";
 
 export default function SignUpScreen({ navigation }) {
-  console.log("HI in SignUP");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -76,12 +75,8 @@ export default function SignUpScreen({ navigation }) {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log("User:", user);
-          console.log("User ID:", user.uid);
           setUserID(user.uid);
           setUser(newUser);
-          //console.log("userID state after set:", userID);
-          console.log("signed up!");
           setSignupError(null);
           resolve();
         })
@@ -94,9 +89,6 @@ export default function SignUpScreen({ navigation }) {
         });
     });
   }
-  useEffect(() => {
-    console.log("userID state after set:", userID);
-  }, [userID]);
   // saves user data to firestore
   const handleNewUserEmail = async () => {
     // get a instance of Firebase db

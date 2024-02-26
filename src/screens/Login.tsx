@@ -47,7 +47,6 @@ export default function LoginScreen({ navigation }) {
   useEffect(() => {
     const checkStoredUser = async () => {
       const storedUserID = await AsyncStorage.getItem("userUID");
-      console.log("Stored User ID: ", storedUserID);
       if (storedUserID) {
         setUserID(storedUserID);
         setIsLoggedIn(true);
@@ -106,7 +105,6 @@ export default function LoginScreen({ navigation }) {
           financial: boolean;
           studentLife: boolean;
         };
-        console.log("Index UserDATA: ", userData);
         setUser(userData);
       } else {
         console.error("User is not logged in");
@@ -128,7 +126,6 @@ export default function LoginScreen({ navigation }) {
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
-        console.log("logged In!");
         setLoginError(null);
         setUserID(user.uid);
         setIsLoggedIn(true);

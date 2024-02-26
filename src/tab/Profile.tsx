@@ -51,7 +51,6 @@ export default function ProfileScreen({ navigation }) {
     setCareer(user.career);
     setFinancial(user.financial);
     setStudentLife(user.studentLife);
-    console.log("user.avatar =");
     setAvatar(user.avatar);
   }, [user]);
 
@@ -85,8 +84,7 @@ export default function ProfileScreen({ navigation }) {
     const loadPosts = async () => {
       setAllPosts(posts);
     };
-    console.log("here are the posts");
-    console.log(posts);
+
     // Call the fetchData function when the component mounts
     loadPosts();
   }, [posts]);

@@ -54,12 +54,9 @@ export default function NeriScreen({ navigation }) {
     );
     if (isSaved && isSchoolProgramExists) {
       // unsave the journey
-      console.log("unsave!");
       unsaveJourney();
     } else if (!isSaved && !isSchoolProgramExists) {
       // saves journey
-      console.log("save!");
-
       saveJourney();
     }
   };
@@ -76,7 +73,7 @@ export default function NeriScreen({ navigation }) {
     await setSavedJourneys(updatedSavedJourneys);
     // updates firestore
     // 1. get reference of Firestore document
-    console.log("unsaving Journey userid: ", currentUserID);
+
     const savedjourneyDocRef = doc(db, "savedJourneys", currentUserID);
     // 2. get instance of document
     const savedjourneySnapshot = await getDoc(savedjourneyDocRef);
@@ -98,7 +95,7 @@ export default function NeriScreen({ navigation }) {
     await savedJourneys.push(newJourney);
     // updates firestore
     // 1. get reference of Firestore document
-    console.log("saving Journey  userid: ", currentUserID);
+
     const savedjourneyDocRef = doc(db, "savedJourneys", currentUserID);
     // 2. get instance of document
     const savedjourneySnapshot = await getDoc(savedjourneyDocRef);

@@ -40,8 +40,6 @@ export type UserContextType = {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  console.log("in UserProvider");
-
   const auth = getAuth();
 
   const db = getFirestore();
@@ -63,7 +61,6 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (Currentuser) => {
       if (Currentuser) {
         const userID = Currentuser.uid;
-        console.log("Fetch user!");
         const usersCollection = collection(db, "users");
         const userInfo = await getDoc(doc(db, "users", userID));
         const userData = userInfo.data() as {
@@ -80,8 +77,6 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         };
 
         setUser(userData);
-        console.log(userData);
-        console.log(user);
       } else {
         //console.error("User is not signed in");
         setUser({

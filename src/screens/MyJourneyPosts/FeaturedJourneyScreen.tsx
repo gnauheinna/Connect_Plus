@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { Image } from "expo-image";
-import { Journey, journeys } from './MyJourneyData';
-
+import { Journey, journeys } from "./MyJourneyData";
 
 import {
   StyleSheet,
@@ -26,11 +25,11 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
   const db = getFirestore();
   const authId = route.params.user;
 
-// for the background & profile image
-  let backImg;  
-  let profileImg
+  // for the background & profile image
+  let backImg;
+  let profileImg;
 
-// this gives the entire object
+  // this gives the entire object
   const journeyInfo = journeys[authId];
 
   const { savedJourneys, setSavedJourneys, setLoading, loading } =
@@ -41,8 +40,7 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
     const isJourneySaved = savedJourneys.some(
       (journey) =>
         journey.authorName === journeyInfo?.author.authorName &&
-        journey.journeyTitle ===
-          journeyInfo?.author.journeyTitle
+        journey.journeyTitle === journeyInfo?.author.journeyTitle
     );
     if (isJourneySaved) {
       // Neri's journey is saved
@@ -58,16 +56,14 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
     await setIsSaved(!isSaved);
     // Check if there exists an entry with journeyTitle "School Program"
     const isSchoolProgramExists = savedJourneys.some(
-      (journey) =>
-        journey.journeyTitle === journeyInfo?.author.journeyTitle
+      (journey) => journey.journeyTitle === journeyInfo?.author.journeyTitle
     );
     if (isSaved && isSchoolProgramExists) {
       // unsave the journey
-      console.log("unsave!");
+
       unsaveJourney();
     } else if (!isSaved && !isSchoolProgramExists) {
       // saves journey
-      console.log("save!");
 
       saveJourney();
     }
@@ -77,15 +73,14 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
     const updatedSavedJourneys = savedJourneys.filter(
       (journey) =>
         journey.authorName !== journeyInfo?.author.authorName &&
-        journey.journeyTitle !==
-        journeyInfo?.author.journeyTitle
+        journey.journeyTitle !== journeyInfo?.author.journeyTitle
     );
 
     // updates context
     await setSavedJourneys(updatedSavedJourneys);
     // updates firestore
     // 1. get reference of Firestore document
-    console.log("unsaving Journey userid: ", currentUserID);
+
     const savedjourneyDocRef = doc(db, "savedJourneys", currentUserID);
     // 2. get instance of document
     const savedjourneySnapshot = await getDoc(savedjourneyDocRef);
@@ -98,16 +93,16 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
   const saveJourney = async () => {
     // If it doesn't exist, add a new entry
     const newJourney = {
-      journeyTitle:  journeyInfo?.author.journeyTitle,
-      authorName:  journeyInfo?.author.authorName,
-      journeyID:  journeyInfo?.author.journeyID,
-      Intro:  journeyInfo?.author.intro,
+      journeyTitle: journeyInfo?.author.journeyTitle,
+      authorName: journeyInfo?.author.authorName,
+      journeyID: journeyInfo?.author.journeyID,
+      Intro: journeyInfo?.author.intro,
     };
     // Add the new entry to the savedJourneys array
     await savedJourneys.push(newJourney);
     // updates firestore
     // 1. get reference of Firestore document
-    console.log("saving Journey  userid: ", currentUserID);
+
     const savedjourneyDocRef = doc(db, "savedJourneys", currentUserID);
     // 2. get instance of document
     const savedjourneySnapshot = await getDoc(savedjourneyDocRef);
@@ -171,21 +166,21 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
 
   switch (journeyInfo?.author.photoName) {
     case "neri":
-        backImg = require(`../../../assets/images/journeyPostsGradients/neri.png`);
-        profileImg = require(`../../../assets/images/mentorProfilePics/neri.png`);
-        break;
+      backImg = require(`../../../assets/images/journeyPostsGradients/neri.png`);
+      profileImg = require(`../../../assets/images/mentorProfilePics/neri.png`);
+      break;
     case "rachel":
-        backImg = require(`../../../assets/images/journeyPostsGradients/rachel.png`);
-        profileImg = require(`../../../assets/images/mentorProfilePics/rachel.png`);
-        break;
+      backImg = require(`../../../assets/images/journeyPostsGradients/rachel.png`);
+      profileImg = require(`../../../assets/images/mentorProfilePics/rachel.png`);
+      break;
     case "shateva":
-        backImg = require(`../../../assets/images/journeyPostsGradients/shatevaFeatured.png`);
-        profileImg = require(`../../../assets/images/mentorProfilePics/shateva.png`);
-        break;
+      backImg = require(`../../../assets/images/journeyPostsGradients/shatevaFeatured.png`);
+      profileImg = require(`../../../assets/images/mentorProfilePics/shateva.png`);
+      break;
     case "julia":
-        backImg = require(`../../../assets/images/journeyPostsGradients/julia.png`);
-        profileImg = require(`../../../assets/images/mentorProfilePics/julia.png`); 
-  } 
+      backImg = require(`../../../assets/images/journeyPostsGradients/julia.png`);
+      profileImg = require(`../../../assets/images/mentorProfilePics/julia.png`);
+  }
   return (
     <View style={styles.outterContainer}>
       <View style={styles.container}>
@@ -222,7 +217,7 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
             <View style={styles.postTitleContainer}>
               <View style={styles.timeAndSaveContainer}>
                 {/* Timestamp */}
-                <Text style={styles.postDate}>{ journeyInfo?.author.date}</Text>
+                <Text style={styles.postDate}>{journeyInfo?.author.date}</Text>
                 {/* Save Button */}
                 <TouchableOpacity onPress={() => handleClick()}>
                   <Image
@@ -237,21 +232,18 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
               </View>
               {/* Title */}
               <Text style={styles.postTitle}>
-                { journeyInfo?.author.journeyTitle}
+                {journeyInfo?.author.journeyTitle}
               </Text>
             </View>
           </View>
           {/* Author's information */}
           <View style={styles.authorInfoContainer}>
-            <Image
-              style={styles.profileImg}
-              source={profileImg}
-            />
+            <Image style={styles.profileImg} source={profileImg} />
             <View style={styles.userNameAndIntro}>
-              <Text style={styles.userName}>{ journeyInfo?.author.authorName}</Text>
-              <Text style={styles.userIntro}>
-                {journeyInfo?.author.intro}
+              <Text style={styles.userName}>
+                {journeyInfo?.author.authorName}
               </Text>
+              <Text style={styles.userIntro}>{journeyInfo?.author.intro}</Text>
             </View>
           </View>
         </View>
@@ -263,7 +255,7 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
             <View style={styles.individualStep}>
               <View style={styles.regularContentContainer}>
                 <Text style={styles.regularContentText}>
-                  { journeyInfo?.header.heading}
+                  {journeyInfo?.header.heading}
                 </Text>
               </View>
             </View>
@@ -277,7 +269,7 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
                   {journeyInfo?.process.step1}
                 </Text>
                 <Text style={styles.regularContentText}>
-                {journeyInfo?.process.step2}
+                  {journeyInfo?.process.step2}
                 </Text>
                 <Text style={styles.regularContentText}>
                   {journeyInfo?.process.step3}
@@ -286,7 +278,7 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
             </View>
             {/*    EXPERIENCE */}
             {journeyInfo?.experience.experience1 && (
-                <View style={styles.individualStep}>
+              <View style={styles.individualStep}>
                 <View style={styles.subtitleContainer}>
                   <Text style={styles.subtitleText}>Experience</Text>
                 </View>
@@ -296,7 +288,6 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
                   </Text>
                 </View>
               </View>
-
             )}
             {/* 3rd Step - challenges */}
             <View style={styles.individualStep}>
@@ -305,7 +296,7 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
               </View>
               <View style={styles.regularContentContainer}>
                 <Text style={styles.regularContentText}>
-                   {journeyInfo?.challenges.challenge1}
+                  {journeyInfo?.challenges.challenge1}
                 </Text>
                 <Text style={styles.regularContentText}>
                   {journeyInfo?.challenges.challenge2}
@@ -315,105 +306,108 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
 
             {/* 4th Step - takeaways */}
             {journeyInfo?.takeaways.takeaway1 && (
-            <View style={styles.individualStep}>
-              <View style={styles.subtitleContainer}>
-                <Text style={styles.subtitleText}>Takeaways</Text>
-              </View>
-              <View style={styles.regularContentContainer}>
-                <Text style={styles.regularContentText}>
-                  {journeyInfo?.takeaways.takeaway1}
-                </Text>
-                <Text style={styles.regularContentText}>
-                  {journeyInfo?.takeaways.takeaway2}
-                </Text>
-                {journeyInfo?.takeaways.takeaway3 && (
+              <View style={styles.individualStep}>
+                <View style={styles.subtitleContainer}>
+                  <Text style={styles.subtitleText}>Takeaways</Text>
+                </View>
+                <View style={styles.regularContentContainer}>
+                  <Text style={styles.regularContentText}>
+                    {journeyInfo?.takeaways.takeaway1}
+                  </Text>
+                  <Text style={styles.regularContentText}>
+                    {journeyInfo?.takeaways.takeaway2}
+                  </Text>
+                  {journeyInfo?.takeaways.takeaway3 && (
                     <Text style={styles.regularContentText}>
-                        {journeyInfo?.takeaways.takeaway3}
+                      {journeyInfo?.takeaways.takeaway3}
                     </Text>
-                )}
+                  )}
+                </View>
               </View>
-            </View>)}
-
-            
-            {/* 5th Step - resources */}
-            {journeyInfo?.resources.resource1 && (
-            <View style={styles.individualStep}>
-              <View style={styles.subtitleContainer}>
-                <Text style={styles.subtitleText}>Resources</Text>
-              </View>
-              <View style={styles.regularContentContainer}>
-                <Text style={styles.regularContentText}>
-                  {journeyInfo?.resources.resource1}
-                </Text>
-                <Text style={styles.regularContentText}>
-                    {journeyInfo?.resources.resource2}
-                </Text>
-                <Text style={styles.regularContentText}>
-                    {journeyInfo?.resources.resource3}
-                </Text>
-              </View>
-            </View>
             )}
 
-           
-            {/* 6th Step - additional groups*/}
-            {journeyInfo?.additionalGroups.group1 &&
-            (<View style={styles.individualStep}>
-              <View style={styles.subtitleContainer}>
-                <Text style={styles.subtitleText}>Additional Groups</Text>
+            {/* 5th Step - resources */}
+            {journeyInfo?.resources.resource1 && (
+              <View style={styles.individualStep}>
+                <View style={styles.subtitleContainer}>
+                  <Text style={styles.subtitleText}>Resources</Text>
+                </View>
+                <View style={styles.regularContentContainer}>
+                  <Text style={styles.regularContentText}>
+                    {journeyInfo?.resources.resource1}
+                  </Text>
+                  <Text style={styles.regularContentText}>
+                    {journeyInfo?.resources.resource2}
+                  </Text>
+                  <Text style={styles.regularContentText}>
+                    {journeyInfo?.resources.resource3}
+                  </Text>
+                </View>
               </View>
-              <View style={styles.regularContentContainer}>
-                <Text style={styles.regularContentText}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      Linking.openURL(
-                        "https://www.bu.edu/questrom/diversity-and-inclusion/"
-                      )
-                    }
-                  >
-                    <Text style={styles.linkText}>
-                      {journeyInfo?.additionalGroups.group1}
-                    </Text>
-                  </TouchableOpacity>
-                  <View style={styles.indentedContentContainer}>
-                    <Text style={styles.regularContentText}>
-                      {journeyInfo?.groupInfo.groupInfo1}
-                    </Text>
-                  </View>
-                </Text>
-                <Text style={styles.regularContentText}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      Linking.openURL(
-                        "https://www.bu.edu/newbury-center/about/"
-                      )
-                    }
-                  >
-                    <Text style={styles.linkText}>{journeyInfo.additionalGroups.group2}</Text>
-                  </TouchableOpacity>
-                  <View style={styles.indentedContentContainer}>
-                    <Text style={styles.regularContentText}>
-                      {journeyInfo.groupInfo.groupInfo2}
-                    </Text>
-                  </View>
-                </Text>
-                <Text style={styles.regularContentText}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      Linking.openURL("https://www.bu.edu/thurman/programs/")
-                    }
-                  >
-                    <Text style={styles.linkText}>{journeyInfo.additionalGroups.group3}</Text>
-                  </TouchableOpacity>
-                  <View style={styles.indentedContentContainer}>
-                    <Text style={styles.regularContentText}>
-                      {journeyInfo.groupInfo.groupInfo3}
-                    </Text>
-                  </View>
-                </Text>
-              </View>
-            </View>)}
+            )}
 
+            {/* 6th Step - additional groups*/}
+            {journeyInfo?.additionalGroups.group1 && (
+              <View style={styles.individualStep}>
+                <View style={styles.subtitleContainer}>
+                  <Text style={styles.subtitleText}>Additional Groups</Text>
+                </View>
+                <View style={styles.regularContentContainer}>
+                  <Text style={styles.regularContentText}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        Linking.openURL(
+                          "https://www.bu.edu/questrom/diversity-and-inclusion/"
+                        )
+                      }
+                    >
+                      <Text style={styles.linkText}>
+                        {journeyInfo?.additionalGroups.group1}
+                      </Text>
+                    </TouchableOpacity>
+                    <View style={styles.indentedContentContainer}>
+                      <Text style={styles.regularContentText}>
+                        {journeyInfo?.groupInfo.groupInfo1}
+                      </Text>
+                    </View>
+                  </Text>
+                  <Text style={styles.regularContentText}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        Linking.openURL(
+                          "https://www.bu.edu/newbury-center/about/"
+                        )
+                      }
+                    >
+                      <Text style={styles.linkText}>
+                        {journeyInfo.additionalGroups.group2}
+                      </Text>
+                    </TouchableOpacity>
+                    <View style={styles.indentedContentContainer}>
+                      <Text style={styles.regularContentText}>
+                        {journeyInfo.groupInfo.groupInfo2}
+                      </Text>
+                    </View>
+                  </Text>
+                  <Text style={styles.regularContentText}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        Linking.openURL("https://www.bu.edu/thurman/programs/")
+                      }
+                    >
+                      <Text style={styles.linkText}>
+                        {journeyInfo.additionalGroups.group3}
+                      </Text>
+                    </TouchableOpacity>
+                    <View style={styles.indentedContentContainer}>
+                      <Text style={styles.regularContentText}>
+                        {journeyInfo.groupInfo.groupInfo3}
+                      </Text>
+                    </View>
+                  </Text>
+                </View>
+              </View>
+            )}
           </View>
         </View>
       </ScrollView>

@@ -55,7 +55,7 @@ export default function BaileyScreen({ navigation }) {
     await setSavedJourneys(updatedSavedJourneys);
     // updates firestore
     // 1. get reference of Firestore document
-    console.log("unsaving Journey userid: ", currentUserID);
+
     const savedjourneyDocRef = doc(db, "savedJourneys", currentUserID);
     // 2. get instance of document
     const savedjourneySnapshot = await getDoc(savedjourneyDocRef);
@@ -77,7 +77,7 @@ export default function BaileyScreen({ navigation }) {
     await savedJourneys.push(newJourney);
     // updates firestore
     // 1. get reference of Firestore document
-    console.log("saving Journey  userid: ", currentUserID);
+
     const savedjourneyDocRef = doc(db, "savedJourneys", currentUserID);
     // 2. get instance of document
     const savedjourneySnapshot = await getDoc(savedjourneyDocRef);
@@ -98,11 +98,10 @@ export default function BaileyScreen({ navigation }) {
     );
     if (isSaved && isPostExists) {
       // unsave the journey
-      console.log("unsave!");
+
       unsaveJourney();
     } else if (!isSaved && !isPostExists) {
       // saves journey
-      console.log("save!");
 
       saveJourney();
     }

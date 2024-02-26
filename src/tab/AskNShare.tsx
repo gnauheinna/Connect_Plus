@@ -71,8 +71,6 @@ export default function AskNShareScreen({ navigation }) {
         setAllPosts(posts);
       }
     };
-    console.log("here are the posts");
-    console.log(posts);
     // Call the fetchData function when the component mounts
     processPosts();
   }, [posts]);

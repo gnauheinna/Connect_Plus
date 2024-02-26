@@ -94,12 +94,8 @@ export default function IndividualChatScreen({ navigation, route }) {
   // fetches the correct chat
   useEffect(() => {
     const fetchUserChat = async () => {
-      console.log("curchatUserID: ", currentChatUserID);
-      console.log("userID: ", user.userID);
-      console.log("curchatID: ", currentChatID);
       const userChatDocRef = doc(db, "chats", currentChatID);
       const userChatDocSnapshot = await getDoc(userChatDocRef);
-      console.log("snapshot data: ", userChatDocSnapshot.data());
       const chatArray: Chats[] = [];
       const userChatData = userChatDocSnapshot.data();
       if (userChatData) {
@@ -108,8 +104,6 @@ export default function IndividualChatScreen({ navigation, route }) {
     };
 
     if (currentChatID && user.name != "") {
-      console.log("currentChatID exist: ", currentChatID);
-      console.log("currentuser exist: ", user);
       const userChatDocRef = doc(db, "chats", currentChatID);
       const unsubscribe = onSnapshot(userChatDocRef, (doc) => {
         if (doc.exists()) {
@@ -134,8 +128,6 @@ export default function IndividualChatScreen({ navigation, route }) {
         date: Timestamp.now(),
       }),
     });
-    console.log("current senderID: ", user.userID);
-    console.log("current receiverID: ", currentChatUserID);
 
     await updateDoc(doc(db, "userChats", user.userID), {
       [currentChatID + ".lastMessage"]: inputText.toString(),

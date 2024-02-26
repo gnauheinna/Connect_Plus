@@ -70,7 +70,6 @@ export default function PostDetailsScreen({ navigation }) {
         date: Timestamp.now(),
       }),
     });
-    console.log("current senderID: ", user.userID);
   };
 
   useEffect(() => {
@@ -79,7 +78,6 @@ export default function PostDetailsScreen({ navigation }) {
       if (curPostID != "") {
         const storedPostID = await AsyncStorage.getItem("curPostID");
         if (storedPostID !== null) {
-          console.log("this is storedChatID: ", storedPostID);
           setCurPostID(storedPostID);
         }
       } else {
@@ -94,8 +92,6 @@ export default function PostDetailsScreen({ navigation }) {
     const loadPosts = async () => {
       setAllPosts(posts);
     };
-    console.log("here are the posts");
-    console.log(posts);
     // Call the fetchData function when the component mounts
     loadPosts();
   }, [posts, curPostID]);
@@ -109,7 +105,6 @@ export default function PostDetailsScreen({ navigation }) {
         const unsubscribe = onSnapshot(commentRef, (docSnapshot) => {
           if (docSnapshot.exists()) {
             const commentData = docSnapshot.data();
-            console.log("comment snapshot array: ", commentData?.commentArr);
             if (commentData && commentData.commentArr) {
               setCommentArr(commentData.commentArr);
             } else {
@@ -129,13 +124,9 @@ export default function PostDetailsScreen({ navigation }) {
 
     fetchComments();
   }, [curPostID]); // Add curPostID as a dependency
-  useEffect(() => {
-    console.log("comment array: ", commentarr);
-  }, [commentarr]);
 
   useEffect(() => {
     const filteredPosts = allPosts.find((post) => post.postID == curPostID);
-    console.log(curPostID);
   }, [allPosts]);
 
   return (

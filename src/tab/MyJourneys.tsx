@@ -20,15 +20,12 @@ export default function MyJourneyScreen({ navigation }) {
   function directToSeeAllJourneys() {
     navigation.navigate("SeeAllJourneys");
   }
-  useEffect(() => {
-    console.log("this is saved Journeys'", savedJourneys);
-  }, [savedJourneys]);
 
   useEffect(() => {
     const loadSavedJourneys = async () => {
       try {
         // get reference of Firestore document
-        console.log("savedJourney Context userid: ", currentUserID);
+
         const savedjourneyDocRef = doc(db, "savedJourneys", currentUserID);
         // get instance of document
         const savedjourneySnapshot = await getDoc(savedjourneyDocRef);
@@ -37,8 +34,7 @@ export default function MyJourneyScreen({ navigation }) {
           // get savedJourney data
           const SJData = savedjourneySnapshot.data();
           if (SJData) {
-            // updated SavedJourneys with array
-            console.log("Journey SJDATA", SJData.savedjourneys);
+            // updated SavedJourneys with arra
             setSavedJourneys(SJData.savedjourneys);
             setLoading(false);
           }

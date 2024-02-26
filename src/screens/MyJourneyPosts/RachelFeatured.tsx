@@ -53,7 +53,7 @@ export default function RachelFeaturedScreen({ navigation }) {
     await setSavedJourneys(updatedSavedJourneys);
     // updates firestore
     // 1. get reference of Firestore document
-    console.log("unsaving Journey userid: ", currentUserID);
+
     const savedjourneyDocRef = doc(db, "savedJourneys", currentUserID);
     // 2. get instance of document
     const savedjourneySnapshot = await getDoc(savedjourneyDocRef);
@@ -76,7 +76,7 @@ export default function RachelFeaturedScreen({ navigation }) {
     await savedJourneys.push(newJourney);
     // updates firestore
     // 1. get reference of Firestore document
-    console.log("saving Journey  userid: ", currentUserID);
+
     const savedjourneyDocRef = doc(db, "savedJourneys", currentUserID);
     // 2. get instance of document
     const savedjourneySnapshot = await getDoc(savedjourneyDocRef);
@@ -85,11 +85,6 @@ export default function RachelFeaturedScreen({ navigation }) {
       savedjourneys: savedJourneys,
     });
   };
-
-  useEffect(() => {
-    console.log("changed: ", savedJourneys);
-  }, [savedJourneys]);
-
   // saves and unsaves the journey
   const handleClick = async () => {
     await setIsSaved(!isSaved);
@@ -101,11 +96,10 @@ export default function RachelFeaturedScreen({ navigation }) {
     );
     if (isSaved && isSchoolProgramExists) {
       // unsave the journey
-      console.log("unsave!");
+
       unsaveJourney();
     } else if (!isSaved && !isSchoolProgramExists) {
       // saves journey
-      console.log("save!");
 
       saveJourney();
     }
