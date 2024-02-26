@@ -143,6 +143,20 @@ export default function LoginScreen({ navigation }) {
       });
   }
 
+  // checks if the user is already logged in and skips the login page
+  useEffect(() => {
+    const autoLogin = async () => {
+      const storedToken = await AsyncStorage.getItem("userUID");
+      console.log("Stored Token: ", storedToken);
+      if (storedToken) {
+        setIsLoggedIn(true);  
+        nextpage();
+      }
+    };
+
+    autoLogin();
+  }, []);
+
   function GoogleLogin() {
     signInWithPopup(auth, provider)
       .then((result) => {
