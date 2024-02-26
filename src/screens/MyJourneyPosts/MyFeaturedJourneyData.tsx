@@ -145,7 +145,7 @@ export const featJourneys: FeaturedJourney = {
             journeyTitle: "Voice of a First-Gen Graduate, Entrepreneur, Faculty",
             authorName: "Nana Younge",
             journeyID: "XlT9K5adSYcud8VOybpKjQL0wHrR5og4",
-            intro: "Founder of Get Girls Going Program Director at Innovate@BU",
+            intro: "Founder of Get Girls Going Program Director\n  at Innovate@BU",
             date: "Dec 4th 2023",
             photoName: "nana",
         },
@@ -158,8 +158,8 @@ export const featJourneys: FeaturedJourney = {
 
         titles: {
             t1: "College Experience",
-            t2: "",
-            t3: "Tips and Advice",
+            t2: "Tips and Advice",
+            t3: null,
         },
 
         question: {
@@ -222,11 +222,11 @@ export const featJourneys: FeaturedJourney = {
             q1: "Q: What are the three words for our students to quickly get to know you?",
             q2: "Q: How do you understand your first-gen identity?",
             q3: "Q: Could you share with us your journey to obtaining an internship at Microsoft?",
-            q4: "Q: What are your top 3 pieces of advice for our students?",
-            q5: "Q: What do you think recruiters at these big companies are looking for in a candidate?",
-            q6: "Q: Now as a young professional, what are some responsibilities or challenges you face that never crossed your mind as a student?",
-            q7: "Q: For students who are just beginning their college journey, what is one piece of advice would you offer to them?",
-            q8: "Q: What are your top 3 pieces of advice for navigating the professional world, adulting challenges, or life after college?",
+            q4: "Q: What do you think recruiters at these big companies are looking for in a candidate?",
+            q5: "Q: Now as a young professional, what are some responsibilities or challenges you face that never crossed your mind as a student?",
+            q6: "Q: For students who are just beginning their college journey, what is one piece of advice would you offer to them?",
+            q7: "Q: What are your top 3 pieces of advice for navigating the professional world, adulting challenges, or life after college?",
+            q8: "",
         },
         answer: {
             a1: "Twenty-two, New-york-city, dynamic",
@@ -239,11 +239,40 @@ export const featJourneys: FeaturedJourney = {
             "bit behind in the material. Catching up is challenging but by" +
             "the end of the lecture, you were able to grasp the concepts" +
             "and learn just as much as everyone else.",
-            a3: "I think what helped me the most was not focusing on getting an internship. Instead,",
-            a4: "",
-            a5: "",
-            a6: "",
-            a7: "",
+            a3: "I think what helped me the most was not focusing on getting an internship. Instead," +
+            " I focused on taking on opportunities I was passionate about and spend my time bettering myself." +
+            "I started various personal projects, took on leadership roles," +
+            " and worked as a project manager on campus. These were all" +
+            "experiences I cared deeply about and they also prepared me for a role in product management." +
+            "If you put genuine time and effort into your learning, it will shine through." +
+            "As for the internship application process, the hardest part is getting through the first screening process. " +
+            " The only way to really do this for an internship is by having a good resume. Yes, how your resume is written is important." +
+            "Using strong action verbs, role specific terminology, and having a clean layout are all valuable components. But the " +
+            "most important thing is your experience and what it says about you.",
+            a4: "I think they look for different qualities at different stages." +
+            "Initially, they probably are just looking for people who can "+
+            "do the job. Things are slightly different with internships "+
+            "because employers are aware of the limited opportunities to" +
+            "gain relevant experience. This means they are at least looking for any indicator of potential to" +
+            "successfully take on the role. For the next stages, it seems like they start evaluating your thinking and problem solving patterns." +
+            "This is done through the more technical interviews which look different depending on the role. Lastly, I thinkthey look for personality." +
+            "They want to see how you communicate with others and for a lack of better words, evaluate your “energy”. They want to see "+
+            "whether you’re trustworthy, likable, and would make a good fit at the company.",
+            a5: "There are just so many more responsibilities to manage. Just " +
+            "to list a few — bills on bills, purchasing and upkeep of " +
+            "furniture/appliances, somehow fitting in dentist/doctors " +
+            "visits, making time to cook and grocery shopping, setting time " +
+            "aside for socializing and just time for myself, and then you " +
+            "have to do all of that on top of working for the majority of the day time. It’s a lot. For the first few months, it felt like my world was spinning." +
+            " But once you plan everything on your calendar, you eventually get into a routine (and you set up auto payments) " +
+            "and it gets easier.", 
+            a6: "The mistakes you make freshman year do not define your next three years. " +
+            "If anything, if you acknowledge these mistakes and put in effort to change, they’ll make you an even better student.",
+            a7: "Have people you can talk to. My family, friends, and my mentors have been my rocks to keep me grounded. " +
+            "Also, be honest about how you feel and face these feelings head on. " +
+            "If you’re feeling overwhelmed, you need to sit down and think about what small changes you can implement now to make things better." +
+            " And if you don’t know what to do, you have those rocks or people in your life. And if you don’t have people in your life or" +
+            " if they aren’t helpful, you have Google and Reddit. There is not shame in asking the internet for advice.",
             a8: "",
         },
     },

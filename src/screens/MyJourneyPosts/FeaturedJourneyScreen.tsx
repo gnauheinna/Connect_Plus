@@ -255,11 +255,19 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
 
         <View style={styles.postContentContainer}>
           <View style={styles.postContentMainContainer}>
+          {journeyInfo?.author.photoName === "nana" && (
+          <View style={styles.individualStep}>
+              <View style={styles.regularContentContainer}>
+                <Text style={styles.regularContentText}>
+                  { journeyInfo?.header.message}
+                </Text>
+              </View>
+            </View> )}
             {/* 1st Step */}
             <View style={styles.individualStep}>
               <View style={styles.subtitleContainer}>
                 {/* STOPPPED HERE */}
-                <Text style={styles.subtitleText}>Career Experience</Text>
+                <Text style={styles.subtitleText}>{journeyInfo.titles.t1}</Text>
               </View>
               <View style={styles.regularContentContainer}>
                 <Text style={styles.regularContentTextBolded}>
@@ -282,7 +290,7 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
             {/* 2nd Step */}
             <View style={styles.individualStep}>
               <View style={styles.subtitleContainer}>
-                <Text style={styles.subtitleText}>Professional Experience</Text>
+                <Text style={styles.subtitleText}>{journeyInfo.titles.t2}</Text>
               </View>
               <View style={styles.regularContentContainer}>
                 <Text style={styles.regularContentTextBolded}>
@@ -314,7 +322,7 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
               {/* 3rd Step */}
               <View style={styles.individualStep}>
                 <View style={styles.subtitleContainer}>
-                  <Text style={styles.subtitleText}>Tips and Advice</Text>
+                  <Text style={styles.subtitleText}>{journeyInfo.titles.t3}</Text>
                 </View>
                 <View style={styles.regularContentContainer}>
                   <Text style={styles.regularContentTextBolded}>

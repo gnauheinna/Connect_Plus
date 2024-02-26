@@ -131,7 +131,7 @@ export default function App() {
                   />
                   <Stack.Screen
                     name="nana"
-                    component={NanaScreen}
+                    component={FeaturedJourneyScreen}
                     options={{ headerShown: false }}
                     initialParams={{ user: "3" }}
                   />
@@ -161,7 +161,7 @@ export default function App() {
                   />
                   <Stack.Screen
                     name="shatevaFeatured"
-                    component={ShatevaFeaturedScreen}
+                    component={FeaturedJourneyScreen}
                     options={{ headerShown: false }}
                     initialParams={{ user: "8" }}
                   />
