@@ -158,8 +158,8 @@ export const featJourneys: FeaturedJourney = {
 
         titles: {
             t1: "College Experience",
-            t2: "Tips and Advice",
-            t3: "",
+            t2: "",
+            t3: "Tips and Advice",
         },
 
         question: {
@@ -173,10 +173,23 @@ export const featJourneys: FeaturedJourney = {
             q8: "",
         },
         answer: {
-            a1: "",
-            a2: "",
-            a3: "",
-            a4: "",
+            a1: " I first realized my first-gen identity when my high school" +
+            " teacher encouraged me to apply to Bottom Line and Upper Bound. \n " +
+            "Being first-gen is powerful. It means you’re changing the future of your family and generations." +
+            "\n Being first-generation makes me sad. When I was in college, I noticed my counterparts could call " +
+            "their families whenever they had problems related to college. My family couldn't help me  " +
+            "in that space because I was the first to experience it. \n " +
+            "Being first-gen is full of responsibilities. I had a lot of stress when trying to balance school, work, and " +
+            "life. I believe that if I had those resources that other " +
+            "students had, it would have been a smoother experience.", 
+            a2: "Being first gen gives me a global perspective, a different point of view on the world and people." + 
+            "First-generation experience also gave me an open mind and a hopeful mindset. As a first gen, I would always tell myself to" +
+            "“use the resources that you have and figure it out.”",
+            a3: "The people around me and the willingness to experience and fail.",
+            a4: "1. First, find a commiunity with people that believe in you. \n" +
+            "2. Second, stay stead and don't give up. \n" +
+            "3. Lastly, care about others. When you care about other people, you’re creating a community of people who are also" +
+            "going to value you and pour into you.",
             a5: "",
             a6: "",
             a7: "",
@@ -200,7 +213,7 @@ export const featJourneys: FeaturedJourney = {
         },
 
         titles: {
-            t1: "Internship Experience",
+            t1: "College Experience",
             t2: "Adulting & Professional Experience",
             t3: "Tips and Advice",
         }, 
@@ -208,17 +221,25 @@ export const featJourneys: FeaturedJourney = {
         question: {
             q1: "Q: What are the three words for our students to quickly get to know you?",
             q2: "Q: How do you understand your first-gen identity?",
-            q3: "Q: ould you share with us your journey to obtaining an internship at Microsoft?",
+            q3: "Q: Could you share with us your journey to obtaining an internship at Microsoft?",
             q4: "Q: What are your top 3 pieces of advice for our students?",
             q5: "Q: What do you think recruiters at these big companies are looking for in a candidate?",
             q6: "Q: Now as a young professional, what are some responsibilities or challenges you face that never crossed your mind as a student?",
             q7: "Q: For students who are just beginning their college journey, what is one piece of advice would you offer to them?",
-            q8: "  Q: What are your top 3 pieces of advice for navigating the professional world, adulting challenges, or life after college?",
+            q8: "Q: What are your top 3 pieces of advice for navigating the professional world, adulting challenges, or life after college?",
         },
         answer: {
-            a1: "",
-            a2: "",
-            a3: "",
+            a1: "Twenty-two, New-york-city, dynamic",
+            a2: "I first became aware of my first-gen identity when I was" +
+            "applying to FY101 sections my freshman year. I think being a" +
+            "first-gen college student is comparable to being late to a" +
+            "lecture. You had a rough morning, missed the bus, and it's" +
+            "raining, but you still showed up. Everyone else around you was" +
+            "there on time and some were of course extra early, so you’re a" +
+            "bit behind in the material. Catching up is challenging but by" +
+            "the end of the lecture, you were able to grasp the concepts" +
+            "and learn just as much as everyone else.",
+            a3: "I think what helped me the most was not focusing on getting an internship. Instead,",
             a4: "",
             a5: "",
             a6: "",
