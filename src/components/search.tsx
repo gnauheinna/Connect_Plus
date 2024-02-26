@@ -35,11 +35,12 @@ export default function Search({ navigation }) {
   // Handle search button press
   const handleSearch = async () => {
     // Handles substring search
-    const nameSubstrings = inputName.toLowerCase().split(" ");
+    const nameSubstrings = inputName.split(" ");
+    console.log("nameSubstrings: " + nameSubstrings);
     // Searches for target user from database
     const q = query(
       collection(db, "users"),
-      where("nameSubstrings", "array-contains", nameSubstrings[0])
+      where("nameSubstrings", "array-contains-any", nameSubstrings[0])
     );
     try {
       const querySnapshot = await getDocs(q);
@@ -166,6 +167,11 @@ const styles = StyleSheet.create({
     width: "100%",
     borderRadius: 30,
     backgroundColor: "white",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
     // opacity: 0.8,
     padding: 10,
     paddingLeft: 20,

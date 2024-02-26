@@ -3,8 +3,9 @@ import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { Image } from "expo-image";
 import { StyleSheet, ScrollView, ImageBackground } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import React from "react";
 import { FontSize, Color, FontFamily } from "../../styles/GlobalStyles";
-
+import { useFocusEffect } from "@react-navigation/native";
 import { useState, useEffect } from "react";
 import Search from "../components/search";
 import "react-native-get-random-values";
@@ -81,9 +82,13 @@ export default function MessageScreen({ navigation }) {
     setCurrentChatUserID(userID);
     setCurrentChatAvatar(avatar);
   }
-  useEffect(() => {
-    navigation.navigate("IndividualChat", { chatID: currentChatID });
-  }, [currentChatID]);
+  useFocusEffect(
+    React.useCallback(() => {
+      if (currentChatID) {
+        navigation.navigate("IndividualChat", { chatID: currentChatID });
+      }
+    }, [currentChatID])
+  );
 
   useEffect(() => {
     const fetchUserChats = async () => {
