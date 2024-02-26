@@ -26,9 +26,9 @@
 # Install Instructions
 In the project directory, you can run:
 ### `npm start`
-1. Option 1 #Run it on a WebBrowser
-Runs the app in the development mode.\
-Open [http://localhost:8081](http://localhost:8081) to view it in your browser.
+1. Option 1  #Run it on a ios simulator
+- run i 
+Runs the app in the development mode on a ios simulator.\
 2. Option 2 #Run it on Expo Go!
 - Download Expo Go on App store
 - Use your camera to scan the QRCode in the terminal
