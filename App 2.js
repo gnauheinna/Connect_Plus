@@ -32,13 +32,12 @@ import RachelScreen from "./src/screens/MyJourneyPosts/Rachel";
 import RachelFeaturedScreen from "./src/screens/MyJourneyPosts/RachelFeatured";
 import ShatevaScreen from "./src/screens/MyJourneyPosts/Shateva";
 import ShatevaFeaturedScreen from "./src/screens/MyJourneyPosts/ShatevaFeatured";
-import JourneyScreen from "./src/screens/MyJourneyPosts/JourneyScreen";
-import FeaturedJourneyScreen from "./src/screens/MyJourneyPosts/FeaturedJourneyScreen";
 
 // Create a Stack navigator
 const Stack = createStackNavigator();
 //SplashScreen.preventAutoHideAsync();
 export default function App() {
+  console.log("rootlayout");
   const [fontsLoaded, fontError] = useFonts({
     "Stolzl Bold": require("./assets/fonts/stolzlBold.ttf"),
     "Stolzl Medium": require("./assets/fonts/stolzlMedium.otf"),
@@ -47,6 +46,7 @@ export default function App() {
     ...FontAwesome.font,
   });
   if (getApps() == null) {
+    console.log("rootlayout no firebase");
     const app = initializeApp(firebaseConfig);
     if (!app) return <View />;
   }
@@ -119,51 +119,43 @@ export default function App() {
                   />
                   <Stack.Screen
                     name="neri"
-                    component={JourneyScreen}
+                    component={NeriScreen}
                     options={{ headerShown: false }}
-                    initialParams={{ user: "1" }}
                   />
                   <Stack.Screen
                     name="bailey"
-                    component={FeaturedJourneyScreen}
+                    component={BaileyScreen}
                     options={{ headerShown: false }}
-                    initialParams={{ user: "2" }}
                   />
                   <Stack.Screen
                     name="nana"
-                    component={FeaturedJourneyScreen}
+                    component={NanaScreen}
                     options={{ headerShown: false }}
-                    initialParams={{ user: "3" }}
                   />
                   <Stack.Screen
                     name="julia"
-                    component={JourneyScreen}
+                    component={JuliaScreen}
                     options={{ headerShown: false }}
-                    initialParams={{ user: "4" }}
                   />
                   <Stack.Screen
                     name="rachel"
-                    component={JourneyScreen}
+                    component={RachelScreen}
                     options={{ headerShown: false }}
-                    initialParams={{ user: "5" }}
                   />
                   <Stack.Screen
                     name="rachelFeatured"
-                    component={JourneyScreen}
+                    component={RachelFeaturedScreen}
                     options={{ headerShown: false }}
-                    initialParams={{ user: "6" }}
                   />
                   <Stack.Screen
                     name="shateva"
-                    component={JourneyScreen}
+                    component={ShatevaScreen}
                     options={{ headerShown: false }}
-                    initialParams={{ user: "7" }}
                   />
                   <Stack.Screen
                     name="shatevaFeatured"
-                    component={FeaturedJourneyScreen}
+                    component={ShatevaFeaturedScreen}
                     options={{ headerShown: false }}
-                    initialParams={{ user: "8" }}
                   />
                 </Stack.Navigator>
               </NavigationContainer>

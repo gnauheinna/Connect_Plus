@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { Image } from "expo-image";
-import { Journey, journeys } from "./MyJourneyData";
+import { FeaturedJourney, featJourneys } from "./MyFeaturedJourneyData";
 
 import {
   StyleSheet,
@@ -30,7 +30,7 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
   let profileImg;
 
   // this gives the entire object
-  const journeyInfo = journeys[authId];
+  const journeyInfo = featJourneys[authId];
 
   const { savedJourneys, setSavedJourneys, setLoading, loading } =
     useSavedJourneyContext();
@@ -165,21 +165,18 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
   );
 
   switch (journeyInfo?.author.photoName) {
-    case "neri":
-      backImg = require(`../../../assets/images/journeyPostsGradients/neri.png`);
-      profileImg = require(`../../../assets/images/mentorProfilePics/neri.png`);
+    case "nana":
+      backImg = require(`../../../assets/images/journeyPostsGradients/nana.png`);
+      profileImg = require(`../../../assets/images/mentorProfilePics/nana.png`);
       break;
-    case "rachel":
+    case "bailey":
       backImg = require(`../../../assets/images/journeyPostsGradients/rachel.png`);
-      profileImg = require(`../../../assets/images/mentorProfilePics/rachel.png`);
+      profileImg = require(`../../../assets/images/mentorProfilePics/bailey.png`);
       break;
     case "shateva":
       backImg = require(`../../../assets/images/journeyPostsGradients/shatevaFeatured.png`);
       profileImg = require(`../../../assets/images/mentorProfilePics/shateva.png`);
       break;
-    case "julia":
-      backImg = require(`../../../assets/images/journeyPostsGradients/julia.png`);
-      profileImg = require(`../../../assets/images/mentorProfilePics/julia.png`);
   }
   return (
     <View style={styles.outterContainer}>
@@ -244,174 +241,117 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
                 {journeyInfo?.author.authorName}
               </Text>
               <Text style={styles.userIntro}>{journeyInfo?.author.intro}</Text>
+              <Text style={styles.userIntro}>{journeyInfo?.author.intro}</Text>
             </View>
           </View>
         </View>
 
-        {/* Processes Content */}
         <View style={styles.postContentContainer}>
           <View style={styles.postContentMainContainer}>
+            {journeyInfo?.author.photoName === "nana" && (
+              <View style={styles.individualStep}>
+                <View style={styles.regularContentContainer}>
+                  <Text style={styles.regularContentText}>
+                    {journeyInfo?.header.message}
+                  </Text>
+                </View>
+              </View>
+            )}
             {/* 1st Step */}
             <View style={styles.individualStep}>
+              <View style={styles.subtitleContainer}>
+                {/* STOPPPED HERE */}
+                <Text style={styles.subtitleText}>{journeyInfo.titles.t1}</Text>
+              </View>
               <View style={styles.regularContentContainer}>
+                <Text style={styles.regularContentTextBolded}>
+                  {journeyInfo.question.q1}
+                </Text>
                 <Text style={styles.regularContentText}>
-                  {journeyInfo?.header.heading}
+                  {journeyInfo.answer.a1}
+                </Text>
+              </View>
+
+              <View style={styles.regularContentContainer}>
+                <Text style={styles.regularContentTextBolded}>
+                  {journeyInfo.question.q2}
+                </Text>
+                <Text style={styles.regularContentText}>
+                  {journeyInfo.answer.a2}
                 </Text>
               </View>
             </View>
             {/* 2nd Step */}
             <View style={styles.individualStep}>
               <View style={styles.subtitleContainer}>
-                <Text style={styles.subtitleText}>Processes</Text>
+                <Text style={styles.subtitleText}>{journeyInfo.titles.t2}</Text>
               </View>
               <View style={styles.regularContentContainer}>
-                <Text style={styles.regularContentText}>
-                  {journeyInfo?.process.step1}
+                <Text style={styles.regularContentTextBolded}>
+                  {journeyInfo.question.q3}
                 </Text>
                 <Text style={styles.regularContentText}>
-                  {journeyInfo?.process.step2}
-                </Text>
-                <Text style={styles.regularContentText}>
-                  {journeyInfo?.process.step3}
+                  {journeyInfo.answer.a3}
                 </Text>
               </View>
-            </View>
-            {/*    EXPERIENCE */}
-            {journeyInfo?.experience.experience1 && (
-              <View style={styles.individualStep}>
-                <View style={styles.subtitleContainer}>
-                  <Text style={styles.subtitleText}>Experience</Text>
-                </View>
-                <View style={styles.regularContentContainer}>
-                  <Text style={styles.regularContentText}>
-                    {journeyInfo?.experience.experience1}
-                  </Text>
-                </View>
-              </View>
-            )}
-            {/* 3rd Step - challenges */}
-            <View style={styles.individualStep}>
-              <View style={styles.subtitleContainer}>
-                <Text style={styles.subtitleText}>Challenges</Text>
-              </View>
+
               <View style={styles.regularContentContainer}>
-                <Text style={styles.regularContentText}>
-                  {journeyInfo?.challenges.challenge1}
+                <Text style={styles.regularContentTextBolded}>
+                  {journeyInfo.question.q4}
                 </Text>
                 <Text style={styles.regularContentText}>
-                  {journeyInfo?.challenges.challenge2}
+                  {journeyInfo.answer.a4}
                 </Text>
+              </View>
+
+              <View style={styles.regularContentContainer}>
+                <Text style={styles.regularContentTextBolded}>
+                  {journeyInfo.question.q5}
+                </Text>
+                <Text style={styles.regularContentText}>
+                  {journeyInfo.answer.a5}
+                </Text>
+              </View>
+
+              {/* 3rd Step */}
+              <View style={styles.individualStep}>
+                <View style={styles.subtitleContainer}>
+                  <Text style={styles.subtitleText}>
+                    {journeyInfo.titles.t3}
+                  </Text>
+                </View>
+                <View style={styles.regularContentContainer}>
+                  <Text style={styles.regularContentTextBolded}>
+                    {journeyInfo.question.q6}
+                  </Text>
+                  <Text style={styles.regularContentText}>
+                    {journeyInfo.answer.a6}
+                  </Text>
+                </View>
+
+                <View style={styles.regularContentContainer}>
+                  <Text style={styles.regularContentTextBolded}>
+                    {journeyInfo.question.q7}
+                  </Text>
+                  <Text style={styles.regularContentText}>
+                    {journeyInfo.answer.a7}
+                  </Text>
+                </View>
+
+                <View style={styles.regularContentContainer}>
+                  <Text style={styles.regularContentTextBolded}>
+                    {journeyInfo.question.q8}
+                  </Text>
+                  <Text style={styles.regularContentText}>
+                    {journeyInfo.answer.a8}
+                  </Text>
+                </View>
               </View>
             </View>
-
-            {/* 4th Step - takeaways */}
-            {journeyInfo?.takeaways.takeaway1 && (
-              <View style={styles.individualStep}>
-                <View style={styles.subtitleContainer}>
-                  <Text style={styles.subtitleText}>Takeaways</Text>
-                </View>
-                <View style={styles.regularContentContainer}>
-                  <Text style={styles.regularContentText}>
-                    {journeyInfo?.takeaways.takeaway1}
-                  </Text>
-                  <Text style={styles.regularContentText}>
-                    {journeyInfo?.takeaways.takeaway2}
-                  </Text>
-                  {journeyInfo?.takeaways.takeaway3 && (
-                    <Text style={styles.regularContentText}>
-                      {journeyInfo?.takeaways.takeaway3}
-                    </Text>
-                  )}
-                </View>
-              </View>
-            )}
-
-            {/* 5th Step - resources */}
-            {journeyInfo?.resources.resource1 && (
-              <View style={styles.individualStep}>
-                <View style={styles.subtitleContainer}>
-                  <Text style={styles.subtitleText}>Resources</Text>
-                </View>
-                <View style={styles.regularContentContainer}>
-                  <Text style={styles.regularContentText}>
-                    {journeyInfo?.resources.resource1}
-                  </Text>
-                  <Text style={styles.regularContentText}>
-                    {journeyInfo?.resources.resource2}
-                  </Text>
-                  <Text style={styles.regularContentText}>
-                    {journeyInfo?.resources.resource3}
-                  </Text>
-                </View>
-              </View>
-            )}
-
-            {/* 6th Step - additional groups*/}
-            {journeyInfo?.additionalGroups.group1 && (
-              <View style={styles.individualStep}>
-                <View style={styles.subtitleContainer}>
-                  <Text style={styles.subtitleText}>Additional Groups</Text>
-                </View>
-                <View style={styles.regularContentContainer}>
-                  <Text style={styles.regularContentText}>
-                    <TouchableOpacity
-                      onPress={() =>
-                        Linking.openURL(
-                          "https://www.bu.edu/questrom/diversity-and-inclusion/"
-                        )
-                      }
-                    >
-                      <Text style={styles.linkText}>
-                        {journeyInfo?.additionalGroups.group1}
-                      </Text>
-                    </TouchableOpacity>
-                    <View style={styles.indentedContentContainer}>
-                      <Text style={styles.regularContentText}>
-                        {journeyInfo?.groupInfo.groupInfo1}
-                      </Text>
-                    </View>
-                  </Text>
-                  <Text style={styles.regularContentText}>
-                    <TouchableOpacity
-                      onPress={() =>
-                        Linking.openURL(
-                          "https://www.bu.edu/newbury-center/about/"
-                        )
-                      }
-                    >
-                      <Text style={styles.linkText}>
-                        {journeyInfo.additionalGroups.group2}
-                      </Text>
-                    </TouchableOpacity>
-                    <View style={styles.indentedContentContainer}>
-                      <Text style={styles.regularContentText}>
-                        {journeyInfo.groupInfo.groupInfo2}
-                      </Text>
-                    </View>
-                  </Text>
-                  <Text style={styles.regularContentText}>
-                    <TouchableOpacity
-                      onPress={() =>
-                        Linking.openURL("https://www.bu.edu/thurman/programs/")
-                      }
-                    >
-                      <Text style={styles.linkText}>
-                        {journeyInfo.additionalGroups.group3}
-                      </Text>
-                    </TouchableOpacity>
-                    <View style={styles.indentedContentContainer}>
-                      <Text style={styles.regularContentText}>
-                        {journeyInfo.groupInfo.groupInfo3}
-                      </Text>
-                    </View>
-                  </Text>
-                </View>
-              </View>
-            )}
           </View>
         </View>
       </ScrollView>
-      {/* )} */}
+
       <View style={styles.progressBarContainer}>
         <View
           style={
@@ -428,18 +368,7 @@ export default function FeaturedJourneyScreen({ route, navigation }) {
             verticalLine3 ? styles.verticalLine3Active : styles.verticalLine3
           }
         ></View>
-        <View
-          style={
-            verticalLine4 ? styles.verticalLine4Active : styles.verticalLine4
-          }
-        ></View>
-        <View
-          style={
-            verticalLine5 ? styles.verticalLine5Active : styles.verticalLine5
-          }
-        ></View>
       </View>
-      {/* </View>)} */}
     </View>
   );
 }
