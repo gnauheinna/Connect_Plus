@@ -106,6 +106,8 @@ export default function SignUpScreen({ navigation }) {
         await setDoc(doc(db, "userChats", user.uid), {});
         // create empty savedJourneys
         await setDoc(doc(db, "savedJourneys", user.uid), { savedjourneys: [] });
+        //create empty following on firestore
+        await setDoc(doc(db, "following", user.uid), {});
       }
     } catch (error) {
       console.log(error);
