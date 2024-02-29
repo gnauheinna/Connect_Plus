@@ -7,13 +7,6 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-import {
-  StyleSheet,
-  TextInput,
-  Pressable,
-  TouchableOpacity,
-  ImageBackground,
-} from "react-native";
 import { Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontFamily, Color, Border } from "../../styles/GlobalStyles";
