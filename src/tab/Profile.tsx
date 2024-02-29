@@ -115,21 +115,40 @@ export default function ProfileScreen({ navigation }) {
       {/* <View style={styles.container}> */}
       <View style={styles.profileInfoContainer}>
         {/* Display the user's profile picture */}
-        <View style={styles.profileImg}>
-          <Image source={avatarImages[avatar]} style={styles.profileImage} />
+        {/* <View style={styles.profileImg}> */}
+          {/* <Image source={avatarImages[avatar]} style={styles.profileImage} /> */}
           {/* Display the icon for editing the profile picture */}
           {/* <TouchableOpacity style={styles.editBtn}>
             <MaterialIcons name="edit" size={20} color="#ffffff" />
           </TouchableOpacity> */}
-        </View>
+        {/* </View> */}
 
         {/* Display the user's full name and intro */}
-        <View style={styles.infoContainer}>
+        {/* <View style={styles.infoContainer}>
           <Text style={[styles.userName]}>{name}</Text>
           <Text style={[styles.userIntro]}>
             {" "}
             Class of {year}, {major} Major
           </Text>
+        </View> */}
+
+        {/* Display the user's avatar, full name, and intro */}
+        <View style={styles.profileContainer}>
+          {/* display avatar */}
+          <Image source={avatarImages[avatar]} style={styles.profileImage} />
+          {/* Display the user's full name and intro */}
+          <View>
+          <Text style={[styles.userName]}>{name}</Text>
+          <Text style={[styles.userIntro]}>
+            {" "}
+            Class of {year}, {major} Major </Text>
+          </View>
+        </View>
+        
+        {/* About me info box */}
+        <View style={styles.aboutMeContainer}>
+          <Text style={styles.aboutMeText}>About me</Text>
+          {/* <Text style={styles.interestText}>deez nuts</Text> */}
         </View>
 
         {/* Display the user's interests */}
@@ -263,6 +282,11 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     paddingTop: 60,
   },
+  profileContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 20,
+  },
   profileInfoContainer: {
     height: 300,
     width: "100%",
@@ -284,17 +308,20 @@ const styles = StyleSheet.create({
     // shadowRadius: 10,
   },
   profileImage: {
-    width: 90,
-    height: 90,
+    width: 75,
+    height: 75,
     borderRadius: 100,
     overflow: "hidden",
     justifyContent: "center",
+    marginRight: 15,
+    marginLeft: 10,
   },
   userName: {
     fontFamily: "Stolzl Medium",
     fontSize: 24,
     color: "#000000",
     marginBottom: 8,
+    marginLeft: 5,
   },
   userIntro: {
     fontSize: 14,
@@ -429,4 +456,20 @@ const styles = StyleSheet.create({
     maxHeight: 20,
     resizeMode: "contain",
   },
+  aboutMeContainer: {
+    alignSelf: "center",
+    alignItems: "center",
+    padding: 10,
+    backgroundColor: "#F9F6FF",
+    // borderRadius: 5,
+    // borderWidth: 1,
+    // borderColor: '#e7e7e7',
+
+    marginBottom: 20,
+},
+aboutMeText: {
+    color: "#724EAE",
+    fontFamily: "Stolzl Regular",
+    fontSize: 14,
+},  
 });
