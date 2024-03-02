@@ -147,8 +147,7 @@ export default function ProfileScreen({ navigation }) {
         
         {/* About me info box */}
         <View style={styles.aboutMeContainer}>
-          <Text style={styles.aboutMeText}>About me</Text>
-          {/* <Text style={styles.interestText}>deez nuts</Text> */}
+          <Text style={styles.aboutMeText}>Open to Coffee Chats Looking for Mentorship, or ask about my Startup</Text>
         </View>
 
         {/* Display the user's interests */}
@@ -285,7 +284,8 @@ const styles = StyleSheet.create({
   profileContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 20,
+    marginTop: 50,
+    marginBottom: 20,
   },
   profileInfoContainer: {
     height: 300,
@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
     fontFamily: "Stolzl Medium",
     fontSize: 24,
     color: "#000000",
-    marginBottom: 8,
+    marginTop: 15,
     marginLeft: 5,
   },
   userIntro: {
@@ -336,8 +336,10 @@ const styles = StyleSheet.create({
   interestsContainer: {
     alignItems: "center",
     flexDirection: "row",
-    alignSelf: "center",
+    alignSelf: "flex-start",
     marginTop: 10,
+    marginBottom: 30,
+    marginLeft: 30,
   },
   individualInterest: {
     marginRight: 10,
@@ -345,6 +347,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     backgroundColor: "#F7F4FA",
+
   },
   interestText: {
     color: "#724EAE",
@@ -471,5 +474,6 @@ aboutMeText: {
     color: "#724EAE",
     fontFamily: "Stolzl Regular",
     fontSize: 14,
+    marginBottom: 15,
 },  
 });
