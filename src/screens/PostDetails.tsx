@@ -180,6 +180,8 @@ export default function PostDetailsScreen({ navigation }) {
                   intro={item.userIntro}
                   timestamp={item.date.toDate().toLocaleDateString()}
                   content={item.text}
+                  userId={item.userID}
+                  navigation={navigation}
                 />
               )}
             />

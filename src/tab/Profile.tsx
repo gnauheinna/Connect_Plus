@@ -5,6 +5,7 @@ import {
   Image,
   ScrollView,
   FlatList,
+  Modal,
 } from "react-native";
 import { useState, useEffect } from "react";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
@@ -24,8 +25,14 @@ import MJPostCard from "../components/MJPostCard";
 
 import { useSavedJourneyContext } from "../context/savedJourneyContext";
 import { Title } from "react-native-paper";
+import { Icon } from "react-native-elements";
+import EditProfile from "../screens/EditProfile";
+import { collection, getDoc, doc, getFirestore } from "firebase/firestore";
 
-export default function ProfileScreen({ navigation }) {
+
+export default function ProfileScreen({ navigation, route }) {
+  // const { userId } = route.params;
+  const db = getFirestore();
   const { user, setUser } = useUser();
   const [name, setName] = useState("");
   const [year, setYear] = useState("");
@@ -42,6 +49,39 @@ export default function ProfileScreen({ navigation }) {
   const { savedJourneys, setSavedJourneys } = useSavedJourneyContext();
   const [Mname, setMName] = useState("");
   const [img, setImg] = useState(Image);
+  const [modalVisible, setModalVisible] = useState(false);
+
+
+
+  // useEffect(() => {
+  //   const updateUser = async () => {
+  //     const usersCollection = collection(db, "users");
+  //     if (userId) {
+  //       const userInfo = await getDoc(doc(db, "users", userId));
+  //       const userData = userInfo.data() as {
+  //         name: string;
+  //         email: string;
+  //         major: string;
+  //         year: string;
+  //         userID: string;
+  //         academic: boolean;
+  //         career: boolean;
+  //         avatar: string;
+  //         financial: boolean;
+  //         studentLife: boolean;
+  //       };
+  //       setUser(userData);
+  //     } else {
+  //       console.error("User is not found");
+  //     }
+  //   };
+  //   if (userId != "") {
+  //     updateUser();
+  //   }
+  // }, [userId]);
+
+
+
 
   useEffect(() => {
     setName(user.name);
@@ -147,7 +187,29 @@ export default function ProfileScreen({ navigation }) {
         
         {/* About me info box */}
         <View style={styles.aboutMeContainer}>
-          <Text style={styles.aboutMeText}>Open to Coffee Chats Looking for Mentorship, or ask about my Startup</Text>
+          <View>
+            <Text style={styles.aboutMeText}>Open to Mentorship, Looking for coffee chats, ask me about my startup</Text>
+          </View>
+          <View>
+            <TouchableOpacity
+            style={styles.editButton}
+            onPress={() => setModalVisible(true)}
+            >
+            <Icon name="pencil" type="font-awesome" size={18} color="#000" />
+          </TouchableOpacity>
+          </View>
+          <View style={styles.modalContainer}>
+          <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <EditProfile close={() => setModalVisible(false)} />
+          </Modal>
+          </View>
         </View>
 
         {/* Display the user's interests */}
@@ -460,20 +522,22 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   aboutMeContainer: {
-    alignSelf: "center",
-    alignItems: "center",
+    justifyContent: 'space-between',
     padding: 10,
-    backgroundColor: "#F9F6FF",
-    // borderRadius: 5,
-    // borderWidth: 1,
-    // borderColor: '#e7e7e7',
-
-    marginBottom: 20,
+    marginLeft: 20,
+    marginRight: 20,
+    backgroundColor: '#F9F6FF',
 },
-aboutMeText: {
-    color: "#724EAE",
-    fontFamily: "Stolzl Regular",
-    fontSize: 14,
-    marginBottom: 15,
-},  
+  aboutMeText: {
+      color: "#724EAE",
+      fontFamily: "Stolzl Regular",
+      fontSize: 14,
+  },  
+  editButton: {
+    alignSelf: 'flex-end',
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: 'gray',
+  },
 });
