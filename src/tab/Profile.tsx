@@ -58,11 +58,13 @@ export default function ProfileScreen({ navigation, route }) {
   const [currentUserId, setCurrentUserId] = useState("");
   const [viewedUser, setViewedUser] = useState("");
   
+  
   useEffect(() => {
     const getCurrUser = async () => {
       const storedToken = await AsyncStorage.getItem("userUID");
       if (storedToken) {
         setCurrentUserId(storedToken);
+        setViewedUser(storedToken);
       }
     };
 
@@ -99,12 +101,6 @@ export default function ProfileScreen({ navigation, route }) {
       setViewedUser(userId);
     }
   }, [userId]);
-
-
-  console.log("currentUserId", currentUserId);
-  console.log("viewed user", userId);
-  console.log("VIEWED", viewedUser);
-
 
   // retrieve user info of viewing another user's profile
   useEffect(() => {
@@ -190,13 +186,22 @@ export default function ProfileScreen({ navigation, route }) {
             Class of {year}, {major} Major </Text>
           </View>
         </View>
-        
-        {/* About me info box */}
-        <View style={styles.aboutMeContainer}>
+      
+        {/* When viewing someone else's file */}
+        {viewedUser !== currentUserId && (
+          <View style={styles.yourAboutMeContainer}>
+            <View>
+            <Text style={styles.yourAboutMeText}>Open to Mentorship, Looking for coffee chats, ask me about my startup</Text>
+          </View>
+          </View>    
+        )}
+
+        {/* When viewing your own profile */}
+        {viewedUser === currentUserId && (
+          <View style={styles.aboutMeContainer}>
           <View>
             <Text style={styles.aboutMeText}>Open to Mentorship, Looking for coffee chats, ask me about my startup</Text>
           </View>
-          {viewedUser === "" || viewedUser == undefined || currentUserId === viewedUser && (
             <View>
               <TouchableOpacity
                 style={styles.editButton}
@@ -217,8 +222,8 @@ export default function ProfileScreen({ navigation, route }) {
                 </Modal>
               </View>
             </View>
-          )}
         </View>
+        )}
 
         {/* Display the user's interests */}
         <View style={styles.interestsContainer}>
@@ -536,11 +541,22 @@ const styles = StyleSheet.create({
     marginRight: 20,
     backgroundColor: '#F9F6FF',
 },
+  yourAboutMeContainer: {
+    justifyContent: 'space-between',
+    padding: 10,
+    marginLeft: 20,
+    marginRight: 20,
+  },
   aboutMeText: {
       color: "#724EAE",
       fontFamily: "Stolzl Regular",
       fontSize: 14,
   },  
+  yourAboutMeText: {
+    color: "#838383",
+    fontFamily: "Stolzl Regular",
+    fontSize: 14,
+},  
   editButton: {
     alignSelf: 'flex-end',
   },
