@@ -271,9 +271,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 
-  postContainer: {
-    flex: 1,
-  },
+  postContainer: {},
   bottomPartContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
