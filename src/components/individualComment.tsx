@@ -27,6 +27,8 @@ interface IndividualCommentProps {
   timestamp: string;
   content: string;
   avatar: string;
+  userId: string;
+  navigation: any;
 }
 
 const IndividualComment: React.FC<IndividualCommentProps> = ({
@@ -35,6 +37,8 @@ const IndividualComment: React.FC<IndividualCommentProps> = ({
   timestamp,
   content,
   avatar,
+  userId,
+  navigation,
 }) => {
   const avatarImages: { [key: string]: any } = {
     avatar1: require("../../assets/images/avatars/avatar1.png"),
@@ -60,7 +64,18 @@ const IndividualComment: React.FC<IndividualCommentProps> = ({
           <View style={styles.topPortionContainer}>
             {/* Display the username and timestamp */}
             <View style={styles.userInfoContainer}>
+
+
+            <TouchableOpacity 
+              onPress={() => {
+                console.log("USER ID", userId); // Log the user ID
+                console.log("USERNAME", username); // Log the username
+                navigation.navigate('Profile', { userId: userId }); // Navigate to the 'Profile' screen with the user's ID as a parameter
+              }}
+            >
               <Text style={styles.userName}>{username}</Text>
+            </TouchableOpacity>
+
               <Text style={styles.timestamp}>{timestamp}</Text>
             </View>
             {/* Display the timestamp */}

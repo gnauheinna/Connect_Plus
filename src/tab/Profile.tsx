@@ -5,6 +5,7 @@ import {
   Image,
   ScrollView,
   FlatList,
+  Modal,
 } from "react-native";
 import { useState, useEffect } from "react";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
@@ -24,8 +25,19 @@ import MJPostCard from "../components/MJPostCard";
 
 import { useSavedJourneyContext } from "../context/savedJourneyContext";
 import { Title } from "react-native-paper";
+import { Icon } from "react-native-elements";
+import EditProfile from "../screens/EditProfile";
+import { collection, getDoc, doc, getFirestore } from "firebase/firestore";
+// import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
+// import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+// import auth from '@react-native-firebase/auth';
+// import firebase from 'firebase/app';
+// import 'firebase/auth';
+import { getAuth } from "firebase/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function ProfileScreen({ navigation }) {
+export default function ProfileScreen({ navigation, route }) {
+  const db = getFirestore();
   const { user, setUser } = useUser();
   const [name, setName] = useState("");
   const [year, setYear] = useState("");
@@ -42,7 +54,55 @@ export default function ProfileScreen({ navigation }) {
   const { savedJourneys, setSavedJourneys } = useSavedJourneyContext();
   const [Mname, setMName] = useState("");
   const [img, setImg] = useState(Image);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState("");
+  const [viewedUser, setViewedUser] = useState("");
+  
+  
+  useEffect(() => {
+    const getCurrUser = async () => {
+      const storedToken = await AsyncStorage.getItem("userUID");
+      if (storedToken) {
+        setCurrentUserId(storedToken);
+        setViewedUser(storedToken);
+      }
+    };
 
+    getCurrUser();
+  }, []);
+
+  // update user info if viewing another user's profile
+  // userId is the id the of the viewed user
+  const { userId } = route?.params || {};
+  useEffect(() => {
+    const updateUser = async () => {
+      const usersCollection = collection(db, "users");
+      if (userId) {
+        const userInfo = await getDoc(doc(db, "users", userId));
+        const userData = userInfo.data() as {
+          name: string;
+          email: string;
+          major: string;
+          year: string;
+          userID: string;
+          academic: boolean;
+          career: boolean;
+          avatar: string;
+          financial: boolean;
+          studentLife: boolean;
+        };
+        setUser(userData);
+      } else {
+        console.error("User is not found");
+      }
+    };
+    if (userId !== "" && userId !== undefined) {
+      updateUser();
+      setViewedUser(userId);
+    }
+  }, [userId]);
+
+  // retrieve user info of viewing another user's profile
   useEffect(() => {
     setName(user.name);
     setMajor(user.major);
@@ -114,23 +174,56 @@ export default function ProfileScreen({ navigation }) {
     <View style={styles.outterMostContainer}>
       {/* <View style={styles.container}> */}
       <View style={styles.profileInfoContainer}>
-        {/* Display the user's profile picture */}
-        <View style={styles.profileImg}>
+        {/* Display the user's avatar, full name, and intro */}
+        <View style={styles.profileContainer}>
+          {/* display avatar */}
           <Image source={avatarImages[avatar]} style={styles.profileImage} />
-          {/* Display the icon for editing the profile picture */}
-          {/* <TouchableOpacity style={styles.editBtn}>
-            <MaterialIcons name="edit" size={20} color="#ffffff" />
-          </TouchableOpacity> */}
-        </View>
-
-        {/* Display the user's full name and intro */}
-        <View style={styles.infoContainer}>
+          {/* Display the user's full name and intro */}
+          <View>
           <Text style={[styles.userName]}>{name}</Text>
           <Text style={[styles.userIntro]}>
             {" "}
-            Class of {year}, {major} Major
-          </Text>
+            Class of {year}, {major} Major </Text>
+          </View>
         </View>
+      
+        {/* When viewing someone else's file */}
+        {viewedUser !== currentUserId && (
+          <View style={styles.yourAboutMeContainer}>
+            <View>
+            <Text style={styles.yourAboutMeText}>Open to Mentorship, Looking for coffee chats, ask me about my startup</Text>
+          </View>
+          </View>    
+        )}
+
+        {/* When viewing your own profile */}
+        {viewedUser === currentUserId && (
+          <View style={styles.aboutMeContainer}>
+          <View>
+            <Text style={styles.aboutMeText}>Open to Mentorship, Looking for coffee chats, ask me about my startup</Text>
+          </View>
+            <View>
+              <TouchableOpacity
+                style={styles.editButton}
+                onPress={() => setModalVisible(true)}
+              >
+                <Icon name="pencil" type="font-awesome" size={18} color="#000" />
+              </TouchableOpacity>
+              <View style={styles.modalContainer}>
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={modalVisible}
+                  onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                  }}
+                >
+                  <EditProfile close={() => setModalVisible(false)} />
+                </Modal>
+              </View>
+            </View>
+        </View>
+        )}
 
         {/* Display the user's interests */}
         <View style={styles.interestsContainer}>
@@ -263,6 +356,12 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     paddingTop: 60,
   },
+  profileContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 50,
+    marginBottom: 20,
+  },
   profileInfoContainer: {
     height: 300,
     width: "100%",
@@ -284,17 +383,20 @@ const styles = StyleSheet.create({
     // shadowRadius: 10,
   },
   profileImage: {
-    width: 90,
-    height: 90,
+    width: 75,
+    height: 75,
     borderRadius: 100,
     overflow: "hidden",
     justifyContent: "center",
+    marginRight: 15,
+    marginLeft: 10,
   },
   userName: {
     fontFamily: "Stolzl Medium",
     fontSize: 24,
     color: "#000000",
-    marginBottom: 8,
+    marginTop: 15,
+    marginLeft: 5,
   },
   userIntro: {
     fontSize: 14,
@@ -309,8 +411,10 @@ const styles = StyleSheet.create({
   interestsContainer: {
     alignItems: "center",
     flexDirection: "row",
-    alignSelf: "center",
+    alignSelf: "flex-start",
     marginTop: 10,
+    marginBottom: 30,
+    marginLeft: 30,
   },
   individualInterest: {
     marginRight: 10,
@@ -318,6 +422,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     backgroundColor: "#F7F4FA",
+
   },
   interestText: {
     color: "#724EAE",
@@ -428,5 +533,35 @@ const styles = StyleSheet.create({
     maxWidth: 60,
     maxHeight: 20,
     resizeMode: "contain",
+  },
+  aboutMeContainer: {
+    justifyContent: 'space-between',
+    padding: 10,
+    marginLeft: 20,
+    marginRight: 20,
+    backgroundColor: '#F9F6FF',
+},
+  yourAboutMeContainer: {
+    justifyContent: 'space-between',
+    padding: 10,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  aboutMeText: {
+      color: "#724EAE",
+      fontFamily: "Stolzl Regular",
+      fontSize: 14,
+  },  
+  yourAboutMeText: {
+    color: "#838383",
+    fontFamily: "Stolzl Regular",
+    fontSize: 14,
+},  
+  editButton: {
+    alignSelf: 'flex-end',
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: 'gray',
   },
 });

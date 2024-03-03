@@ -30,11 +30,13 @@ import { useNavigation } from "@react-navigation/native";
 interface IndividualPostProps {
   postId: string;
   navigation: any;
+  userId: string;
 }
 
 const IndividualPost: React.FC<IndividualPostProps> = ({
   postId,
   navigation,
+  userId,
 }) => {
   const [likePressed, setlikePressed] = useState(false);
 
@@ -51,7 +53,7 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
   const post = posts.find((post) => post.postID === postId);
   //use PostIDContext
   const { curPostID, setCurPostID } = useContext(PostIdContext);
-
+  
   useEffect(() => {
     if (post) {
       setTag(post.tag);
@@ -79,15 +81,20 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
       <TouchableOpacity onPress={() => viewPostDetails(postId)}>
         {post && (
           <View style={{ ...styles.itemContainer }}>
+           
             {/* Display the user's profile image, name, and intro on the top */}
             <View style={styles.userContainer}>
               <View style={styles.userInfo}>
+                {/* Press avatar to use other person's profile page */}
+                <TouchableOpacity onPress={() => navigation.navigate('Profile', { userId: userId })}>
                 <Image
                   style={styles.profileImg}
                   source={avatarImages[post.avatar]}
                 />
+                </TouchableOpacity>
                 <View style={styles.userNameAndIntro}>
                   <Text style={styles.userName}>{post.userName}</Text>
+                  {/* <Text> {post.userName}</Text> */}
                   <Text style={styles.userIntro}>{post.major}</Text>
                 </View>
               </View>
