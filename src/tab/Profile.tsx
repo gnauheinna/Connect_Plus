@@ -28,10 +28,15 @@ import { Title } from "react-native-paper";
 import { Icon } from "react-native-elements";
 import EditProfile from "../screens/EditProfile";
 import { collection, getDoc, doc, getFirestore } from "firebase/firestore";
-
+// import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
+// import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+// import auth from '@react-native-firebase/auth';
+// import firebase from 'firebase/app';
+// import 'firebase/auth';
+import { getAuth } from "firebase/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function ProfileScreen({ navigation, route }) {
-  // const { userId } = route.params;
   const db = getFirestore();
   const { user, setUser } = useUser();
   const [name, setName] = useState("");
@@ -50,39 +55,58 @@ export default function ProfileScreen({ navigation, route }) {
   const [Mname, setMName] = useState("");
   const [img, setImg] = useState(Image);
   const [modalVisible, setModalVisible] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState("");
+  const [viewedUser, setViewedUser] = useState("");
+  
+  useEffect(() => {
+    const getCurrUser = async () => {
+      const storedToken = await AsyncStorage.getItem("userUID");
+      if (storedToken) {
+        setCurrentUserId(storedToken);
+      }
+    };
+
+    getCurrUser();
+  }, []);
+
+  // update user info if viewing another user's profile
+  // userId is the id the of the viewed user
+  const { userId } = route?.params || {};
+  useEffect(() => {
+    const updateUser = async () => {
+      const usersCollection = collection(db, "users");
+      if (userId) {
+        const userInfo = await getDoc(doc(db, "users", userId));
+        const userData = userInfo.data() as {
+          name: string;
+          email: string;
+          major: string;
+          year: string;
+          userID: string;
+          academic: boolean;
+          career: boolean;
+          avatar: string;
+          financial: boolean;
+          studentLife: boolean;
+        };
+        setUser(userData);
+      } else {
+        console.error("User is not found");
+      }
+    };
+    if (userId !== "" && userId !== undefined) {
+      updateUser();
+      setViewedUser(userId);
+    }
+  }, [userId]);
 
 
-
-  // useEffect(() => {
-  //   const updateUser = async () => {
-  //     const usersCollection = collection(db, "users");
-  //     if (userId) {
-  //       const userInfo = await getDoc(doc(db, "users", userId));
-  //       const userData = userInfo.data() as {
-  //         name: string;
-  //         email: string;
-  //         major: string;
-  //         year: string;
-  //         userID: string;
-  //         academic: boolean;
-  //         career: boolean;
-  //         avatar: string;
-  //         financial: boolean;
-  //         studentLife: boolean;
-  //       };
-  //       setUser(userData);
-  //     } else {
-  //       console.error("User is not found");
-  //     }
-  //   };
-  //   if (userId != "") {
-  //     updateUser();
-  //   }
-  // }, [userId]);
+  console.log("currentUserId", currentUserId);
+  console.log("viewed user", userId);
+  console.log("VIEWED", viewedUser);
 
 
-
-
+  // retrieve user info of viewing another user's profile
   useEffect(() => {
     setName(user.name);
     setMajor(user.major);
@@ -154,24 +178,6 @@ export default function ProfileScreen({ navigation, route }) {
     <View style={styles.outterMostContainer}>
       {/* <View style={styles.container}> */}
       <View style={styles.profileInfoContainer}>
-        {/* Display the user's profile picture */}
-        {/* <View style={styles.profileImg}> */}
-          {/* <Image source={avatarImages[avatar]} style={styles.profileImage} /> */}
-          {/* Display the icon for editing the profile picture */}
-          {/* <TouchableOpacity style={styles.editBtn}>
-            <MaterialIcons name="edit" size={20} color="#ffffff" />
-          </TouchableOpacity> */}
-        {/* </View> */}
-
-        {/* Display the user's full name and intro */}
-        {/* <View style={styles.infoContainer}>
-          <Text style={[styles.userName]}>{name}</Text>
-          <Text style={[styles.userIntro]}>
-            {" "}
-            Class of {year}, {major} Major
-          </Text>
-        </View> */}
-
         {/* Display the user's avatar, full name, and intro */}
         <View style={styles.profileContainer}>
           {/* display avatar */}
@@ -190,26 +196,28 @@ export default function ProfileScreen({ navigation, route }) {
           <View>
             <Text style={styles.aboutMeText}>Open to Mentorship, Looking for coffee chats, ask me about my startup</Text>
           </View>
-          <View>
-            <TouchableOpacity
-            style={styles.editButton}
-            onPress={() => setModalVisible(true)}
-            >
-            <Icon name="pencil" type="font-awesome" size={18} color="#000" />
-          </TouchableOpacity>
-          </View>
-          <View style={styles.modalContainer}>
-          <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <EditProfile close={() => setModalVisible(false)} />
-          </Modal>
-          </View>
+          {viewedUser === "" || viewedUser == undefined || currentUserId === viewedUser && (
+            <View>
+              <TouchableOpacity
+                style={styles.editButton}
+                onPress={() => setModalVisible(true)}
+              >
+                <Icon name="pencil" type="font-awesome" size={18} color="#000" />
+              </TouchableOpacity>
+              <View style={styles.modalContainer}>
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={modalVisible}
+                  onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                  }}
+                >
+                  <EditProfile close={() => setModalVisible(false)} />
+                </Modal>
+              </View>
+            </View>
+          )}
         </View>
 
         {/* Display the user's interests */}

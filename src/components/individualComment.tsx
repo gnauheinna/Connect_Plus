@@ -65,6 +65,7 @@ const IndividualComment: React.FC<IndividualCommentProps> = ({
             {/* Display the username and timestamp */}
             <View style={styles.userInfoContainer}>
 
+
             <TouchableOpacity 
               onPress={() => {
                 console.log("USER ID", userId); // Log the user ID
