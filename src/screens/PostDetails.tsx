@@ -49,6 +49,7 @@ export default function PostDetailsScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const { user, setUser } = useUser();
   const db = getFirestore();
+  const [userPostId, setUserPostId ] = useState("");
   const openModal = () => {
     setModalVisible(true);
   };
@@ -56,6 +57,8 @@ export default function PostDetailsScreen({ navigation }) {
   const closeModal = () => {
     setModalVisible(false);
   };
+
+
 
   const comment = async () => {
     const randomString = Math.random().toString(36).substring(7);
@@ -127,7 +130,12 @@ export default function PostDetailsScreen({ navigation }) {
 
   useEffect(() => {
     const filteredPosts = allPosts.find((post) => post.postID == curPostID);
-  }, [allPosts]);
+    if (filteredPosts) {
+      const postUserID = filteredPosts.userID;
+      setUserPostId(postUserID);
+      // console.log(userPostId);
+    }
+  }, [allPosts, curPostID]);
 
   return (
     <View style={styles.outermostContainer}>
@@ -151,7 +159,8 @@ export default function PostDetailsScreen({ navigation }) {
           <View style={styles.mainContainer}>
             <View style={styles.postContainer}>
               {/* Displays the post */}
-              <IndividualPost navigation={navigation} postId={curPostID} />
+              {/* <Text> HIIIIII {user.userID} </Text> */}
+              <IndividualPost navigation={navigation} postId={curPostID} userId={userPostId} />
             </View>
             {/* Divider line */}
             <View style={styles.dividerLine} />
