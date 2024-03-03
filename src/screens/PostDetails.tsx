@@ -372,11 +372,9 @@ const styles = StyleSheet.create({
   },
   inputMessageContainer: {
     flexDirection: "row",
-    bottom: 20,
+    bottom: 40,
     width: "100%",
-    marginLeft: 20,
-    paddingTop: 16,
-    marginRight: 20,
+    justifyContent: "center",
     backgroundColor: "white",
   },
   inputMessageBox: {
