@@ -49,7 +49,7 @@ export default function PostDetailsScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const { user, setUser } = useUser();
   const db = getFirestore();
-  const [userPostId, setUserPostId ] = useState("");
+  const [userPostId, setUserPostId] = useState("");
   const openModal = () => {
     setModalVisible(true);
   };
@@ -57,8 +57,6 @@ export default function PostDetailsScreen({ navigation }) {
   const closeModal = () => {
     setModalVisible(false);
   };
-
-
 
   const comment = async () => {
     const randomString = Math.random().toString(36).substring(7);
@@ -139,99 +137,99 @@ export default function PostDetailsScreen({ navigation }) {
 
   return (
     <View style={styles.outermostContainer}>
-      <View style={styles.tempContainer}>
-        {/*  Back Button */}
-        <View style={styles.backBtnContainer}>
-          <TouchableOpacity
-            style={styles.backBtn}
-            onPress={() => {
-              navigation.navigate("AskNShare");
-            }}
-          >
-            <Image
-              style={styles.backBtnImg}
-              source={require("../../assets/images/icons/blackBack.png")}
-            />
-          </TouchableOpacity>
+      {/*  Back Button */}
+      <View style={styles.backBtnContainer}>
+        <TouchableOpacity
+          style={styles.backBtn}
+          onPress={() => {
+            navigation.navigate("AskNShare");
+          }}
+        >
+          <Image
+            style={styles.backBtnImg}
+            source={require("../../assets/images/icons/blackBack.png")}
+          />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.container}>
+        <View style={styles.postContainer}>
+          {/* Displays the post */}
+          {/* <Text> HIIIIII {user.userID} </Text> */}
+          <IndividualPost
+            navigation={navigation}
+            postId={curPostID}
+            userId={userPostId}
+          />
+        </View>
+        {/* Divider line */}
+        <View style={styles.dividerLine} />
+        {/* Display the comments */}
+        <View style={styles.repliesTitle}>
+          <Text style={styles.replyTitle}>Replies</Text>
         </View>
 
-        <View style={styles.container}>
-          <View style={styles.mainContainer}>
-            <View style={styles.postContainer}>
-              {/* Displays the post */}
-              {/* <Text> HIIIIII {user.userID} </Text> */}
-              <IndividualPost navigation={navigation} postId={curPostID} userId={userPostId} />
-            </View>
-            {/* Divider line */}
-            <View style={styles.dividerLine} />
-            {/* Display the comments */}
-            <View style={styles.repliesTitle}>
-              <Text style={styles.replyTitle}>Replies</Text>
-            </View>
-
-            {/* <ScrollView
+        {/* <ScrollView
               style={styles.commentsContainer}
               showsVerticalScrollIndicator={false}
             > */}
-            <FlatList
-              style={styles.commentsContainer}
-              data={commentarr.sort(
-                (a, b) =>
-                  new Date(b.date.toDate()).getTime() -
-                  new Date(a.date.toDate()).getTime()
-              )}
-              showsVerticalScrollIndicator={false}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item }) => (
-                <IndividualComment
-                  avatar={item.avatar}
-                  username={item.userName}
-                  intro={item.userIntro}
-                  timestamp={item.date.toDate().toLocaleDateString()}
-                  content={item.text}
-                  userId={item.userID}
-                  navigation={navigation}
-                />
-              )}
+        <FlatList
+          style={styles.commentsContainer}
+          data={commentarr.sort(
+            (a, b) =>
+              new Date(b.date.toDate()).getTime() -
+              new Date(a.date.toDate()).getTime()
+          )}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <IndividualComment
+              avatar={item.avatar}
+              username={item.userName}
+              intro={item.userIntro}
+              timestamp={item.date.toDate().toLocaleDateString()}
+              content={item.text}
+              userId={item.userID}
+              navigation={navigation}
             />
-            {/* </ScrollView> */}
-          </View>
-        </View>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          keyboardVerticalOffset={-10}
-          style={{ backgroundColor: "white" }}
-        >
-          <View style={styles.inputMessageContainer}>
-            {/* Box to type your message */}
-            <TouchableOpacity style={styles.inputMessageBox}>
-              <TextInput
-                style={styles.inputText}
-                placeholder="Add a Comment"
-                value={content}
-                onChangeText={(text) => setContent(text)}
-                multiline={true}
-                numberOfLines={10}
-              />
-            </TouchableOpacity>
-            {/* Send Icon */}
-            <TouchableOpacity
-              onPress={() => {
-                if (content.trim() !== "") {
-                  comment();
-                  Keyboard.dismiss();
-                  setContent("");
-                }
-              }}
-            >
-              <Image
-                style={styles.sendIcon}
-                source={require("../../assets/images/icons/sendMessage.png")}
-              />
-            </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
+          )}
+        />
+        {/* </ScrollView> */}
       </View>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={-10}
+        style={{ backgroundColor: "white" }}
+      >
+        <View style={styles.inputMessageContainer}>
+          {/* Box to type your message */}
+          <TouchableOpacity style={styles.inputMessageBox}>
+            <TextInput
+              style={styles.inputText}
+              placeholder="Add a Comment"
+              value={content}
+              onChangeText={(text) => setContent(text)}
+              multiline={true}
+              numberOfLines={10}
+            />
+          </TouchableOpacity>
+          {/* Send Icon */}
+          <TouchableOpacity
+            onPress={() => {
+              if (content.trim() !== "") {
+                comment();
+                Keyboard.dismiss();
+                setContent("");
+              }
+            }}
+          >
+            <Image
+              style={styles.sendIcon}
+              source={require("../../assets/images/icons/sendMessage.png")}
+            />
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     </View>
   );
 }
@@ -240,10 +238,6 @@ const styles = StyleSheet.create({
   outermostContainer: {
     flex: 1,
     backgroundColor: "white",
-  },
-
-  tempContainer: {
-    flex: 1,
   },
   backBtnContainer: {
     top: 60,
@@ -271,18 +265,15 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "white",
-    marginLeft: 20,
-    marginRight: 20,
     marginTop: 20,
+    paddingHorizontal: 30,
+    width: "100%",
   },
-  mainContainer: {
+
+  postContainer: {
     flex: 1,
-    backgroundColor: "white",
   },
-  postContainer: {},
   bottomPartContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
