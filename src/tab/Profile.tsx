@@ -57,8 +57,7 @@ export default function ProfileScreen({ navigation, route }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [currentUserId, setCurrentUserId] = useState("");
   const [viewedUser, setViewedUser] = useState("");
-  
-  
+
   useEffect(() => {
     const getCurrUser = async () => {
       const storedToken = await AsyncStorage.getItem("userUID");
@@ -180,34 +179,46 @@ export default function ProfileScreen({ navigation, route }) {
           <Image source={avatarImages[avatar]} style={styles.profileImage} />
           {/* Display the user's full name and intro */}
           <View>
-          <Text style={[styles.userName]}>{name}</Text>
-          <Text style={[styles.userIntro]}>
-            {" "}
-            Class of {year}, {major} Major </Text>
+            <Text style={[styles.userName]}>{name}</Text>
+            <Text style={[styles.userIntro]}>
+              {" "}
+              Class of {year}, {major} Major{" "}
+            </Text>
           </View>
         </View>
-      
+
         {/* When viewing someone else's file */}
         {viewedUser !== currentUserId && (
           <View style={styles.yourAboutMeContainer}>
             <View>
-            <Text style={styles.yourAboutMeText}>Open to Mentorship, Looking for coffee chats, ask me about my startup</Text>
+              <Text style={styles.yourAboutMeText}>
+                Open to Mentorship, Looking for coffee chats, ask me about my
+                startup
+              </Text>
+            </View>
           </View>
-          </View>    
         )}
 
         {/* When viewing your own profile */}
         {viewedUser === currentUserId && (
           <View style={styles.aboutMeContainer}>
-          <View>
-            <Text style={styles.aboutMeText}>Open to Mentorship, Looking for coffee chats, ask me about my startup</Text>
-          </View>
+            <View>
+              <Text style={styles.aboutMeText}>
+                Open to Mentorship, Looking for coffee chats, ask me about my
+                startup
+              </Text>
+            </View>
             <View>
               <TouchableOpacity
                 style={styles.editButton}
                 onPress={() => setModalVisible(true)}
               >
-                <Icon name="pencil" type="font-awesome" size={18} color="#000" />
+                <Icon
+                  name="pencil"
+                  type="font-awesome"
+                  size={18}
+                  color="#000"
+                />
               </TouchableOpacity>
               <View style={styles.modalContainer}>
                 <Modal
@@ -222,7 +233,7 @@ export default function ProfileScreen({ navigation, route }) {
                 </Modal>
               </View>
             </View>
-        </View>
+          </View>
         )}
 
         {/* Display the user's interests */}
@@ -303,7 +314,11 @@ export default function ProfileScreen({ navigation, route }) {
           renderItem={({ item }) => (
             <View style={styles.postShadowContainer}>
               {/* Displays the post */}
-              <IndividualPost navigation={navigation} postId={item.postID} />
+              <IndividualPost
+                navigation={navigation}
+                postId={item.postID}
+                userId={item.userID}
+              />
             </View>
           )}
         />
@@ -422,7 +437,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     backgroundColor: "#F7F4FA",
-
   },
   interestText: {
     color: "#724EAE",
@@ -535,33 +549,33 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   aboutMeContainer: {
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     padding: 10,
     marginLeft: 20,
     marginRight: 20,
-    backgroundColor: '#F9F6FF',
-},
+    backgroundColor: "#F9F6FF",
+  },
   yourAboutMeContainer: {
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     padding: 10,
     marginLeft: 20,
     marginRight: 20,
   },
   aboutMeText: {
-      color: "#724EAE",
-      fontFamily: "Stolzl Regular",
-      fontSize: 14,
-  },  
+    color: "#724EAE",
+    fontFamily: "Stolzl Regular",
+    fontSize: 14,
+  },
   yourAboutMeText: {
     color: "#838383",
     fontFamily: "Stolzl Regular",
     fontSize: 14,
-},  
+  },
   editButton: {
-    alignSelf: 'flex-end',
+    alignSelf: "flex-end",
   },
   modalContainer: {
     flex: 1,
-    backgroundColor: 'gray',
+    backgroundColor: "gray",
   },
 });
