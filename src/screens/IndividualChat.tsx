@@ -34,7 +34,6 @@ type Chats = {
   text: string;
 };
 export default function IndividualChatScreen({ navigation, route }) {
-  console.log("route.params " + route.params.chatID);
   const chatID = route.params.chatID;
   const db = getFirestore();
   const { user, setUser } = useUser();
@@ -66,10 +65,10 @@ export default function IndividualChatScreen({ navigation, route }) {
   };
 
   useEffect(() => {
-    // set currentChatID from local storage when the page refreshes
+    // set chatID from local storage when the page refreshes
     const fetchChatData = async () => {
-      if (currentChatID != "") {
-        const storedChatID = await AsyncStorage.getItem("currentChatID");
+      if (chatID != "") {
+        const storedChatID = await AsyncStorage.getItem("chatID");
         if (storedChatID !== null) {
           setCurrentChatID(storedChatID);
         }
@@ -84,7 +83,7 @@ export default function IndividualChatScreen({ navigation, route }) {
           setCurrentChatUserID(storedChatUserID);
         }
       } else {
-        console.log("this is useEffect hook currentChatID :", currentChatID);
+        console.log("this is useEffect hook chatID :", chatID);
       }
     };
 
@@ -94,7 +93,7 @@ export default function IndividualChatScreen({ navigation, route }) {
   // fetches the correct chat
   useEffect(() => {
     const fetchUserChat = async () => {
-      const userChatDocRef = doc(db, "chats", currentChatID);
+      const userChatDocRef = doc(db, "chats", chatID);
       const userChatDocSnapshot = await getDoc(userChatDocRef);
       const chatArray: Chats[] = [];
       const userChatData = userChatDocSnapshot.data();
@@ -103,8 +102,8 @@ export default function IndividualChatScreen({ navigation, route }) {
       }
     };
 
-    if (currentChatID && user.name != "") {
-      const userChatDocRef = doc(db, "chats", currentChatID);
+    if (chatID != "" && user.name != "") {
+      const userChatDocRef = doc(db, "chats", chatID);
       const unsubscribe = onSnapshot(userChatDocRef, (doc) => {
         if (doc.exists()) {
           fetchUserChat();
@@ -114,13 +113,13 @@ export default function IndividualChatScreen({ navigation, route }) {
       });
       return () => unsubscribe();
     } else {
-      console.error("currentChatID is not defined");
+      console.error("chatID is not defined");
     }
-  }, [currentChatID, user.name]);
+  }, [chatID, user.name]);
 
   const handleSend = async () => {
     const randomString = Math.random().toString(36).substring(7);
-    await updateDoc(doc(db, "chats", currentChatID), {
+    await updateDoc(doc(db, "chats", chatID), {
       messages: arrayUnion({
         chatID: randomString,
         text: inputText,
@@ -130,18 +129,26 @@ export default function IndividualChatScreen({ navigation, route }) {
     });
 
     await updateDoc(doc(db, "userChats", user.userID), {
-      [currentChatID + ".lastMessage"]: inputText.toString(),
-      [currentChatID + ".date"]: serverTimestamp(),
+      [chatID + ".lastMessage"]: inputText.toString(),
+      [chatID + ".date"]: serverTimestamp(),
     });
 
     await updateDoc(doc(db, "userChats", currentChatUserID), {
-      [currentChatID + ".lastMessage"]: inputText.toString(),
-      [currentChatID + ".date"]: serverTimestamp(),
+      [chatID + ".lastMessage"]: inputText.toString(),
+      [chatID + ".date"]: serverTimestamp(),
     });
 
     setInputText("");
   };
-
+  const goToMessageScreen = async () => {
+    await setCurrentChatID("");
+    await AsyncStorage.removeItem("chatID");
+    await setCurrentChatName("");
+    await AsyncStorage.removeItem("currentChatName");
+    await setCurrentChatUserID("");
+    await AsyncStorage.removeItem("currentChatUserID");
+    navigation.navigate("Tabs", { screen: "Message" });
+  };
   // NOT WORKING YET
   const flatListRef = useRef<FlatList<Chats>>(null);
 
@@ -158,12 +165,7 @@ export default function IndividualChatScreen({ navigation, route }) {
         <View style={styles.topPortionContainer}>
           {/*  Back Button */}
           <View style={styles.backBtnContainer}>
-            <TouchableOpacity
-              style={styles.backBtn}
-              onPress={() => {
-                navigation.navigate("Tabs", { screen: "Message" });
-              }}
-            >
+            <TouchableOpacity onPress={goToMessageScreen}>
               <Image
                 style={styles.backBtnImg}
                 source={require("../../assets/images/icons/blackBack.png")}

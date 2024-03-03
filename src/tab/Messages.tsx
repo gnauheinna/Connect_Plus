@@ -5,7 +5,7 @@ import { StyleSheet, ScrollView, ImageBackground } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { FontSize, Color, FontFamily } from "../../styles/GlobalStyles";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { useState, useEffect } from "react";
 import Search from "../components/search";
 import "react-native-get-random-values";
@@ -66,29 +66,30 @@ export default function MessageScreen({ navigation }) {
     setCurrentChatAvatar,
   } = useCurrentChat();
 
-  function directToChatBox(
+  async function directToChatBox(
     chatID: string,
     name: string,
     userID: string,
     avatar: string
   ) {
-    // passes the state to CurrentChatContext
-    // Save currentChatID to AsyncStorage
-    AsyncStorage.setItem("currentChatID", chatID);
-    AsyncStorage.setItem("currentChatName", name);
-    AsyncStorage.setItem("currentChatUserID", userID);
-    setCurrentChatID(chatID);
-    setCurrentChatName(name);
-    setCurrentChatUserID(userID);
-    setCurrentChatAvatar(avatar);
+    try {
+      // passes the state to CurrentChatContext
+      // Save currentChatID to AsyncStorage
+      await AsyncStorage.setItem("currentChatID", chatID);
+      await AsyncStorage.setItem("currentChatName", name);
+      await AsyncStorage.setItem("currentChatUserID", userID);
+
+      setCurrentChatID(chatID);
+      setCurrentChatName(name);
+      setCurrentChatUserID(userID);
+      setCurrentChatAvatar(avatar);
+
+      navigation.navigate("IndividualChat", { chatID: chatID });
+    } catch (error) {
+      // Handle errors if any
+      console.error("Error while setting AsyncStorage:", error);
+    }
   }
-  useFocusEffect(
-    React.useCallback(() => {
-      if (currentChatID) {
-        navigation.navigate("IndividualChat", { chatID: currentChatID });
-      }
-    }, [currentChatID])
-  );
 
   useEffect(() => {
     const fetchUserChats = async () => {
