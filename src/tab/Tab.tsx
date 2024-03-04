@@ -1,5 +1,5 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ProfileScreen from "./Profile";
@@ -7,6 +7,8 @@ import AskNShareScreen from "./AskNShare";
 import MessageScreen from "./Messages";
 import { Image } from "react-native";
 import MyJourneyScreen from "./MyJourneys";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 const Tab = createBottomTabNavigator();
 function TabBarIcon(props: {
@@ -17,11 +19,34 @@ function TabBarIcon(props: {
 }
 
 const MyTabs = () => {
+  const [currentUserId, setCurrentUserId] = useState(null);
+
+  useEffect(() => {
+    const getCurrUser = async () => {
+      const storedToken = await AsyncStorage.getItem("userUID");
+      if (storedToken) {
+        setCurrentUserId(storedToken);
+
+      }
+    };
+
+    getCurrUser();
+  }, []);
+  
   return (
     <Tab.Navigator>
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
+        listeners={({ navigation }) => ({
+          tabPress: event => {
+            // Prevent the default action
+            event.preventDefault();
+
+            // Navigate to the current user's profile
+            navigation.navigate('Profile', { userId: currentUserId });
+          },
+        })}
         options={{
           tabBarIcon: ({ focused }) => (
             <Image

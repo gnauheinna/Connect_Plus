@@ -30,13 +30,8 @@ import { Title } from "react-native-paper";
 import { Icon } from "react-native-elements";
 import EditProfile from "../screens/EditProfile";
 import { collection, getDoc, doc, getFirestore } from "firebase/firestore";
-// import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
-// import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
-// import auth from '@react-native-firebase/auth';
-// import firebase from 'firebase/app';
-// import 'firebase/auth';
-import { getAuth } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import React from "react";
 
 export default function ProfileScreen({ navigation, route }) {
   const db = getFirestore();
