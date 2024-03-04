@@ -1,3 +1,254 @@
+// import React from 'react'
+
+// export default function pro() {
+//   return (
+//     <View style={styles.outterMostContainer}>
+//       {/* <View style={styles.container}> */}
+//       <View style={styles.profileInfoContainer}>
+//         {/* Display the user's avatar, full name, and intro */}
+//         <View style={styles.profileContainer}>
+//           {/* display avatar */}
+//           <Image source={avatarImages[avatar]} style={styles.profileImage} />
+//           {/* Display the user's full name and intro */}
+//           <View>
+//             <Text style={[styles.userName]}>{name}</Text>
+//             <Text style={[styles.userIntro]}>
+//               {" "}
+//               Class of {year}, {major} Major{" "}
+//             </Text>
+//           </View>
+//         </View>
+
+//         {/* When viewing someone else's file */}
+//         {viewedUser !== currentUserId ? (
+//           <View style={styles.yourTopContainer}>
+//             <View style={styles.yourAboutMeContainer}>
+//               <Text style={styles.yourAboutMeText}>
+//                 Open to Mentorship, Looking for coffee chats, ask me about my
+//                 startup
+//               </Text>
+//             </View>
+//             <View style={styles.buttonContainer}>
+//               <View style={{ marginRight: 10 }}>
+//                 <FollowButton userIdToFollow={viewedUser} />
+//               </View>
+//               <MessageButton navigation={navigation} chatID={viewedUser} />
+//             </View>
+//           </View>
+//         ) : (
+//           <View style={styles.aboutMeContainer}>
+//             <View>
+//               <Text style={styles.aboutMeText}>
+//                 Open to Mentorship, Looking for coffee chats, ask me about my
+//                 startup
+//               </Text>
+//             </View>
+//             <View>
+//               <TouchableOpacity
+//                 style={styles.editButton}
+//                 onPress={() => setModalVisible(true)}
+//               >
+//                 <Icon
+//                   name="pencil"
+//                   type="font-awesome"
+//                   size={18}
+//                   color="#000"
+//                 />
+//               </TouchableOpacity>
+//               <View style={styles.modalContainer}>
+//                 <Modal
+//                   animationType="slide"
+//                   transparent={true}
+//                   visible={modalVisible}
+//                   onRequestClose={() => {
+//                     setModalVisible(!modalVisible);
+//                   }}
+//                 >
+//                   <EditProfile close={() => setModalVisible(false)} />
+//                 </Modal>
+//               </View>
+//             </View>
+//           </View>
+//         )}
+
+//         {/* Display the user's interests */}
+//         <View style={styles.interestsContainer}>
+//           {user && user.academic && (
+//             <View style={styles.individualInterest}>
+//               <Text style={styles.interestText}>Academic</Text>
+//             </View>
+//           )}
+//           {user && user.career && (
+//             <View style={styles.individualInterest}>
+//               <Text style={styles.interestText}>Career</Text>
+//             </View>
+//           )}
+//           {user && user.financial && (
+//             <View style={styles.individualInterest}>
+//               <Text style={styles.interestText}>Financial</Text>
+//             </View>
+//           )}
+//           {user && user.studentLife && (
+//             <View style={styles.individualInterest}>
+//               <Text style={styles.interestText}>Student Life</Text>
+//             </View>
+//           )}
+//         </View>
+//       </View>
+
+//       {/* Horizontal Bar */}
+//       <View style={styles.horizontalBarContainer}>
+//         {/* Press on the My Questions tab */}
+//         <TouchableOpacity
+//           onPress={() => {
+//             setshowLineForSaved(false);
+//             setshowLineForQuestions(true);
+//           }}
+//         >
+//           <Text
+//             style={[
+//               styles.myQuestionsText,
+//               showLineForSaved
+//                 ? { color: "#85808C", fontFamily: "Stolzl Regular" }
+//                 : {},
+//             ]}
+//           >
+//             My Questions
+//           </Text>
+//         </TouchableOpacity>
+//         {/* Display the line underneath the My Questions tab */}
+//         {showLineForQuestions && <View style={styles.lineForQuestions}></View>}
+//         {/* Press on the Saved Journeys tab */}
+//         <TouchableOpacity
+//           onPress={() => {
+//             setshowLineForSaved(true);
+//             setshowLineForQuestions(false);
+//           }}
+//         >
+//           <Text
+//             style={[
+//               styles.savedText,
+//               showLineForQuestions
+//                 ? { color: "#85808C", fontFamily: "Stolzl Regular" }
+//                 : {},
+//             ]}
+//           >
+//             Saved
+//           </Text>
+//         </TouchableOpacity>
+//         {/* Display the line underneath the Saved Journeys tab */}
+//         {showLineForSaved && <View style={styles.lineForJourneys}></View>}
+//       </View>
+//       {/* <View style={styles.questionsBigContainer}> */}
+//       {!showLineForSaved ? (
+//         <FlatList
+//           style={styles.questionsContainer}
+//           showsVerticalScrollIndicator={false}
+//           data={filteredPosts}
+//           keyExtractor={(item, index) => index.toString()}
+//           renderItem={({ item }) => (
+//             <View style={styles.postShadowContainer}>
+//               {/* Displays the post */}
+//               <IndividualPost
+//                 navigation={navigation}
+//                 postId={item.postID}
+//                 userId={item.userID}
+//               />
+//             </View>
+//           )}
+//         />
+//       ) : (
+//         <View style={styles.bottompartContainer}>
+//           <View style={styles.nestedBarContainer}>
+//             {/* Press on the My Questions tab */}
+//             <Pressable
+//               onPress={() => {
+//                 setchosenJourneys(false);
+//                 setchosenAsks(true);
+//               }}
+//             >
+//               <Text
+//                 style={[
+//                   { marginHorizontal: 30, marginBottom: 0 },
+//                   chosenJourneys
+//                     ? { color: "#84808B", fontFamily: "Stolzl Regular" }
+//                     : {
+//                         fontWeight: "bold",
+//                         color: "#84808B",
+//                         fontFamily: "Stolzl Medium",
+//                       },
+//                   ,
+//                 ]}
+//               >
+//                 Asks
+//               </Text>
+//             </Pressable>
+//             {/* Press on the Saved Journeys tab */}
+//             <Pressable
+//               onPress={() => {
+//                 setchosenJourneys(true);
+//                 setchosenAsks(false);
+//               }}
+//             >
+//               <Text
+//                 style={[
+//                   { marginHorizontal: 30, marginBottom: 0 },
+//                   chosenAsks
+//                     ? { color: "#84808B", fontFamily: "Stolzl Regular" }
+//                     : {
+//                         fontWeight: "bold",
+//                         color: "#84808B",
+//                         fontFamily: "Stolzl Medium",
+//                       },
+//                   ,
+//                 ]}
+//               >
+//                 Journeys
+//               </Text>
+//             </Pressable>
+//           </View>
+//           <View>
+//             {chosenJourneys && (
+//               <FlatList
+//                 style={styles.journeysContainer}
+//                 showsVerticalScrollIndicator={false}
+//                 data={filteredJourneys}
+//                 keyExtractor={(item, index) => index.toString()}
+//                 renderItem={({ item }) => {
+//                   const imgSource =
+//                     item.authorName === "Rachel Li"
+//                       ? require("../../assets/images/mentorMyJourneyPics/rachel.png")
+//                       : item.authorName === "Neri Ajiatas Arreaga"
+//                       ? require("../../assets/images/mentorMyJourneyPics/neri.png")
+//                       : item.authorName === "Shateva Long"
+//                       ? require("../../assets/images/mentorMyJourneyPics/shateva.png")
+//                       : item.authorName === "Julia Tran"
+//                       ? require("../../assets/images/mentorMyJourneyPics/julia.png")
+//                       : require("../../assets/images/mentorMyJourneyPics/rachel.png");
+
+//                   return (
+//                     <View style={styles.myJourneyContainer}>
+//                       <MJPostCard
+//                         onPress={() =>
+//                           directToMyJourneyPost(mentorName(item.journeyTitle))
+//                         }
+//                         img={imgSource}
+//                         title={item.journeyTitle}
+//                         name={item.authorName}
+//                         year={item.Intro}
+//                       />
+//                     </View>
+//                   );
+//                 }}
+//               />
+//             )}
+//           </View>
+//         </View>
+//       )}
+//     </View>
+//   )
+// }
+
 import {
   StyleSheet,
   Text,
