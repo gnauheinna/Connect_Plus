@@ -30,13 +30,11 @@ import { useNavigation } from "@react-navigation/native";
 interface IndividualPostProps {
   postId: string;
   navigation: any;
-  // userId: string;
 }
 
 const IndividualPost: React.FC<IndividualPostProps> = ({
   postId,
   navigation,
-  // userId,
 }) => {
   const [likePressed, setlikePressed] = useState(false);
 

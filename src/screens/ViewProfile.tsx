@@ -30,6 +30,7 @@ import {
   import { collection, getDoc, doc, getFirestore } from "firebase/firestore";
   import AsyncStorage from "@react-native-async-storage/async-storage";
   import React from "react";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
   
   export default function ProfileScreen({ navigation, route }) {
     const db = getFirestore();
@@ -52,20 +53,12 @@ import {
     const [modalVisible, setModalVisible] = useState(false);
     const [currentUserId, setCurrentUserId] = useState("");
     const [viewedUser, setViewedUser] = useState("");
-    
-    
-    useEffect(() => {
-      const getCurrUser = async () => {
+  
+    const getCurrUser = async () => {
         const storedToken = await AsyncStorage.getItem("userUID");
-        if (storedToken) {
-          setCurrentUserId(storedToken);
-          setViewedUser(storedToken);
-        }
-      };
-  
-      getCurrUser();
-    }, []);
-  
+        setCurrentUserId(storedToken);
+    };
+
     // update user info if viewing another user's profile
     // userId is the id the of the viewed user
     const { userId } = route?.params || {};
@@ -109,6 +102,9 @@ import {
       setAvatar(user.avatar);
     }, [user]);
   
+    getCurrUser();
+    console.log("curruser", currentUserId);
+    console.log("vieweduser", viewedUser); 
     function mentorName(Title: string) {
       switch (Title) {
         case "The Ultimate SNAP Guide: Get $200 Monthly for Groceries":
@@ -214,8 +210,8 @@ import {
               <View>
               <Text style={styles.yourAboutMeText}>Open to Mentorship, Looking for coffee chats, ask me about my startup</Text>
             </View>
-            </View>     
-          }
+            </View>  
+            }   
   
           {/* Display the user's interests */}
           <View style={styles.interestsContainer}>
@@ -295,7 +291,7 @@ import {
             renderItem={({ item }) => (
               <View style={styles.postShadowContainer}>
                 {/* Displays the post */}
-                <IndividualPost navigation={navigation} postId={item.postID} userId={item.userID} />
+                <IndividualPost navigation={navigation} postId={item.postID} />
               </View>
             )}
           />

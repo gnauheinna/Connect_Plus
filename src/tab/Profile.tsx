@@ -50,52 +50,37 @@ export default function ProfileScreen({ navigation, route }) {
   const [Mname, setMName] = useState("");
   const [img, setImg] = useState(Image);
   const [modalVisible, setModalVisible] = useState(false);
-  const [currentUserId, setCurrentUserId] = useState("");
-  const [viewedUser, setViewedUser] = useState("");
-  
-  
-  useEffect(() => {
-    const getCurrUser = async () => {
-      const storedToken = await AsyncStorage.getItem("userUID");
-      if (storedToken) {
-        setCurrentUserId(storedToken);
-        setViewedUser(storedToken);
-      }
-    };
-
-    getCurrUser();
-  }, []);
 
   // update user info if viewing another user's profile
   // userId is the id the of the viewed user
-  const { userId } = route?.params || {};
-  useEffect(() => {
-    const updateUser = async () => {
-      const usersCollection = collection(db, "users");
-      if (userId) {
-        const userInfo = await getDoc(doc(db, "users", userId));
-        const userData = userInfo.data() as {
-          name: string;
-          email: string;
-          major: string;
-          year: string;
-          userID: string;
-          academic: boolean;
-          career: boolean;
-          avatar: string;
-          financial: boolean;
-          studentLife: boolean;
-        };
-        setUser(userData);
-      } else {
-        console.error("User is not found");
-      }
-    };
-    if (userId !== "" && userId !== undefined) {
-      updateUser();
-      setViewedUser(userId);
-    }
-  }, [userId]);
+  // const { userId } = route?.params || {};
+  // useEffect(() => {
+  //   const updateUser = async () => {
+  //     const usersCollection = collection(db, "users");
+  //     if (userId) {
+  //       const userInfo = await getDoc(doc(db, "users", userId));
+  //       const userData = userInfo.data() as {
+  //         name: string;
+  //         email: string;
+  //         major: string;
+  //         year: string;
+  //         userID: string;
+  //         academic: boolean;
+  //         career: boolean;
+  //         avatar: string;
+  //         financial: boolean;
+  //         studentLife: boolean;
+  //       };
+  //       setUser(userData);
+  //     } else {
+  //       console.error("User is not found");
+  //     }
+  //   };
+  //   if (userId !== "" && userId !== undefined) {
+  //     updateUser();
+  //     setViewedUser(userId);
+  //   }
+  // }, [userId]);
 
   // retrieve user info of viewing another user's profile
   useEffect(() => {
@@ -181,18 +166,9 @@ export default function ProfileScreen({ navigation, route }) {
             Class of {year}, {major} Major </Text>
           </View>
         </View>
-      
-        {/* When viewing someone else's file */}
-        {viewedUser !== currentUserId && (
-          <View style={styles.yourAboutMeContainer}>
-            <View>
-            <Text style={styles.yourAboutMeText}>Open to Mentorship, Looking for coffee chats, ask me about my startup</Text>
-          </View>
-          </View>    
-        )}
+    
 
         {/* When viewing your own profile */}
-        {viewedUser === currentUserId && (
           <View style={styles.aboutMeContainer}>
           <View>
             <Text style={styles.aboutMeText}>Open to Mentorship, Looking for coffee chats, ask me about my startup</Text>
@@ -218,7 +194,6 @@ export default function ProfileScreen({ navigation, route }) {
               </View>
             </View>
         </View>
-        )}
 
         {/* Display the user's interests */}
         <View style={styles.interestsContainer}>

@@ -27,7 +27,7 @@ interface IndividualCommentProps {
   timestamp: string;
   content: string;
   avatar: string;
-  userId: string;
+  // userId: string;
   navigation: any;
 }
 
@@ -37,7 +37,7 @@ const IndividualComment: React.FC<IndividualCommentProps> = ({
   timestamp,
   content,
   avatar,
-  userId,
+  // userId,
   navigation,
 }) => {
   const avatarImages: { [key: string]: any } = {
@@ -66,7 +66,7 @@ const IndividualComment: React.FC<IndividualCommentProps> = ({
             <View style={styles.userInfoContainer}>
 
 
-            <TouchableOpacity 
+            {/* <TouchableOpacity 
               onPress={() => {
                 console.log("USER ID", userId); // Log the user ID
                 console.log("USERNAME", username); // Log the username
@@ -74,8 +74,9 @@ const IndividualComment: React.FC<IndividualCommentProps> = ({
               }}
             >
               <Text style={styles.userName}>{username}</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
+            <Text style={styles.userName}>{username}</Text>
               <Text style={styles.timestamp}>{timestamp}</Text>
             </View>
             {/* Display the timestamp */}
