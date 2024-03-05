@@ -70,7 +70,7 @@ const IndividualComment: React.FC<IndividualCommentProps> = ({
               onPress={() => {
                 console.log("USER ID", userId); // Log the user ID
                 console.log("USERNAME", username); // Log the username
-                navigation.navigate('Profile', { userId: userId }); // Navigate to the 'Profile' screen with the user's ID as a parameter
+                navigation.navigate('ViewProfile', { userId: userId }); // Navigate to the 'Profile' screen with the user's ID as a parameter
               }}
             >
               <Text style={styles.userName}>{username}</Text>
