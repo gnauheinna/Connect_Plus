@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { useUser } from "../context/UserContext";
 
 
 export default function EditProfile({ close }) {
@@ -8,6 +9,14 @@ export default function EditProfile({ close }) {
   const [input2, setInput2] = useState('');
   const [input3, setInput3] = useState('');
   const [input4, setInput4] = useState('');
+  const [year, setYear] = useState("");
+  const [major, setMajor] = useState("");
+  const { user, setUser } = useUser();
+
+  useEffect(() => {
+    setMajor(user.major);
+    setYear(user.year);
+  }, [user]);
 
   const handleSubmit = () => {
     // Handle the submit action here
@@ -21,34 +30,40 @@ export default function EditProfile({ close }) {
 
   return (
     <View style={styles.modalView}>
+      <Text style={styles.label}>Bio</Text>
       <TextInput
         style={styles.input}
         onChangeText={setInput1}
         value={input1}
-        placeholder="Bio"
-        placeholderTextColor="#000000"
+        placeholder={"Class of " + year + ", " + major + " Major"}
+        placeholderTextColor="#85808C"
         maxLength={35}
       />
+      <Text style={styles.subLabel}>Character Limit: {35 - input1.length}</Text>
+
+      <Text style={styles.label}>Open To</Text>
       <TextInput
         style={styles.input}
         onChangeText={setInput2}
         value={input2}
         placeholder="Select Status"
-        placeholderTextColor="#000000"
+        placeholderTextColor="#85808C"
       />
+      <Text style={styles.label}>Looking For</Text>
       <TextInput
         style={styles.input}
         onChangeText={setInput3}
         value={input3}
         placeholder="Select Status"
-        placeholderTextColor="#000000"
+        placeholderTextColor="#85808C"
       />
+      <Text style={styles.label}>Ask Me About</Text>
       <TextInput
         style={styles.input}
         onChangeText={setInput4}
         value={input4}
         placeholder="Select Status"
-        placeholderTextColor="#000000"
+        placeholderTextColor="#85808C"
       />
 
 
@@ -70,9 +85,6 @@ export default function EditProfile({ close }) {
 }
 
 const styles = StyleSheet.create({
-  button:{
-
-  },
     buttonText: {
         
     },
@@ -93,35 +105,43 @@ const styles = StyleSheet.create({
         elevation: 5,
         height: '85%',
     },
-    // input: {
-    //     height: 40,
-    //     borderColor: 'gray',
-    //     borderWidth: 1,
-    //     marginBottom: 10,
-    //     padding: 10,
-    // },
+    label: {
+      fontFamily: "Stolzl Regular",
+      alignSelf: "flex-start",
+      fontSize: 14,
+    },
+    subLabel: {
+      color: "#85808C",
+      fontFamily: "Stolzl Regular",
+      alignSelf: "flex-end",
+
+    },
     input: {
-        borderRadius: 10,
-        paddingLeft: 48,
+        borderRadius: 5,
+        borderWidth: 1,
+        paddingLeft: 5,
         width: "100%",
         height: 42,
         marginVertical: 10,
         backgroundColor: "white",
-        borderBottomWidth: 0,
-        borderColor: "#E3E3E3",
-        fontSize: 16,
+        borderColor: "#85808C",
+        fontSize: 14,
         fontFamily: "Stolzl Regular",
-        shadowColor: "#49006C",
-        shadowOffset: {
-          width: -2,
-          height: 4,
-        },
-        shadowOpacity: 0.06,
-        shadowRadius: 10,
+        alignSelf: "flex-start",
+        alignItems: "flex-start",
       },
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: '50%',
+        width: '100%',
+      },
+    button: {
+        borderWidth: 1, // Add this
+        borderColor: 'black', // Add this
+        borderRadius: 10,
+        backgroundColor: "#FFD465",
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '30%',
       },
 });
