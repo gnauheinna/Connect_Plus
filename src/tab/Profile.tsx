@@ -6,7 +6,6 @@ import {
   ScrollView,
   FlatList,
   Modal,
-  Pressable,
 } from "react-native";
 import { useState, useEffect } from "react";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
@@ -23,8 +22,7 @@ import IndividualPost from "../components/individualPost";
 import { useUser } from "../context/UserContext";
 import { Post, usePostContext } from "../context/postContext";
 import MJPostCard from "../components/MJPostCard";
-import FollowButton from "../components/followButton";
-import MessageButton from "../components/messagebutton";
+
 import { useSavedJourneyContext } from "../context/savedJourneyContext";
 import { Title } from "react-native-paper";
 import { Icon } from "react-native-elements";
@@ -47,7 +45,7 @@ export default function ProfileScreen({ navigation, route }) {
   const { posts, loading } = usePostContext();
   const [allPosts, setAllPosts] = useState<Post[]>([]);
   const [showLineForQuestions, setshowLineForQuestions] = useState(true);
-  const [chosenJourneys, setchosenJourneys] = useState(false);
+  const [showLineForJourneys, setshowLineForJourneys] = useState(false);
   const { savedJourneys, setSavedJourneys } = useSavedJourneyContext();
   const [Mname, setMName] = useState("");
   const [img, setImg] = useState(Image);
@@ -162,39 +160,42 @@ export default function ProfileScreen({ navigation, route }) {
           <Image source={avatarImages[avatar]} style={styles.profileImage} />
           {/* Display the user's full name and intro */}
           <View>
-          <Text style={[styles.userName]}>{name}</Text>
-          <Text style={[styles.userIntro]}>
-            {" "}
-            Class of {year}, {major} Major </Text>
+            <Text style={[styles.userName]}>{name}</Text>
+            <Text style={[styles.userIntro]}>
+              {" "}
+              Class of {year}, {major} Major{" "}
+            </Text>
           </View>
         </View>
-    
 
         {/* When viewing your own profile */}
-          <View style={styles.aboutMeContainer}>
+        <View style={styles.aboutMeContainer}>
           <View>
-            <Text style={styles.aboutMeText}>Open to Mentorship, Looking for coffee chats, ask me about my startup</Text>
+            <Text style={styles.aboutMeText}>
+              Open to Mentorship, Looking for coffee chats, ask me about my
+              startup
+            </Text>
           </View>
-            <View>
-              <TouchableOpacity
-                style={styles.editButton}
-                onPress={() => setModalVisible(true)}
+          <View>
+            <TouchableOpacity
+              style={styles.editButton}
+              onPress={() => setModalVisible(true)}
+            >
+              <Icon name="pencil" type="font-awesome" size={18} color="#000" />
+            </TouchableOpacity>
+            <View style={styles.modalContainer}>
+              <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                  setModalVisible(!modalVisible);
+                }}
               >
-                <Icon name="pencil" type="font-awesome" size={18} color="#000" />
-              </TouchableOpacity>
-              <View style={styles.modalContainer}>
-                <Modal
-                  animationType="slide"
-                  transparent={true}
-                  visible={modalVisible}
-                  onRequestClose={() => {
-                    setModalVisible(!modalVisible);
-                  }}
-                >
-                  <EditProfile close={() => setModalVisible(false)} />
-                </Modal>
-              </View>
+                <EditProfile close={() => setModalVisible(false)} />
+              </Modal>
             </View>
+          </View>
         </View>
 
         {/* Display the user's interests */}
@@ -297,25 +298,24 @@ export default function ProfileScreen({ navigation, route }) {
                 ? require("../../assets/images/mentorMyJourneyPics/julia.png")
                 : require("../../assets/images/mentorMyJourneyPics/rachel.png");
 
-                return (
-                  <View style={styles.myJourneyContainer}>
-                    <MJPostCard
-                      onPress={() =>
-                        directToMyJourneyPost(mentorName(item.journeyTitle))
-                      }
-                      img={imgSource}
-                      title={item.journeyTitle}
-                      name={item.authorName}
-                      year={item.Intro}
-                    />
-                  </View>
-                );
-              }}
-            />
-          )}
-        </View>
+            return (
+              <View style={styles.myJourneyContainer}>
+                <MJPostCard
+                  onPress={() =>
+                    directToMyJourneyPost(mentorName(item.journeyTitle))
+                  }
+                  img={imgSource}
+                  title={item.journeyTitle}
+                  name={item.authorName}
+                  year={item.Intro}
+                />
+              </View>
+            );
+          }}
+        />
       )}
-    </>
+    </View>
+    // </View>
   );
 }
 
@@ -323,23 +323,11 @@ const styles = StyleSheet.create({
   outterMostContainer: {
     flex: 1,
   },
-  bottompartContainer: {},
   container: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
     paddingTop: 60,
-  },
-  yourTopContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 20,
   },
   profileContainer: {
     flexDirection: "row",
@@ -398,28 +386,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignSelf: "flex-start",
     marginTop: 10,
-    marginBottom: 15,
+    marginBottom: 30,
     marginLeft: 30,
   },
   individualInterest: {
-    marginRight: 5,
-    borderRadius: 20,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
+    marginRight: 10,
+    borderRadius: 25,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
     backgroundColor: "#F7F4FA",
   },
   interestText: {
     color: "#724EAE",
     fontFamily: "Stolzl Regular",
-  },
-  nestedBarContainer: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    borderBottomColor: "#F0EAF6",
-    borderBottomWidth: 1,
-    paddingVertical: 20,
-    backgroundColor: "#F9F6FF",
-    // marginBottom: 24,
   },
   horizontalBarContainer: {
     flexDirection: "row",
@@ -441,8 +420,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     fontFamily: "Stolzl Medium",
   },
-
-  savedText: {
+  savedJourneysText: {
     fontWeight: "bold",
     marginHorizontal: 30,
     marginBottom: 0,
@@ -474,13 +452,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F9F6FF",
     paddingTop: 24,
-    zIndex: 1,
-  },
-  journeysContainer: {
-    flex: 1,
-    backgroundColor: "#F9F6FF",
-    paddingTop: 24,
-    zIndex: 1,
   },
   mainQuestionsContainer: {
     marginLeft: 20,
@@ -510,7 +481,12 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     marginBottom: 20,
   },
-
+  bottomPartContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: 24,
+  },
   postLikesContainer: {
     flexDirection: "row",
     alignItems: "center",
