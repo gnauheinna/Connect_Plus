@@ -135,24 +135,75 @@ export default function IndividualChatScreen({ navigation, route }) {
 
   // fetches the correct chat
   useEffect(() => {
+    // fetches chat again everytime there is a new message
+    const userChatDocRef = doc(db, "chats", chatID);
     const fetchUserChat = async () => {
-      const userChatDocRef = doc(db, "chats", chatID);
-      const userChatDoc = await getDoc(userChatDocRef);
-      if (userChatDoc.exists()) {
-        const userChatData = userChatDoc.data();
+      const userChatDocSnapshot = await getDoc(userChatDocRef);
+      const chatArray: Chats[] = [];
+      const userChatData = userChatDocSnapshot.data();
+      if (userChatData) {
         setChats(userChatData.messages);
-      } else {
-        // Document doesn't exist, create a new one
-        try {
-          await setDoc(userChatDocRef, { messages: [] });
-          console.log("New chat document created");
-          setChats([]);
-        } catch (error) {
-          console.error("Error creating new chat document:", error);
-        }
       }
     };
-    fetchUserChat();
+
+    const createNewChat = async () => {
+      // Document doesn't exist, create a new one
+      try {
+        // create new Chat
+        await setDoc(userChatDocRef, { messages: [] });
+        setChats([]);
+        // Define the new field you want to add
+        const newField = {
+          [chatID]: {
+            chatID: chatID,
+            date: Timestamp.now(),
+            lastMessage: "",
+            userInfo: {
+              name: userData.name,
+              avatar: userData.avatar,
+              userID: ChatUserId,
+            },
+          },
+        };
+        const othernewField = {
+          [chatID]: {
+            chatID: chatID,
+            date: Timestamp.now(),
+            lastMessage: "",
+            userInfo: {
+              name: user.name,
+              avatar: user.avatar,
+              userID: user.userID,
+            },
+          },
+        };
+        try {
+          // creates new user chat
+          const chatsref = await doc(db, "userChats", user.userID);
+          const otherchatsref = await doc(db, "userChats", ChatUserId);
+          await setDoc(chatsref, newField, { merge: true });
+          await setDoc(otherchatsref, othernewField, { merge: true });
+          console.log("New chat document created");
+        } catch (error) {
+          console.error("Error creating new userChat document:", error);
+        }
+      } catch (error) {
+        console.error("Error creating new chat document:", error);
+      }
+    };
+
+    if (chatID != "") {
+      const unsubscribe = onSnapshot(userChatDocRef, (doc) => {
+        if (doc.exists()) {
+          fetchUserChat();
+        } else {
+          createNewChat();
+        }
+      });
+      return () => unsubscribe();
+    } else {
+      console.error("current chatID is not defined");
+    }
   }, [chatID, user.name]);
 
   const handleSend = async () => {

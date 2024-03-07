@@ -53,13 +53,8 @@ export default function ProfileScreen({ navigation, route }) {
   const [Mname, setMName] = useState("");
   const [img, setImg] = useState(Image);
   const [modalVisible, setModalVisible] = useState(false);
-  const [currentUserId, setCurrentUserId] = useState("");
   const [viewedUser, setViewedUser] = useState("");
   const [chatID, setchatID] = useState("");
-  const getCurrUser = async () => {
-    const storedToken = await AsyncStorage.getItem("userUID");
-    setCurrentUserId(storedToken);
-  };
 
   // update user info if viewing another user's profile
   // userId is the id the of the viewed user
@@ -90,11 +85,14 @@ export default function ProfileScreen({ navigation, route }) {
     if (userId !== "" && userId !== undefined) {
       updateUser();
       setViewedUser(userId);
-
-      if (currentUserId > userId) {
-        setchatID(currentUserId + userId);
+      console.log("viewprofile chatID debug userid", userId);
+      console.log("viewprofile chatID debug userid", user.userID);
+      if (user.userID > userId) {
+        console.log("viewprofile chatID 1", user.userID + userId);
+        setchatID(user.userID + userId);
       } else {
-        setchatID(userId + currentUserId);
+        console.log("viewprofile chatID 2", userId + user.userID);
+        setchatID(userId + user.userID);
       }
     }
   }, [userId]);
@@ -111,9 +109,8 @@ export default function ProfileScreen({ navigation, route }) {
     setAvatar(user.avatar);
   }, [user]);
 
-  getCurrUser();
-  console.log("curruser", currentUserId);
-  console.log("vieweduser", viewedUser);
+  //console.log("curruser", currentUserId);
+  //console.log("vieweduser", viewedUser);
   function mentorName(Title: string) {
     switch (Title) {
       case "The Ultimate SNAP Guide: Get $200 Monthly for Groceries":
