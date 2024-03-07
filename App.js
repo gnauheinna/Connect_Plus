@@ -35,6 +35,7 @@ import ShatevaFeaturedScreen from "./src/screens/MyJourneyPosts/ShatevaFeatured"
 import JourneyScreen from "./src/screens/MyJourneyPosts/JourneyScreen";
 import FeaturedJourneyScreen from "./src/screens/MyJourneyPosts/FeaturedJourneyScreen";
 import EditProfile from "./src/screens/EditProfile";
+import ViewProfile from "./src/screens/ViewProfile";
 
 // Create a Stack navigator
 const Stack = createStackNavigator();
@@ -170,8 +171,12 @@ export default function App() {
                     name="EditProfile"
                     component={EditProfile}
                     options={{ headerShown: false }}
-                  >
-                  </Stack.Screen>
+                  />
+                  <Stack.Screen
+                    name="ViewProfile"
+                    component={ViewProfile}
+                    options={{ headerShown: false }}
+                  />
                 </Stack.Navigator>
               </NavigationContainer>
             </SavedJourneyProvider>

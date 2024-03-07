@@ -52,65 +52,37 @@ export default function ProfileScreen({ navigation, route }) {
   const [Mname, setMName] = useState("");
   const [img, setImg] = useState(Image);
   const [modalVisible, setModalVisible] = useState(false);
-  const [currentUserId, setCurrentUserId] = useState("");
-  const [viewedUser, setViewedUser] = useState("");
-  const [chosenAsks, setchosenAsks] = useState(false);
-  const [showLineForSaved, setshowLineForSaved] = useState(false);
-  const [viewMyOwn, setViewMyOwn] = useState(true);
 
   // update user info if viewing another user's profile
   // userId is the id the of the viewed user
-  const { userId } = route?.params || {};
-
-  // Checks if the current user is viewing their own profile
-  useEffect(() => {
-    if (userId === viewedUser) {
-      setViewMyOwn(true);
-    } else {
-      setViewMyOwn(false);
-    }
-  }, []);
-
-  // Get the current user's id
-  useEffect(() => {
-    const getCurrUser = async () => {
-      const storedToken = await AsyncStorage.getItem("userUID");
-      if (storedToken) {
-        setCurrentUserId(storedToken);
-        setViewedUser(storedToken);
-      }
-    };
-    getCurrUser();
-  }, []);
-
-  useEffect(() => {
-    const updateUser = async () => {
-      const usersCollection = collection(db, "users");
-      if (userId) {
-        const userInfo = await getDoc(doc(db, "users", userId));
-        const userData = userInfo.data() as {
-          name: string;
-          email: string;
-          major: string;
-          year: string;
-          userID: string;
-          academic: boolean;
-          career: boolean;
-          avatar: string;
-          financial: boolean;
-          studentLife: boolean;
-        };
-        setUser(userData);
-      } else {
-        console.error("User is not found");
-      }
-    };
-    if (userId !== "" && userId !== undefined) {
-      // only updates user data if view other user's profile
-      updateUser();
-      setViewedUser(userId);
-    }
-  }, [userId]);
+  // const { userId } = route?.params || {};
+  // useEffect(() => {
+  //   const updateUser = async () => {
+  //     const usersCollection = collection(db, "users");
+  //     if (userId) {
+  //       const userInfo = await getDoc(doc(db, "users", userId));
+  //       const userData = userInfo.data() as {
+  //         name: string;
+  //         email: string;
+  //         major: string;
+  //         year: string;
+  //         userID: string;
+  //         academic: boolean;
+  //         career: boolean;
+  //         avatar: string;
+  //         financial: boolean;
+  //         studentLife: boolean;
+  //       };
+  //       setUser(userData);
+  //     } else {
+  //       console.error("User is not found");
+  //     }
+  //   };
+  //   if (userId !== "" && userId !== undefined) {
+  //     updateUser();
+  //     setViewedUser(userId);
+  //   }
+  // }, [userId]);
 
   // retrieve user info of viewing another user's profile
   useEffect(() => {
@@ -181,381 +153,149 @@ export default function ProfileScreen({ navigation, route }) {
   }
 
   return (
-    <>
-      {viewMyOwn ? (
-        // MY OWN PROFILE
-        <View style={styles.outterMostContainer}>
-          <View style={styles.profileInfoContainer}>
-            {/* Display the user's avatar, full name, and intro */}
-            <View style={styles.profileContainer}>
-              {/* display avatar */}
-              <Image
-                source={avatarImages[avatar]}
-                style={styles.profileImage}
-              />
-              {/* Display the user's full name and intro */}
-              <View>
-                <Text style={[styles.userName]}>{name}</Text>
-                <Text style={[styles.userIntro]}>
-                  {" "}
-                  Class of {year}, {major} Major{" "}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.aboutMeContainer}>
-              <View>
-                <Text style={styles.aboutMeText}>
-                  Open to Mentorship, Looking for coffee chats, ask me about my
-                  startup
-                </Text>
-              </View>
-              <View>
-                <TouchableOpacity
-                  style={styles.editButton}
-                  onPress={() => setModalVisible(true)}
-                >
-                  <Icon
-                    name="pencil"
-                    type="font-awesome"
-                    size={18}
-                    color="#000"
-                  />
-                </TouchableOpacity>
-                <View style={styles.modalContainer}>
-                  <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => {
-                      setModalVisible(!modalVisible);
-                    }}
-                  >
-                    <EditProfile close={() => setModalVisible(false)} />
-                  </Modal>
-                </View>
-              </View>
-            </View>
-            {/* Display the user's interests */}
-            <View style={styles.interestsContainer}>
-              {user && user.academic && (
-                <View style={styles.individualInterest}>
-                  <Text style={styles.interestText}>Academic</Text>
-                </View>
-              )}
-              {user && user.career && (
-                <View style={styles.individualInterest}>
-                  <Text style={styles.interestText}>Career</Text>
-                </View>
-              )}
-              {user && user.financial && (
-                <View style={styles.individualInterest}>
-                  <Text style={styles.interestText}>Financial</Text>
-                </View>
-              )}
-              {user && user.studentLife && (
-                <View style={styles.individualInterest}>
-                  <Text style={styles.interestText}>Student Life</Text>
-                </View>
-              )}
-            </View>
-          </View>
-          {/* Horizontal Bar */}
-          <View style={styles.horizontalBarContainer}>
-            {/* My Questions tab */}
-            <TouchableOpacity
-              onPress={() => {
-                setshowLineForSaved(false);
-                setshowLineForQuestions(true);
-              }}
-            >
-              <Text
-                style={[
-                  styles.myQuestionsText,
-                  showLineForSaved
-                    ? { color: "#85808C", fontFamily: "Stolzl Regular" }
-                    : {},
-                ]}
-              >
-                My Posts
-              </Text>
-            </TouchableOpacity>
-            {/* Display the line underneath the My Questions tab */}
-            {showLineForQuestions && (
-              <View style={styles.lineForQuestions}></View>
-            )}
-            {/* Press on the Saved tab */}
-            <TouchableOpacity
-              onPress={() => {
-                setshowLineForSaved(true);
-                setshowLineForQuestions(false);
-              }}
-            >
-              <Text
-                style={[
-                  styles.savedText,
-                  showLineForQuestions
-                    ? { color: "#85808C", fontFamily: "Stolzl Regular" }
-                    : {},
-                ]}
-              >
-                Saved
-              </Text>
-            </TouchableOpacity>
-            {/* Display the line underneath the Saved Journeys tab */}
-            {showLineForSaved && <View style={styles.lineForJourneys}></View>}
-          </View>
-
-          {/* Bottom Half of the page*/}
+    <View style={styles.outterMostContainer}>
+      {/* <View style={styles.container}> */}
+      <View style={styles.profileInfoContainer}>
+        {/* Display the user's avatar, full name, and intro */}
+        <View style={styles.profileContainer}>
+          {/* display avatar */}
+          <Image source={avatarImages[avatar]} style={styles.profileImage} />
+          {/* Display the user's full name and intro */}
           <View>
-            {!showLineForSaved ? (
-              <FlatList
-                style={styles.questionsContainer}
-                showsVerticalScrollIndicator={false}
-                data={filteredPosts}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item }) => (
-                  <View style={styles.postShadowContainer}>
-                    {/* Displays the post */}
-                    <IndividualPost
-                      navigation={navigation}
-                      postId={item.postID}
-                      userId={item.userID}
-                    />
-                  </View>
-                )}
-              />
-            ) : (
-              <View style={styles.bottompartContainer}>
-                <View style={styles.nestedBarContainer}>
-                  {/* Press on the My Questions tab */}
-                  <Pressable
-                    onPress={() => {
-                      setchosenJourneys(false);
-                      setchosenAsks(true);
-                    }}
-                  >
-                    <Text
-                      style={[
-                        { marginHorizontal: 30, marginBottom: 0 },
-                        chosenJourneys
-                          ? { color: "#84808B", fontFamily: "Stolzl Regular" }
-                          : {
-                              fontWeight: "bold",
-                              color: "#84808B",
-                              fontFamily: "Stolzl Medium",
-                            },
-                        ,
-                      ]}
-                    >
-                      Asks
-                    </Text>
-                  </Pressable>
-                  {/* Press on the Saved Journeys tab */}
-                  <Pressable
-                    onPress={() => {
-                      setchosenJourneys(true);
-                      setchosenAsks(false);
-                    }}
-                  >
-                    <Text
-                      style={[
-                        { marginHorizontal: 30, marginBottom: 0 },
-                        chosenAsks
-                          ? { color: "#84808B", fontFamily: "Stolzl Regular" }
-                          : {
-                              fontWeight: "bold",
-                              color: "#84808B",
-                              fontFamily: "Stolzl Medium",
-                            },
-                        ,
-                      ]}
-                    >
-                      Journeys
-                    </Text>
-                  </Pressable>
-                </View>
-                <View>
-                  {chosenJourneys && (
-                    <FlatList
-                      style={styles.journeysContainer}
-                      showsVerticalScrollIndicator={false}
-                      data={filteredJourneys}
-                      keyExtractor={(item, index) => index.toString()}
-                      renderItem={({ item }) => {
-                        const imgSource =
-                          item.authorName === "Rachel Li"
-                            ? require("../../assets/images/mentorMyJourneyPics/rachel.png")
-                            : item.authorName === "Neri Ajiatas Arreaga"
-                            ? require("../../assets/images/mentorMyJourneyPics/neri.png")
-                            : item.authorName === "Shateva Long"
-                            ? require("../../assets/images/mentorMyJourneyPics/shateva.png")
-                            : item.authorName === "Julia Tran"
-                            ? require("../../assets/images/mentorMyJourneyPics/julia.png")
-                            : require("../../assets/images/mentorMyJourneyPics/rachel.png");
-
-                        return (
-                          <View style={styles.myJourneyContainer}>
-                            <MJPostCard
-                              onPress={() =>
-                                directToMyJourneyPost(
-                                  mentorName(item.journeyTitle)
-                                )
-                              }
-                              img={imgSource}
-                              title={item.journeyTitle}
-                              name={item.authorName}
-                              year={item.Intro}
-                            />
-                          </View>
-                        );
-                      }}
-                    />
-                  )}
-                </View>
-              </View>
-            )}
+          <Text style={[styles.userName]}>{name}</Text>
+          <Text style={[styles.userIntro]}>
+            {" "}
+            Class of {year}, {major} Major </Text>
           </View>
         </View>
+    
+
+        {/* When viewing your own profile */}
+          <View style={styles.aboutMeContainer}>
+          <View>
+            <Text style={styles.aboutMeText}>Open to Mentorship, Looking for coffee chats, ask me about my startup</Text>
+          </View>
+            <View>
+              <TouchableOpacity
+                style={styles.editButton}
+                onPress={() => setModalVisible(true)}
+              >
+                <Icon name="pencil" type="font-awesome" size={18} color="#000" />
+              </TouchableOpacity>
+              <View style={styles.modalContainer}>
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={modalVisible}
+                  onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                  }}
+                >
+                  <EditProfile close={() => setModalVisible(false)} />
+                </Modal>
+              </View>
+            </View>
+        </View>
+
+        {/* Display the user's interests */}
+        <View style={styles.interestsContainer}>
+          {user && user.academic && (
+            <View style={styles.individualInterest}>
+              <Text style={styles.interestText}>Academic</Text>
+            </View>
+          )}
+          {user && user.career && (
+            <View style={styles.individualInterest}>
+              <Text style={styles.interestText}>Career</Text>
+            </View>
+          )}
+          {user && user.financial && (
+            <View style={styles.individualInterest}>
+              <Text style={styles.interestText}>Financial</Text>
+            </View>
+          )}
+          {user && user.studentLife && (
+            <View style={styles.individualInterest}>
+              <Text style={styles.interestText}>Student Life</Text>
+            </View>
+          )}
+        </View>
+      </View>
+
+      {/* Horizontal Bar */}
+      <View style={styles.horizontalBarContainer}>
+        {/* Press on the My Questions tab */}
+        <TouchableOpacity
+          onPress={() => {
+            setshowLineForJourneys(false);
+            setshowLineForQuestions(true);
+          }}
+        >
+          <Text
+            style={[
+              styles.myQuestionsText,
+              showLineForJourneys
+                ? { color: "#85808C", fontFamily: "Stolzl Regular" }
+                : {},
+            ]}
+          >
+            My Questions
+          </Text>
+        </TouchableOpacity>
+        {/* Display the line underneath the My Questions tab */}
+        {showLineForQuestions && <View style={styles.lineForQuestions}></View>}
+        {/* Press on the Saved Journeys tab */}
+        <TouchableOpacity
+          onPress={() => {
+            setshowLineForJourneys(true);
+            setshowLineForQuestions(false);
+          }}
+        >
+          <Text
+            style={[
+              styles.savedJourneysText,
+              showLineForQuestions
+                ? { color: "#85808C", fontFamily: "Stolzl Regular" }
+                : {},
+            ]}
+          >
+            Saved Journeys
+          </Text>
+        </TouchableOpacity>
+        {/* Display the line underneath the Saved Journeys tab */}
+        {showLineForJourneys && <View style={styles.lineForJourneys}></View>}
+      </View>
+      {/* <View style={styles.questionsBigContainer}> */}
+      {!showLineForJourneys ? (
+        <FlatList
+          style={styles.questionsContainer}
+          showsVerticalScrollIndicator={false}
+          data={filteredPosts}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.postShadowContainer}>
+              {/* Displays the post */}
+              <IndividualPost navigation={navigation} postId={item.postID} />
+            </View>
+          )}
+        />
       ) : (
-        // OTHER USER'S PROFILE
-        <View style={styles.outterMostContainer}>
-          <View style={styles.profileInfoContainer}>
-            {/* Display the user's avatar, full name, and intro */}
-            <View style={styles.profileContainer}>
-              {/* display avatar */}
-              <Image
-                source={avatarImages[avatar]}
-                style={styles.profileImage}
-              />
-              {/* Display the user's full name and intro */}
-              <View>
-                <Text style={[styles.userName]}>{name}</Text>
-                <Text style={[styles.userIntro]}>
-                  {" "}
-                  Class of {year}, {major} Major{" "}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.yourTopContainer}>
-              <View style={styles.yourAboutMeContainer}>
-                <Text style={styles.yourAboutMeText}>
-                  Open to Mentorship, Looking for coffee chats, ask me about my
-                  startup
-                </Text>
-              </View>
-              <View style={styles.buttonContainer}>
-                <View style={{ marginRight: 10 }}>
-                  <FollowButton userIdToFollow={viewedUser} />
-                </View>
-                <MessageButton navigation={navigation} chatID={viewedUser} />
-              </View>
-            </View>
-            {/* Display the user's interests */}
-            <View style={styles.interestsContainer}>
-              {user && user.academic && (
-                <View style={styles.individualInterest}>
-                  <Text style={styles.interestText}>Academic</Text>
-                </View>
-              )}
-              {user && user.career && (
-                <View style={styles.individualInterest}>
-                  <Text style={styles.interestText}>Career</Text>
-                </View>
-              )}
-              {user && user.financial && (
-                <View style={styles.individualInterest}>
-                  <Text style={styles.interestText}>Financial</Text>
-                </View>
-              )}
-              {user && user.studentLife && (
-                <View style={styles.individualInterest}>
-                  <Text style={styles.interestText}>Student Life</Text>
-                </View>
-              )}
-            </View>
-          </View>
-          {/* Horizontal Bar */}
-          <View style={styles.horizontalBarContainer}>
-            {/* My Questions tab */}
-            <TouchableOpacity
-              onPress={() => {
-                setshowLineForSaved(false);
-                setshowLineForQuestions(true);
-              }}
-            >
-              <Text
-                style={[
-                  styles.myQuestionsText,
-                  showLineForSaved
-                    ? { color: "#85808C", fontFamily: "Stolzl Regular" }
-                    : {},
-                ]}
-              >
-                Asks
-              </Text>
-            </TouchableOpacity>
-            {/* Display the line underneath the My Questions tab */}
-            {showLineForQuestions && (
-              <View style={styles.lineForQuestions}></View>
-            )}
-            {/* Press on the Saved tab */}
-            <TouchableOpacity
-              onPress={() => {
-                setshowLineForSaved(true);
-                setshowLineForQuestions(false);
-              }}
-            >
-              <Text
-                style={[
-                  styles.savedText,
-                  showLineForQuestions
-                    ? { color: "#85808C", fontFamily: "Stolzl Regular" }
-                    : {},
-                ]}
-              >
-                Journeys
-              </Text>
-            </TouchableOpacity>
-            {/* Display the line underneath the Saved Journeys tab */}
-            {showLineForSaved && <View style={styles.lineForJourneys}></View>}
-          </View>
-
-          {/* Bottom Half of the page*/}
-
-          {!showLineForSaved ? (
-            <FlatList
-              style={styles.questionsContainer}
-              showsVerticalScrollIndicator={false}
-              data={filteredPosts}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item }) => (
-                <View style={styles.postShadowContainer}>
-                  {/* Displays the post */}
-                  <IndividualPost
-                    navigation={navigation}
-                    postId={item.postID}
-                    userId={item.userID}
-                  />
-                </View>
-              )}
-            />
-          ) : (
-            <FlatList
-              style={styles.questionsContainer}
-              showsVerticalScrollIndicator={false}
-              data={filteredJourneys}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item }) => {
-                const imgSource =
-                  item.authorName === "Rachel Li"
-                    ? require("../../assets/images/mentorMyJourneyPics/rachel.png")
-                    : item.authorName === "Neri Ajiatas Arreaga"
-                    ? require("../../assets/images/mentorMyJourneyPics/neri.png")
-                    : item.authorName === "Shateva Long"
-                    ? require("../../assets/images/mentorMyJourneyPics/shateva.png")
-                    : item.authorName === "Julia Tran"
-                    ? require("../../assets/images/mentorMyJourneyPics/julia.png")
-                    : require("../../assets/images/mentorMyJourneyPics/rachel.png");
+        <FlatList
+          style={styles.questionsContainer}
+          showsVerticalScrollIndicator={false}
+          data={filteredJourneys}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => {
+            const imgSource =
+              item.authorName === "Rachel Li"
+                ? require("../../assets/images/mentorMyJourneyPics/rachel.png")
+                : item.authorName === "Neri Ajiatas Arreaga"
+                ? require("../../assets/images/mentorMyJourneyPics/neri.png")
+                : item.authorName === "Shateva Long"
+                ? require("../../assets/images/mentorMyJourneyPics/shateva.png")
+                : item.authorName === "Julia Tran"
+                ? require("../../assets/images/mentorMyJourneyPics/julia.png")
+                : require("../../assets/images/mentorMyJourneyPics/rachel.png");
 
                 return (
                   <View style={styles.myJourneyContainer}>
