@@ -58,9 +58,13 @@ export default function ProfileScreen({ navigation, route }) {
   const [showLineForSaved, setshowLineForSaved] = useState(false);
   const [viewMyOwn, setViewMyOwn] = useState(true);
 
+  // update user info if viewing another user's profile
+  // userId is the id the of the viewed user
+  const { userId } = route?.params || {};
+
   // Checks if the current user is viewing their own profile
   useEffect(() => {
-    if (currentUserId === viewedUser) {
+    if (userId === viewedUser) {
       setViewMyOwn(true);
     } else {
       setViewMyOwn(false);
@@ -79,9 +83,6 @@ export default function ProfileScreen({ navigation, route }) {
     getCurrUser();
   }, []);
 
-  // update user info if viewing another user's profile
-  // userId is the id the of the viewed user
-  const { userId } = route?.params || {};
   useEffect(() => {
     const updateUser = async () => {
       const usersCollection = collection(db, "users");
@@ -104,7 +105,7 @@ export default function ProfileScreen({ navigation, route }) {
         console.error("User is not found");
       }
     };
-    if (userId !== "" && userId !== undefined && !viewMyOwn) {
+    if (userId !== "" && userId !== undefined) {
       // only updates user data if view other user's profile
       updateUser();
       setViewedUser(userId);
