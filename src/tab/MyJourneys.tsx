@@ -17,6 +17,7 @@ export default function MyJourneyScreen({ navigation }) {
   function directToMyJourneyPost(postName: string) {
     navigation.navigate(postName);
   }
+
   function directToSeeAllJourneys() {
     navigation.navigate("SeeAllJourneys");
   }

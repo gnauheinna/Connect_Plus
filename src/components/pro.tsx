@@ -1097,12 +1097,12 @@ import {
   FontSize,
 } from "../../styles/ProfileStyles";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import IndividualPost from "../components/individualPost";
+import IndividualPost from "./individualPost";
 import { useUser } from "../context/UserContext";
 import { Post, usePostContext } from "../context/postContext";
-import MJPostCard from "../components/MJPostCard";
-import FollowButton from "../components/followButton";
-import MessageButton from "../components/messagebutton";
+import MJPostCard from "./MJPostCard";
+import FollowButton from "./followButton";
+import MessageButton from "./messagebutton";
 import { useSavedJourneyContext } from "../context/savedJourneyContext";
 import { Title } from "react-native-paper";
 import { Icon } from "react-native-elements";
@@ -1527,6 +1527,7 @@ export default function ProfileScreen({ navigation, route }) {
                 <MessageButton navigation={navigation} chatID={viewedUser} />
               </View>
             </View>
+
             {/* Display the user's interests */}
             <View style={styles.interestsContainer}>
               {user && user.academic && (

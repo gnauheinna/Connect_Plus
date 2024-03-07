@@ -156,11 +156,7 @@ export default function PostDetailsScreen({ navigation }) {
         <View style={styles.postContainer}>
           {/* Displays the post */}
           {/* <Text> HIIIIII {user.userID} </Text> */}
-          <IndividualPost
-            navigation={navigation}
-            postId={curPostID}
-            userId={userPostId}
-          />
+          <IndividualPost navigation={navigation} postId={curPostID} />
         </View>
         {/* Divider line */}
         <View style={styles.dividerLine} />
@@ -189,7 +185,6 @@ export default function PostDetailsScreen({ navigation }) {
               intro={item.userIntro}
               timestamp={item.date.toDate().toLocaleDateString()}
               content={item.text}
-              userId={item.userID}
               navigation={navigation}
             />
           )}

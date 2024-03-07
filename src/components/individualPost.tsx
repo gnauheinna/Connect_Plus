@@ -84,9 +84,10 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
               <View style={styles.userInfo}>
                 {/* Press avatar to use other person's profile page */}
                 <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("ViewProfile", { userId: post.userID })
-                  }
+                  onPress={() => {
+                    console.log("individual post user id: ", post.userID);
+                    navigation.navigate("ViewProfile", { userId: post.userID });
+                  }}
                 >
                   <Image
                     style={styles.profileImg}
