@@ -19,6 +19,8 @@ import {
   onSnapshot,
   Timestamp,
   arrayUnion,
+  collection,
+  setDoc,
 } from "firebase/firestore";
 import { FontAwesome5, Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -35,20 +37,35 @@ type Chats = {
 };
 export default function IndividualChatScreen({ navigation, route }) {
   const chatID = route.params.chatID;
+  const ChatUserId = route.params.ChatUserId;
   const db = getFirestore();
   const { user, setUser } = useUser();
+  // userData is the other user's userdata
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    major: "",
+    year: "",
+    userID: "",
+    academic: false,
+    career: false,
+    avatar: "",
+    financial: false,
+    studentLife: false,
+  });
+
   const currentUserID = user.userID;
-  const {
-    currentChatID,
-    setCurrentChatID,
-    currentChatName,
-    setCurrentChatName,
-    currentChatAvatar,
-    setCurrentChatAvatar,
-    currentChatUserID,
-    setCurrentChatUserID,
-  } = useCurrentChat();
-  setCurrentChatID(chatID);
+  // const {
+  //   currentChatID,
+  //   setCurrentChatID,
+  //   currentChatName,
+  //   setCurrentChatName,
+  //   currentChatAvatar,
+  //   setCurrentChatAvatar,
+  //   currentChatUserID,
+  //   setCurrentChatUserID,
+  // } = useCurrentChat();
+  // setCurrentChatID(chatID);
   const [chats, setChats] = useState<Chats[]>([]);
   const [inputText, setInputText] = useState("");
 
@@ -64,57 +81,78 @@ export default function IndividualChatScreen({ navigation, route }) {
     avatar9: require("../../assets/images/avatars/avatar9.png"),
   };
 
-  useEffect(() => {
-    // set chatID from local storage when the page refreshes
-    const fetchChatData = async () => {
-      if (chatID != "") {
-        const storedChatID = await AsyncStorage.getItem("chatID");
-        if (storedChatID !== null) {
-          setCurrentChatID(storedChatID);
-        }
-        const storedChatName = await AsyncStorage.getItem("currentChatName");
-        if (storedChatName !== null) {
-          setCurrentChatName(storedChatName);
-        }
-        const storedChatUserID = await AsyncStorage.getItem(
-          "currentChatUserID"
-        );
-        if (storedChatUserID !== null) {
-          setCurrentChatUserID(storedChatUserID);
-        }
-      } else {
-        console.log("this is useEffect hook chatID :", chatID);
-      }
-    };
+  // useEffect(() => {
+  //   // set chatID from local storage when the page refreshes
+  //   const fetchChatData = async () => {
+  //     if (chatID != "") {
+  //       const storedChatID = await AsyncStorage.getItem("chatID");
+  //       if (storedChatID !== null) {
+  //         setCurrentChatID(storedChatID);
+  //       }
+  //       const storedChatName = await AsyncStorage.getItem("currentChatName");
+  //       if (storedChatName !== null) {
+  //         setCurrentChatName(storedChatName);
+  //       }
+  //       const storedChatUserID = await AsyncStorage.getItem(
+  //         "currentChatUserID"
+  //       );
+  //       if (storedChatUserID !== null) {
+  //         setCurrentChatUserID(storedChatUserID);
+  //       }
+  //     } else {
+  //       console.log("this is useEffect hook chatID :", chatID);
+  //     }
+  //   };
 
-    fetchChatData();
-  }, []);
+  //   fetchChatData();
+  // }, []);
+
+  useEffect(() => {
+    const updateUser = async () => {
+      const usersCollection = collection(db, "users");
+      console.log("updateuser userId in", ChatUserId);
+      const userInfo = await getDoc(doc(db, "users", ChatUserId));
+      const userData = userInfo.data() as {
+        name: string;
+        email: string;
+        major: string;
+        year: string;
+        userID: string;
+        academic: boolean;
+        career: boolean;
+        avatar: string;
+        financial: boolean;
+        studentLife: boolean;
+      };
+      console.log(
+        "userData after updating everything from individual chat",
+        userData
+      );
+      setUserData(userData);
+    };
+    updateUser();
+  }, [ChatUserId]);
 
   // fetches the correct chat
   useEffect(() => {
     const fetchUserChat = async () => {
       const userChatDocRef = doc(db, "chats", chatID);
-      const userChatDocSnapshot = await getDoc(userChatDocRef);
-      const chatArray: Chats[] = [];
-      const userChatData = userChatDocSnapshot.data();
-      if (userChatData) {
+      const userChatDoc = await getDoc(userChatDocRef);
+      if (userChatDoc.exists()) {
+        const userChatData = userChatDoc.data();
         setChats(userChatData.messages);
+      } else {
+        // Document doesn't exist, create a new one
+        try {
+          await setDoc(userChatDocRef, { messages: [] });
+          console.log("New chat document created");
+          setChats([]);
+        } catch (error) {
+          console.error("Error creating new chat document:", error);
+        }
       }
     };
-
-    if (chatID != "" && user.name != "") {
-      const userChatDocRef = doc(db, "chats", chatID);
-      const unsubscribe = onSnapshot(userChatDocRef, (doc) => {
-        if (doc.exists()) {
-          fetchUserChat();
-        } else {
-          console.error("Document does not exist");
-        }
-      });
-      return () => unsubscribe();
-    } else {
-      console.error("chatID is not defined");
-    }
+    fetchUserChat();
   }, [chatID, user.name]);
 
   const handleSend = async () => {
@@ -133,7 +171,7 @@ export default function IndividualChatScreen({ navigation, route }) {
       [chatID + ".date"]: serverTimestamp(),
     });
 
-    await updateDoc(doc(db, "userChats", currentChatUserID), {
+    await updateDoc(doc(db, "userChats", ChatUserId), {
       [chatID + ".lastMessage"]: inputText.toString(),
       [chatID + ".date"]: serverTimestamp(),
     });
@@ -141,12 +179,6 @@ export default function IndividualChatScreen({ navigation, route }) {
     setInputText("");
   };
   const goToMessageScreen = async () => {
-    await setCurrentChatID("");
-    await AsyncStorage.removeItem("chatID");
-    await setCurrentChatName("");
-    await AsyncStorage.removeItem("currentChatName");
-    await setCurrentChatUserID("");
-    await AsyncStorage.removeItem("currentChatUserID");
     navigation.navigate("Tabs", { screen: "Message" });
   };
   // NOT WORKING YET
@@ -177,9 +209,9 @@ export default function IndividualChatScreen({ navigation, route }) {
           <View style={styles.recipientContainer}>
             <Image
               style={styles.recipientImg}
-              source={avatarImages[currentChatAvatar]}
+              source={avatarImages[userData.avatar]}
             />
-            <Text style={styles.recipient}>{currentChatName}</Text>
+            <Text style={styles.recipient}>{userData.name}</Text>
           </View>
         </View>
 

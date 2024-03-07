@@ -1,13 +1,14 @@
 import { View, Text, Pressable, StyleSheet, Image } from "react-native";
 import { useState } from "react";
 
-function MessageButton({ navigation, chatID }) {
+function MessageButton({ navigation, chatID, ChatUserId }) {
   const [isClicked, setIsClicked] = useState(false);
   const handlePress = () => {
     // Toggle the state when the button is clicked
     setIsClicked(!isClicked);
     navigation.navigate("IndividualChat", {
       chatID: chatID,
+      ChatUserId: ChatUserId,
     });
   };
 

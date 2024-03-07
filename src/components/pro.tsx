@@ -1524,7 +1524,7 @@ export default function ProfileScreen({ navigation, route }) {
                 <View style={{ marginRight: 10 }}>
                   <FollowButton userIdToFollow={viewedUser} />
                 </View>
-                <MessageButton navigation={navigation} chatID={viewedUser} />
+                {/* // <MessageButton navigation={navigation} chatID={viewedUser} /> */}
               </View>
             </View>
 

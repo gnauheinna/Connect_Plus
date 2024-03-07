@@ -55,7 +55,7 @@ export default function ProfileScreen({ navigation, route }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [currentUserId, setCurrentUserId] = useState("");
   const [viewedUser, setViewedUser] = useState("");
-
+  const [chatID, setchatID] = useState("");
   const getCurrUser = async () => {
     const storedToken = await AsyncStorage.getItem("userUID");
     setCurrentUserId(storedToken);
@@ -90,6 +90,12 @@ export default function ProfileScreen({ navigation, route }) {
     if (userId !== "" && userId !== undefined) {
       updateUser();
       setViewedUser(userId);
+
+      if (currentUserId > userId) {
+        setchatID(currentUserId + userId);
+      } else {
+        setchatID(userId + currentUserId);
+      }
     }
   }, [userId]);
 
@@ -191,7 +197,11 @@ export default function ProfileScreen({ navigation, route }) {
             <View style={{ marginRight: 10 }}>
               <FollowButton userIdToFollow={viewedUser} />
             </View>
-            <MessageButton navigation={navigation} chatID={viewedUser} />
+            <MessageButton
+              navigation={navigation}
+              chatID={chatID}
+              ChatUserId={viewedUser}
+            />
           </View>
         </View>
 
