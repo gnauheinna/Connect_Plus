@@ -36,24 +36,26 @@ import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 export default function ProfileScreen({ navigation, route }) {
   const db = getFirestore();
-  const { user, setUser } = useUser();
-  const [name, setName] = useState("");
-  const [year, setYear] = useState("");
-  const [major, setMajor] = useState("");
-  const [avatar, setAvatar] = useState("");
-  const [academic, setAcademic] = useState(false);
-  const [career, setCareer] = useState(false);
-  const [financial, setFinancial] = useState(false);
-  const [studentLife, setStudentLife] = useState(false);
+  const { user, setUser } = useUser(); //current logged in user
   const { posts, loading } = usePostContext();
   const [allPosts, setAllPosts] = useState<Post[]>([]);
   const [showLineForQuestions, setshowLineForQuestions] = useState(true);
   const [showLineForJourneys, setshowLineForJourneys] = useState(false);
   const { savedJourneys, setSavedJourneys } = useSavedJourneyContext();
-  const [Mname, setMName] = useState("");
   const [img, setImg] = useState(Image);
   const [modalVisible, setModalVisible] = useState(false);
-  const [viewedUser, setViewedUser] = useState("");
+  const [viewedUser, setViewedUser] = useState({
+    name: "",
+    email: "",
+    major: "",
+    year: "",
+    userID: "",
+    academic: false,
+    career: false,
+    avatar: "",
+    financial: false,
+    studentLife: false,
+  });
   const [chatID, setchatID] = useState("");
 
   // update user info if viewing another user's profile
@@ -65,7 +67,7 @@ export default function ProfileScreen({ navigation, route }) {
       console.log("updateuser userId", userId);
       if (userId) {
         const userInfo = await getDoc(doc(db, "users", userId));
-        const userData = userInfo.data() as {
+        const userData = (await userInfo.data()) as {
           name: string;
           email: string;
           major: string;
@@ -77,7 +79,7 @@ export default function ProfileScreen({ navigation, route }) {
           financial: boolean;
           studentLife: boolean;
         };
-        setUser(userData);
+        await setViewedUser(userData);
       } else {
         console.error("User is not found");
       }
@@ -96,18 +98,6 @@ export default function ProfileScreen({ navigation, route }) {
       }
     }
   }, [userId]);
-
-  // retrieve user info of viewing another user's profile
-  useEffect(() => {
-    setName(user.name);
-    setMajor(user.major);
-    setYear(user.year);
-    setAcademic(user.academic);
-    setCareer(user.career);
-    setFinancial(user.financial);
-    setStudentLife(user.studentLife);
-    setAvatar(user.avatar);
-  }, [user]);
 
   //console.log("curruser", currentUserId);
   //console.log("vieweduser", viewedUser);
@@ -147,7 +137,7 @@ export default function ProfileScreen({ navigation, route }) {
   }, [posts]);
 
   const filteredPosts = allPosts.filter(
-    (post) => user && post.userID == user.userID
+    (post) => user && post.userID == viewedUser.userID
   );
 
   const filteredJourneys = savedJourneys;
@@ -173,13 +163,16 @@ export default function ProfileScreen({ navigation, route }) {
         {/* Display the user's avatar, full name, and intro */}
         <View style={styles.profileContainer}>
           {/* display avatar */}
-          <Image source={avatarImages[avatar]} style={styles.profileImage} />
+          <Image
+            source={avatarImages[viewedUser.avatar]}
+            style={styles.profileImage}
+          />
           {/* Display the user's full name and intro */}
           <View>
-            <Text style={[styles.userName]}>{name}</Text>
+            <Text style={[styles.userName]}>{viewedUser.name}</Text>
             <Text style={[styles.userIntro]}>
               {" "}
-              Class of {year}, {major} Major{" "}
+              Class of {viewedUser.year}, {viewedUser.major} Major{" "}
             </Text>
           </View>
         </View>

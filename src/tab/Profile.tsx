@@ -31,7 +31,7 @@ import { collection, getDoc, doc, getFirestore } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React from "react";
 
-export default function ProfileScreen({ navigation, route }) {
+export default function ProfileScreen({ navigation }) {
   const db = getFirestore();
   const { user, setUser } = useUser();
   const [name, setName] = useState("");

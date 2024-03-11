@@ -22,7 +22,7 @@ function FollowButton({ userIdToFollow }) {
               (key) => FollowingData[key]
             );
             setFollowingList(FollowingArray);
-            console.log("Following List is: " + FollowingData);
+            console.log("Following List is: " + FollowingData.toString());
             setIsClicked(FollowingArray.includes(userIdToFollow));
           }
         }

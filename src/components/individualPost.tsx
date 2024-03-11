@@ -43,6 +43,7 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
     setCurPostID(postId);
     navigation.navigate("PostDetails");
   }
+  const { user, setUser } = useUser();
 
   // User PostContext
   const { posts, loading } = usePostContext();
@@ -85,8 +86,17 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
                 {/* Press avatar to use other person's profile page */}
                 <TouchableOpacity
                   onPress={() => {
-                    console.log("individual post user id: ", post.userID);
-                    navigation.navigate("ViewProfile", { userId: post.userID });
+                    if (post.userID !== user.userID) {
+                      // Navigate to the other user's profile
+                      navigation.navigate("ViewProfile", {
+                        userId: post.userID,
+                      });
+                    } else {
+                      // Navigate to the user's profile
+                      navigation.navigate("Profile", {
+                        navigation: navigation,
+                      });
+                    }
                   }}
                 >
                   <Image
