@@ -112,7 +112,7 @@ export default function IndividualChatScreen({ navigation, route }) {
       const usersCollection = collection(db, "users");
       console.log("updateuser userId in", ChatUserId);
       const userInfo = await getDoc(doc(db, "users", ChatUserId));
-      const userData = userInfo.data() as {
+      const userDatafb = userInfo.data() as {
         name: string;
         email: string;
         major: string;
@@ -128,10 +128,10 @@ export default function IndividualChatScreen({ navigation, route }) {
         "userData after updating everything from individual chat",
         userData
       );
-      setUserData(userData);
+      await setUserData(userDatafb);
     };
     updateUser();
-  }, [ChatUserId]);
+  }, []);
 
   // fetches the correct chat
   useEffect(() => {
@@ -157,7 +157,7 @@ export default function IndividualChatScreen({ navigation, route }) {
           [chatID]: {
             chatID: chatID,
             date: Timestamp.now(),
-            lastMessage: "",
+            lastMessage: "boohoo",
             userInfo: {
               name: userData.name,
               avatar: userData.avatar,
@@ -169,7 +169,7 @@ export default function IndividualChatScreen({ navigation, route }) {
           [chatID]: {
             chatID: chatID,
             date: Timestamp.now(),
-            lastMessage: "",
+            lastMessage: "meow",
             userInfo: {
               name: user.name,
               avatar: user.avatar,
@@ -178,6 +178,7 @@ export default function IndividualChatScreen({ navigation, route }) {
           },
         };
         try {
+          console.log("user.userID", userData.userID);
           // creates new user chat
           const chatsref = await doc(db, "userChats", user.userID);
           const otherchatsref = await doc(db, "userChats", ChatUserId);
