@@ -109,7 +109,28 @@ export default function EditProfile({ close }) {
       <View style={styles.divider} />
 
       <Text style={styles.label}>Preview</Text>
-      <Text style={styles.preview}>{bioPreview}</Text>
+      <View style={styles.previewContainer}>
+        <View style={styles.profileInfoContainer}>
+          <View style={styles.profileContainer}>
+            <Image source={avatarImages[avatar]} style={styles.profileImage} />
+            <View>
+              <Text style={[styles.userName]}>{name}</Text>
+              <Text style={[styles.userIntro]}>
+                {" "}
+                Class of {year}, {major} Major{" "}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.aboutMePrevContainer}>
+            <View>
+              <Text style={styles.aboutMeTextPrev}>
+                Open to Mentorship, Looking for coffee chats, ask me about my
+                startup
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
       
 
       
@@ -199,53 +220,54 @@ const styles = StyleSheet.create({
         width: '126%',
         marginVertical: 10,
       },
-      preview: {},
+      preview: {
+        fontFamily: "Stolzl Regular",
+        alignSelf: "flex-start",
+        fontSize: 14,
+      },     
+      previewContainer: {
+        flex: 1,
+      },
       profileImage: {
-        width: 75,
-        height: 75,
-        borderRadius: 50,
+        width: 55,
+        height: 55,
+        borderRadius: 100,
         overflow: "hidden",
         justifyContent: "center",
-        marginRight: 15,
+        marginRight: 10,
         marginLeft: 10,
+        // borderColor: "red",
+        // borderWidth: 1,
+
+      },
+      profileContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        // marginTop: 30,
+        marginBottom: 5,
       },
       userName: {
         fontFamily: "Stolzl Medium",
-        fontSize: 16,
+        fontSize: 20,
         color: "#000000",
-        marginTop: 15,
+        // marginTop: 15,
         marginLeft: 5,
       },
       userIntro: {
         fontSize: 14,
         color: "#838383",
-        marginBottom: 10,
         fontFamily: "Stolzl Regular",
       },
-      infoContainer: {
-        alignSelf: "center",
-        alignItems: "center",
+      aboutMePrevContainer: {
+        justifyContent: "space-between",
+        padding: 10,
+        marginLeft: 20,
+        marginRight: 20,
+        backgroundColor: "#F9F6FF",
       },
-      profileContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        marginTop: 50,
-        marginBottom: 20,
-      },
-      profileInfoContainer: {
-        height: 300,
-        width: "100%",
-        justifyContent: "center",
-        alignSelf: "center",
-        backgroundColor: "white",
-        paddingTop: 20,
-      },
-      profileImg: {
-        flexDirection: "row",
-        justifyContent: "center",
-        marginBottom: 10,
-      },
-      container: {
-        flex: 1,
+      aboutMeTextPrev: {
+        color: "#724EAE",
+        fontFamily: "Stolzl Regular",
+        fontSize: 14,
       },
 });
