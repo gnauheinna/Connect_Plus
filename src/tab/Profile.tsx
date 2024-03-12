@@ -152,14 +152,13 @@ export default function ProfileScreen({ navigation }) {
 
   return (
     <View style={styles.outterMostContainer}>
-      {/* <View style={styles.container}> */}
       <View style={styles.profileInfoContainer}>
         {/* Display the user's avatar, full name, and intro */}
         <View style={styles.profileContainer}>
           {/* display avatar */}
           <Image source={avatarImages[avatar]} style={styles.profileImage} />
           {/* Display the user's full name and intro */}
-          <View>
+          <View style={styles.profileTextContainer}>
             <Text style={[styles.userName]}>{name}</Text>
             <Text style={[styles.userIntro]}>
               {" "}
@@ -170,12 +169,11 @@ export default function ProfileScreen({ navigation }) {
 
         {/* When viewing your own profile */}
         <View style={styles.aboutMeContainer}>
-          <View>
-            <Text style={styles.aboutMeText}>
-              Open to Mentorship, Looking for coffee chats, ask me about my
-              startup
-            </Text>
-          </View>
+          <Text style={styles.aboutMeText}>
+            Open to Mentorship, Looking for coffee chats, ask me about my
+            startup
+          </Text>
+
           <View>
             <TouchableOpacity
               style={styles.editButton}
@@ -322,18 +320,16 @@ export default function ProfileScreen({ navigation }) {
 const styles = StyleSheet.create({
   outterMostContainer: {
     flex: 1,
-  },
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "white",
-    paddingTop: 60,
   },
+  profileTextContainer: {},
   profileContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 50,
-    marginBottom: 20,
+    marginTop: 60,
+    paddingLeft: 20,
+    marginRight: 20,
+    marginBottom: 10,
   },
   profileInfoContainer: {
     height: 300,
@@ -366,13 +362,14 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontFamily: "Stolzl Medium",
-    fontSize: 24,
+    fontSize: 22,
     color: "#000000",
-    marginTop: 15,
+    marginTop: 8,
+    marginBottom: 3,
     marginLeft: 5,
   },
   userIntro: {
-    fontSize: 14,
+    fontSize: 16,
     color: "#838383",
     marginBottom: 10,
     fontFamily: "Stolzl Regular",
@@ -520,14 +517,9 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   aboutMeText: {
-    color: "#724EAE",
-    fontFamily: "Stolzl Regular",
-    fontSize: 14,
-  },
-  yourAboutMeText: {
     color: "#838383",
     fontFamily: "Stolzl Regular",
-    fontSize: 14,
+    fontSize: 15,
   },
   editButton: {
     alignSelf: "flex-end",
