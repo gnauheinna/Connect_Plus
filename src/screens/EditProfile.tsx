@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { useUser } from "../context/UserContext";
+import { getFirestore } from 'firebase/firestore';
+
 
 
 export default function EditProfile({ close }) {
@@ -12,6 +14,32 @@ export default function EditProfile({ close }) {
   const [year, setYear] = useState("");
   const [major, setMajor] = useState("");
   const { user, setUser } = useUser();
+  const [bioPreview, setBioPreview] = useState('');
+  const [img, setImg] = useState(Image);
+  const db = getFirestore();
+  const [avatar, setAvatar] = useState("");
+  const [academic, setAcademic] = useState(false);
+  const [career, setCareer] = useState(false);
+  const [financial, setFinancial] = useState(false);
+  const [studentLife, setStudentLife] = useState(false);
+  const [showLineForQuestions, setshowLineForQuestions] = useState(true);
+  const [showLineForJourneys, setshowLineForJourneys] = useState(false);
+  const [Mname, setMName] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [name, setName] = useState("");
+
+
+  useEffect(() => {
+    setName(user.name);
+    setMajor(user.major);
+    setYear(user.year);
+    setAcademic(user.academic);
+    setCareer(user.career);
+    setFinancial(user.financial);
+    setStudentLife(user.studentLife);
+    setAvatar(user.avatar);
+  }, [user]);
+
 
   useEffect(() => {
     setMajor(user.major);
@@ -26,6 +54,18 @@ export default function EditProfile({ close }) {
   const handleCancel = () => {
     // Handle the cancel action here
     close();
+  };
+
+  const avatarImages: { [key: string]: any } = {
+    avatar1: require("../../assets/images/avatars/avatar1.png"),
+    avatar2: require("../../assets/images/avatars/avatar2.png"),
+    avatar3: require("../../assets/images/avatars/avatar3.png"),
+    avatar4: require("../../assets/images/avatars/avatar4.png"),
+    avatar5: require("../../assets/images/avatars/avatar5.png"),
+    avatar6: require("../../assets/images/avatars/avatar6.png"),
+    avatar7: require("../../assets/images/avatars/avatar7.png"),
+    avatar8: require("../../assets/images/avatars/avatar8.png"),
+    avatar9: require("../../assets/images/avatars/avatar9.png"),
   };
 
   return (
@@ -65,6 +105,15 @@ export default function EditProfile({ close }) {
         placeholder="Select Status"
         placeholderTextColor="#85808C"
       />
+
+      <View style={styles.divider} />
+
+      <Text style={styles.label}>Preview</Text>
+      <Text style={styles.preview}>{bioPreview}</Text>
+      
+
+      
+      
 
 
         <View style={styles.buttonContainer}>
@@ -122,7 +171,7 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
         width: "100%",
         height: 42,
-        marginVertical: 10,
+        marginVertical: 5,
         backgroundColor: "white",
         borderColor: "#85808C",
         fontSize: 14,
@@ -143,5 +192,60 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: '30%',
+      },
+      divider: {
+        height: 1,
+        backgroundColor: '#85808C',
+        width: '126%',
+        marginVertical: 10,
+      },
+      preview: {},
+      profileImage: {
+        width: 75,
+        height: 75,
+        borderRadius: 50,
+        overflow: "hidden",
+        justifyContent: "center",
+        marginRight: 15,
+        marginLeft: 10,
+      },
+      userName: {
+        fontFamily: "Stolzl Medium",
+        fontSize: 16,
+        color: "#000000",
+        marginTop: 15,
+        marginLeft: 5,
+      },
+      userIntro: {
+        fontSize: 14,
+        color: "#838383",
+        marginBottom: 10,
+        fontFamily: "Stolzl Regular",
+      },
+      infoContainer: {
+        alignSelf: "center",
+        alignItems: "center",
+      },
+      profileContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: 50,
+        marginBottom: 20,
+      },
+      profileInfoContainer: {
+        height: 300,
+        width: "100%",
+        justifyContent: "center",
+        alignSelf: "center",
+        backgroundColor: "white",
+        paddingTop: 20,
+      },
+      profileImg: {
+        flexDirection: "row",
+        justifyContent: "center",
+        marginBottom: 10,
+      },
+      container: {
+        flex: 1,
       },
 });

@@ -51,37 +51,6 @@ export default function ProfileScreen({ navigation }) {
   const [img, setImg] = useState(Image);
   const [modalVisible, setModalVisible] = useState(false);
 
-  // update user info if viewing another user's profile
-  // userId is the id the of the viewed user
-  // const { userId } = route?.params || {};
-  // useEffect(() => {
-  //   const updateUser = async () => {
-  //     const usersCollection = collection(db, "users");
-  //     if (userId) {
-  //       const userInfo = await getDoc(doc(db, "users", userId));
-  //       const userData = userInfo.data() as {
-  //         name: string;
-  //         email: string;
-  //         major: string;
-  //         year: string;
-  //         userID: string;
-  //         academic: boolean;
-  //         career: boolean;
-  //         avatar: string;
-  //         financial: boolean;
-  //         studentLife: boolean;
-  //       };
-  //       setUser(userData);
-  //     } else {
-  //       console.error("User is not found");
-  //     }
-  //   };
-  //   if (userId !== "" && userId !== undefined) {
-  //     updateUser();
-  //     setViewedUser(userId);
-  //   }
-  // }, [userId]);
-
   // retrieve user info of viewing another user's profile
   useEffect(() => {
     setName(user.name);
