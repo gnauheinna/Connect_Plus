@@ -13,14 +13,7 @@ function MessageButton({ navigation, chatID, ChatUserId }) {
   };
 
   return (
-    <Pressable
-      style={({ pressed }) => [
-        styles.button,
-        pressed && styles.buttonPressed,
-        isClicked && styles.clickedButton,
-      ]}
-      onPress={handlePress}
-    >
+    <Pressable style={styles.button} onPress={handlePress}>
       <Text style={styles.buttonText}>Message</Text>
       <Image
         source={require("../../assets/images/MessageButton.png")}
@@ -33,18 +26,20 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "white",
     borderColor: "#8E71BE",
-    padding: 10,
-    borderRadius: 25,
+    padding: 8,
+    borderRadius: 20,
     borderWidth: 2,
-    width: 148,
+    width: 152,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
   },
   buttonText: {
     color: "#8E71BE",
-    marginRight: 10,
-    fontSize: 16,
+    marginRight: 7,
+    fontFamily: "Stolzl Regular",
+    fontSize: 17,
+    fontWeight: "bold",
   },
   icon: {
     width: 15,

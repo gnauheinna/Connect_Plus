@@ -168,7 +168,7 @@ export default function ProfileScreen({ navigation, route }) {
             style={styles.profileImage}
           />
           {/* Display the user's full name and intro */}
-          <View>
+          <View style={styles.profileTextContainer}>
             <Text style={[styles.userName]}>{viewedUser.name}</Text>
             <Text style={[styles.userIntro]}>
               {" "}
@@ -193,30 +193,29 @@ export default function ProfileScreen({ navigation, route }) {
               ChatUserId={viewedUser.userID}
             />
           </View>
-        </View>
-
-        {/* Display the user's interests */}
-        <View style={styles.interestsContainer}>
-          {user && user.academic && (
-            <View style={styles.individualInterest}>
-              <Text style={styles.interestText}>Academic</Text>
-            </View>
-          )}
-          {user && user.career && (
-            <View style={styles.individualInterest}>
-              <Text style={styles.interestText}>Career</Text>
-            </View>
-          )}
-          {user && user.financial && (
-            <View style={styles.individualInterest}>
-              <Text style={styles.interestText}>Financial</Text>
-            </View>
-          )}
-          {user && user.studentLife && (
-            <View style={styles.individualInterest}>
-              <Text style={styles.interestText}>Student Life</Text>
-            </View>
-          )}
+          {/* Display the user's interests */}
+          <View style={styles.interestsContainer}>
+            {user && user.academic && (
+              <View style={styles.individualInterest}>
+                <Text style={styles.interestText}>Academic</Text>
+              </View>
+            )}
+            {user && user.career && (
+              <View style={styles.individualInterest}>
+                <Text style={styles.interestText}>Career</Text>
+              </View>
+            )}
+            {user && user.financial && (
+              <View style={styles.individualInterest}>
+                <Text style={styles.interestText}>Financial</Text>
+              </View>
+            )}
+            {user && user.studentLife && (
+              <View style={styles.individualInterest}>
+                <Text style={styles.interestText}>Student Life</Text>
+              </View>
+            )}
+          </View>
         </View>
       </View>
       {/* Horizontal Bar */}
@@ -319,16 +318,11 @@ export default function ProfileScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   outterMostContainer: {
     flex: 1,
-  },
-  bottompartContainer: {},
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "white",
-    paddingTop: 60,
   },
   yourTopContainer: {
-    flex: 1,
+    paddingTop: 5,
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -336,13 +330,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 20,
   },
   profileContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 50,
-    marginBottom: 20,
+    marginTop: 60,
+    paddingLeft: 20,
+    marginRight: 20,
   },
   profileInfoContainer: {
     height: 300,
@@ -350,67 +344,59 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "center",
     backgroundColor: "white",
-    paddingTop: 20,
-  },
-  profileImg: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginBottom: 10,
-    // shadowColor: "#49006C",
-    // shadowOffset: {
-    //   width: -2,
-    //   height: 4,
-    // },
-    // shadowOpacity: 0.06,
-    // shadowRadius: 10,
+    paddingTop: 80,
+    paddingHorizontal: 5,
+    marginBottom: 30,
   },
   profileImage: {
-    width: 75,
-    height: 75,
+    width: 70,
+    height: 70,
     borderRadius: 100,
     overflow: "hidden",
     justifyContent: "center",
     marginRight: 15,
     marginLeft: 10,
+    borderWidth: 0.2,
+  },
+  profileTextContainer: {
+    paddingLeft: 8,
   },
   userName: {
     fontFamily: "Stolzl Medium",
-    fontSize: 24,
+    fontSize: 22,
     color: "#000000",
-    marginTop: 15,
+    marginTop: 8,
+    marginBottom: 3,
     marginLeft: 5,
   },
   userIntro: {
-    fontSize: 14,
+    fontSize: 16,
     color: "#838383",
     marginBottom: 10,
     fontFamily: "Stolzl Regular",
-  },
-  infoContainer: {
-    alignSelf: "center",
-    alignItems: "center",
   },
 
   interestsContainer: {
     alignItems: "center",
     flexDirection: "row",
     alignSelf: "flex-start",
-    marginTop: 10,
-    marginBottom: 30,
+    marginTop: 15,
+    marginBottom: 40,
     marginLeft: 30,
   },
   individualInterest: {
     marginRight: 10,
-    borderRadius: 25,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    backgroundColor: "#F7F4FA",
+    borderRadius: 15,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    backgroundColor: "#F0E7FE",
   },
   interestText: {
     color: "#724EAE",
     fontFamily: "Stolzl Regular",
   },
   horizontalBarContainer: {
+    paddingTop: 20,
     flexDirection: "row",
     justifyContent: "space-evenly",
     borderBottomColor: "#F0EAF6",
@@ -418,11 +404,6 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     backgroundColor: "white",
     // marginBottom: 24,
-  },
-  horizontalBarText: {
-    fontWeight: "bold",
-    marginHorizontal: 30,
-    marginBottom: 0,
   },
   myQuestionsText: {
     fontWeight: "bold",
@@ -463,19 +444,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9F6FF",
     paddingTop: 24,
   },
-  mainQuestionsContainer: {
-    marginLeft: 20,
-    marginRight: 20,
-    paddingTop: 20,
-    backgroundColor: "transparent",
-  },
-  verticalLine: {
-    width: 1.5,
-    height: 33,
-    backgroundColor: "#9286B1",
-    marginRight: 8,
-    marginLeft: 8,
-  },
   postShadowContainer: {
     backgroundColor: "white",
     marginLeft: 20,
@@ -491,59 +459,17 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     marginBottom: 20,
   },
-  bottomPartContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    height: 24,
-  },
-  postLikesContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  postLikesImg: {
-    width: 20,
-    height: 20,
-    marginRight: 5,
-    resizeMode: "contain",
-  },
-  postLikesText: {
-    fontSize: 14,
-  },
-  replyPostContainer: {},
-  replyPostImg: {
-    maxWidth: 60,
-    maxHeight: 20,
-    resizeMode: "contain",
-  },
-  aboutMeContainer: {
-    justifyContent: "space-between",
-    padding: 10,
-    marginLeft: 20,
-    marginRight: 20,
-    backgroundColor: "#F9F6FF",
-  },
   yourAboutMeContainer: {
     justifyContent: "space-between",
     padding: 10,
-    marginLeft: 20,
-    marginRight: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    paddingBottom: 15,
   },
-  aboutMeText: {
-    color: "#724EAE",
-    fontFamily: "Stolzl Regular",
-    fontSize: 14,
-  },
+
   yourAboutMeText: {
     color: "#838383",
     fontFamily: "Stolzl Regular",
-    fontSize: 14,
-  },
-  editButton: {
-    alignSelf: "flex-end",
-  },
-  modalContainer: {
-    flex: 1,
-    backgroundColor: "gray",
+    fontSize: 15,
   },
 });

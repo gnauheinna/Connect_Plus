@@ -55,17 +55,6 @@ export default function IndividualChatScreen({ navigation, route }) {
   });
 
   const currentUserID = user.userID;
-  // const {
-  //   currentChatID,
-  //   setCurrentChatID,
-  //   currentChatName,
-  //   setCurrentChatName,
-  //   currentChatAvatar,
-  //   setCurrentChatAvatar,
-  //   currentChatUserID,
-  //   setCurrentChatUserID,
-  // } = useCurrentChat();
-  // setCurrentChatID(chatID);
   const [chats, setChats] = useState<Chats[]>([]);
   const [inputText, setInputText] = useState("");
 
@@ -80,32 +69,6 @@ export default function IndividualChatScreen({ navigation, route }) {
     avatar8: require("../../assets/images/avatars/avatar8.png"),
     avatar9: require("../../assets/images/avatars/avatar9.png"),
   };
-
-  // useEffect(() => {
-  //   // set chatID from local storage when the page refreshes
-  //   const fetchChatData = async () => {
-  //     if (chatID != "") {
-  //       const storedChatID = await AsyncStorage.getItem("chatID");
-  //       if (storedChatID !== null) {
-  //         setCurrentChatID(storedChatID);
-  //       }
-  //       const storedChatName = await AsyncStorage.getItem("currentChatName");
-  //       if (storedChatName !== null) {
-  //         setCurrentChatName(storedChatName);
-  //       }
-  //       const storedChatUserID = await AsyncStorage.getItem(
-  //         "currentChatUserID"
-  //       );
-  //       if (storedChatUserID !== null) {
-  //         setCurrentChatUserID(storedChatUserID);
-  //       }
-  //     } else {
-  //       console.log("this is useEffect hook chatID :", chatID);
-  //     }
-  //   };
-
-  //   fetchChatData();
-  // }, []);
 
   useEffect(() => {
     const updateUser = async () => {

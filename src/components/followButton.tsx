@@ -12,19 +12,16 @@ function FollowButton({ userIdToFollow }) {
     // Check if the current user is already following userIdToFollow
     const checkIfFollowing = async () => {
       try {
-        if (user) {
-          const FollowingListSnapShot = await getDoc(
-            doc(db, "following", user.userID)
-          );
-          if (FollowingListSnapShot.exists()) {
-            const FollowingData = FollowingListSnapShot.data();
-            const FollowingArray = Object.keys(FollowingData).map(
-              (key) => FollowingData[key]
-            );
-            setFollowingList(FollowingArray);
-            console.log("Following List is: " + FollowingData.toString());
-            setIsClicked(FollowingArray.includes(userIdToFollow));
-          }
+        const FollowingListSnapShot = await getDoc(
+          doc(db, "following", user.userID)
+        );
+        if (FollowingListSnapShot.exists()) {
+          const FollowingData = await FollowingListSnapShot.data();
+          const FollowingArray = FollowingData.following || [];
+          await setFollowingList(FollowingArray);
+          setIsClicked(FollowingArray.includes(userIdToFollow));
+        } else {
+          console.log("Following List doesn't exist.");
         }
       } catch (error) {
         console.error("Error checking follow status:", error);
@@ -35,41 +32,33 @@ function FollowButton({ userIdToFollow }) {
 
   const handlePress = async () => {
     try {
-      if (user) {
-        let FollowingArray = [...followingList];
-        if (isClicked) {
-          // Unfollow the user
-          FollowingArray = await followingList.filter(
-            (item) => item !== userIdToFollow
-          );
-          await setFollowingList(FollowingArray);
-        } else {
-          // Follow the user
-          FollowingArray = await [...followingList, userIdToFollow];
-          await setFollowingList(FollowingArray);
-        }
-        // update firebase with the new following list
-        // 1. Get the document reference
-        const FollowingDocRef = doc(db, "following", user.userID);
-        // 2. update the document
-        await updateDoc(FollowingDocRef, { [user.userID]: FollowingArray });
-        // Toggle the state when the button is clicked
-        setIsClicked(!isClicked);
+      let newFollowingArray = followingList;
+      if (isClicked) {
+        // Unfollow the user
+        newFollowingArray = await followingList.filter(
+          (item) => item !== userIdToFollow
+        );
+        await setFollowingList(newFollowingArray);
+      } else {
+        // Follow the user
+
+        newFollowingArray.push(userIdToFollow);
+        await setFollowingList(newFollowingArray);
       }
+      // update firebase with the new following list
+      // 1. Get the document reference
+      const FollowingDocRef = doc(db, "following", user.userID);
+      // 2. update the document
+      await updateDoc(FollowingDocRef, { following: newFollowingArray });
+      // Toggle the state when the button is clicked
+      setIsClicked(!isClicked);
     } catch (error) {
       console.error("Error toggling follow status:", error);
     }
   };
 
   return (
-    <Pressable
-      style={({ pressed }) => [
-        styles.button,
-        pressed && styles.buttonPressed,
-        isClicked && styles.clickedButton,
-      ]}
-      onPress={handlePress}
-    >
+    <Pressable style={styles.button} onPress={handlePress}>
       <Text style={styles.buttonText}>{isClicked ? "Followed" : "Follow"}</Text>
     </Pressable>
   );
@@ -78,9 +67,10 @@ function FollowButton({ userIdToFollow }) {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: "#8E71BE",
-    padding: 10,
-    borderRadius: 25,
-    width: 193,
+
+    borderRadius: 20,
+    height: 38,
+    width: 215,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
@@ -88,13 +78,9 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     marginRight: 10,
-    fontSize: 16,
-  },
-  buttonPressed: {
-    opacity: 0.5, // Lower opacity when pressed
-  },
-  clickedButton: {
-    backgroundColor: "white", // Change color when clicked
+    fontFamily: "Stolzl Regular",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
 
