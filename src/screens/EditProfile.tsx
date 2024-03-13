@@ -2,15 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { useUser } from "../context/UserContext";
-import { getFirestore } from 'firebase/firestore';
+import { doc, getFirestore, updateDoc } from 'firebase/firestore';
+import { SelectList } from 'react-native-dropdown-select-list'
+import {
+  getAuth,
+} from "firebase/auth";
+
 
 
 
 export default function EditProfile({ close }) {
-  const [input1, setInput1] = useState('');
-  const [input2, setInput2] = useState('');
-  const [input3, setInput3] = useState('');
-  const [input4, setInput4] = useState('');
+  const [bioInput, setBioInput] = useState('');
+  const [openToInput, setOpenToInput] = useState('');
+  const [lookingForInput, setLookingForInput] = useState('');
+  const [askInput, setAskInput] = useState('');
   const [year, setYear] = useState("");
   const [major, setMajor] = useState("");
   const { user, setUser } = useUser();
@@ -27,6 +32,20 @@ export default function EditProfile({ close }) {
   const [Mname, setMName] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setName] = useState("");
+  const [selected, setSelected] = React.useState("");
+  const auth = getAuth();
+  const openToChoices = [
+      {key:'1', value:'Coffee Chats'},
+      {key:'2', value:'Mentorship'}, 
+  ]
+
+  const lookingForChoices = [
+      {key:'1', value:'Friends'},
+  ]
+
+  const askMeAboutChoices = [
+    {key:'1', value:'My Startup'},
+]
 
 
   useEffect(() => {
@@ -46,11 +65,27 @@ export default function EditProfile({ close }) {
     setYear(user.year);
   }, [user]);
 
-  const handleSubmit = () => {
-    // Handle the submit action here
-    close();
+  // const handleSubmit = () => {
+  //   // Handle the submit action here
+  //   close();
+  // };
+  const handleUpdateUserBio = async (bio: string) => {
+    const db = getFirestore();
+    const user = auth.currentUser;
+    try {
+      if (user) {
+        const userRef = doc(db, "users", user.uid);
+        await updateDoc(userRef, { bio });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
-
+  
+  const handleSubmit = () => {
+    handleUpdateUserBio(bioInput);
+    close();  
+  };
   const handleCancel = () => {
     // Handle the cancel action here
     close();
@@ -68,43 +103,57 @@ export default function EditProfile({ close }) {
     avatar9: require("../../assets/images/avatars/avatar9.png"),
   };
 
+  
+
+
   return (
     <View style={styles.modalView}>
       <Text style={styles.label}>Bio</Text>
       <TextInput
         style={styles.input}
-        onChangeText={setInput1}
-        value={input1}
+        onChangeText={setBioInput}
+        value={bioInput}
         placeholder={"Class of " + year + ", " + major + " Major"}
         placeholderTextColor="#85808C"
         maxLength={35}
       />
-      <Text style={styles.subLabel}>Character Limit: {35 - input1.length}</Text>
-
+      <Text style={styles.subLabel}>Character Limit: {35 - bioInput.length}</Text>
+      
       <Text style={styles.label}>Open To</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setInput2}
-        value={input2}
-        placeholder="Select Status"
-        placeholderTextColor="#85808C"
-      />
+      <SelectList 
+        placeholder='Select Status'
+        fontFamily="Stolzl Regular"
+        boxStyles={{width: '100%', height: 45, borderColor: "#85808C", borderWidth: 1, borderRadius: 5, marginVertical: 15}}
+        dropdownStyles={{height: '35%'}}
+        setSelected={(val) => setSelected(val)} 
+        data={openToChoices} 
+        maxHeight={55}
+        save="value"
+    />
+
       <Text style={styles.label}>Looking For</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setInput3}
-        value={input3}
-        placeholder="Select Status"
-        placeholderTextColor="#85808C"
-      />
+      <SelectList 
+        placeholder='Select Status'
+        fontFamily="Stolzl Regular"
+        boxStyles={{width: '100%', height: 45, borderColor: "#85808C", borderWidth: 1, borderRadius: 5, marginVertical: 15}}
+        dropdownStyles={{height: '35%'}}
+        setSelected={(val) => setSelected(val)} 
+        data={lookingForChoices} 
+        maxHeight={55}
+        save="value"
+    />
       <Text style={styles.label}>Ask Me About</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setInput4}
-        value={input4}
-        placeholder="Select Status"
-        placeholderTextColor="#85808C"
-      />
+      <SelectList 
+        placeholder='Select Status'
+        fontFamily="Stolzl Regular"
+        boxStyles={{width: '100%', height: 45, borderColor: "#85808C", borderWidth: 1, borderRadius: 5, marginVertical: 15}}
+        dropdownStyles={{height: '35%'}}
+        setSelected={(val) => setSelected(val)} 
+        data={askMeAboutChoices} 
+        maxHeight={55}
+        save="value"
+    />
+
 
       <View style={styles.divider} />
 
@@ -131,10 +180,6 @@ export default function EditProfile({ close }) {
           </View>
         </View>
       </View>
-      
-
-      
-      
 
 
         <View style={styles.buttonContainer}>
@@ -160,7 +205,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
         margin: 20,
-        marginTop: 70,
+        marginTop: 20,
         backgroundColor: 'white', // Set the background color to white
         borderRadius: 20,
         padding: 35,
@@ -173,7 +218,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5, // Increase the opacity to make the shadow darker
         shadowRadius: 10, // Increase the radius to make the shadow larger
         elevation: 5,
-        height: '85%',
+        height: '95%',
     },
     label: {
       fontFamily: "Stolzl Regular",
@@ -270,4 +315,14 @@ const styles = StyleSheet.create({
         fontFamily: "Stolzl Regular",
         fontSize: 14,
       },
+      profileInfoContainer: {
+        width: "100%",
+        justifyContent: "center",
+        alignSelf: "center",
+        backgroundColor: "white",
+      },
+      pickers: {
+        // height: 20,x/
+        width: "100%",
+      }
 });
