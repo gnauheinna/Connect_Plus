@@ -81,6 +81,39 @@ export default function MyJourneyScreen({ navigation }) {
           </View>
 
           <View style={styles.journeySubTitleContainer}>
+            <Text style={styles.journeySubTitle}>Popular</Text>
+          </View>
+          <View style={styles.popularContainer}>
+            <Pressable style={styles.popularButton}>
+              <Image
+                style={styles.popularButtonImg}
+                source={require("../../assets/images/icons/MatchAcademic.png")}
+              />
+              <Text style={styles.popularButtonText}>Academic</Text>
+            </Pressable>
+            <Pressable style={styles.popularButton}>
+              <Image
+                style={styles.popularButtonImg}
+                source={require("../../assets/images/icons/MatchCareer.png")}
+              />
+              <Text style={styles.popularButtonText}>Career</Text>
+            </Pressable>
+            <Pressable style={styles.popularButton}>
+              <Image
+                style={styles.popularButtonImg}
+                source={require("../../assets/images/icons/MatchFinancial.png")}
+              />
+              <Text style={styles.popularButtonText}>Financial</Text>
+            </Pressable>
+            <Pressable style={styles.popularButton}>
+              <Image
+                style={styles.popularButtonImg}
+                source={require("../../assets/images/icons/MatchCampus.png")}
+              />
+              <Text style={styles.popularButtonText}>Campus Life</Text>
+            </Pressable>
+          </View>
+          <View style={styles.journeySubTitleContainer}>
             <Text style={styles.journeySubTitle}>Featured</Text>
           </View>
 
@@ -211,7 +244,7 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     flex: 1,
-    marginBottom: 10,
+    marginBottom: 20,
     height: 40,
     backgroundColor: "transparent",
   },
@@ -241,7 +274,7 @@ const styles = StyleSheet.create({
     fontFamily: "Stolzl Regular",
   },
   journeyBigTitleContainer: {
-    marginTop: 60,
+    marginTop: 50,
     flexDirection: "row",
     backgroundColor: "transparent",
     justifyContent: "space-between",
@@ -253,7 +286,7 @@ const styles = StyleSheet.create({
     fontSize: 34,
     color: "#453B4F",
     marginTop: 20,
-    marginBottom: 16,
+    marginBottom: 5,
     justifyContent: "flex-start",
     fontFamily: "Stolzl Medium",
   },
@@ -270,10 +303,43 @@ const styles = StyleSheet.create({
   },
   journeySubTitle: {
     fontSize: 20,
-    color: "#919191",
-    fontWeight: "500",
+    color: "#000000",
     justifyContent: "flex-start",
     fontFamily: "Stolzl Medium",
+  },
+  popularButton: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    gap: 15,
+    backgroundColor: "white",
+    height: 50,
+    borderRadius: 8,
+    width: 180,
+    padding: 10,
+    shadowColor: "rgba(73, 0, 108, 0.11)",
+    shadowOpacity: 0.6,
+    shadowOffset: { width: -1, height: -2 },
+  },
+  popularButtonImg: {
+    marginTop: 3,
+    marginLeft: 5,
+    width: 25,
+    height: 25,
+    resizeMode: "contain",
+  },
+  popularButtonText: {
+    paddingTop: 5,
+    fontSize: 17,
+    fontFamily: "Stolzl Regular",
+  },
+  popularContainer: {
+    marginBottom: 32,
+    height: 120,
+    backgroundColor: "transparent",
+    justifyContent: "space-evenly",
+    flexDirection: "row",
+    gap: 8,
+    flexWrap: "wrap",
   },
   featuredJourneysContainer: {
     marginBottom: 32,
