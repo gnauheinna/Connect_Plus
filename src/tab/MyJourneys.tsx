@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
   profileButton: {
     marginTop: 15,
     marginLeft: 1,
-    backgroundColor: "#D9D9D9",
+    backgroundColor: "#ece6ed",
     opacity: 0.5,
     padding: 23,
     borderRadius: 50,
@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: "100%",
     borderRadius: 30,
-    backgroundColor: "#F4EFF5",
+    backgroundColor: "#FCFCFC",
     position: "absolute",
     top: 0,
     left: 0,
