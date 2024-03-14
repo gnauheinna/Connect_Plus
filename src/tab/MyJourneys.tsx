@@ -193,46 +193,38 @@ export default function MyJourneyScreen({ navigation }) {
           </View>
 
           <View style={styles.journeySubTitleContainer}>
-            <Text style={styles.journeySubTitle}>Hear From Others</Text>
+            <Text style={styles.journeySubTitle}>Topics</Text>
           </View>
 
           <View style={styles.allJourneysContainer}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-              {/* Rachel Li's Journey */}
-              <MJPostCard
-                onPress={() => directToMyJourneyPost("rachel")}
-                img={require("../../assets/images/mentorMyJourneyPics/rachel.png")}
-                title="The Ultimate SNAP Guide: Get $200 Monthly for Groceries"
-                name="Rachel Li"
-                year="Data Science Major, 2024"
-              />
-
-              {/* Julia Tran's Journey */}
-              <MJPostCard
-                onPress={() => directToMyJourneyPost("julia")}
-                img={require("../../assets/images/mentorMyJourneyPics/julia.png")}
-                title="Everything You Need to Know About On-Campus Jobs"
-                name="Julia Tran"
-                year="Business Administration Major, 2027"
-              />
-
-              {/* Neri Ajiatas Arreaga's Journey */}
-              <MJPostCard
-                onPress={() => directToMyJourneyPost("neri")}
-                img={require("../../assets/images/mentorMyJourneyPics/neri.png")}
-                title="Discovering BU: Campus Communities & Organizations"
-                name="Neri Ajiatas Arreaga"
-                year="Data Science Major, 2025"
-              />
-
-              {/* Shateva Long's Journey */}
-              <MJPostCard
-                onPress={() => directToMyJourneyPost("shateva")}
-                img={require("../../assets/images/mentorMyJourneyPics/shateva.png")}
-                title="I Got To Create My Own 4 Credit CS Course!"
-                name="Shateva Long"
-                year="BU Alumni"
-              />
+            <ScrollView
+              contentContainerStyle={styles.topicContentContainer}
+              showsVerticalScrollIndicator={true}
+            >
+              <Pressable style={styles.TopicButton}>
+                <Text style={styles.TopicButtonText}>Software Engineering</Text>
+              </Pressable>
+              <Pressable style={styles.TopicButton}>
+                <Text style={styles.TopicButtonText}>Cyber Security</Text>
+              </Pressable>
+              <Pressable style={styles.TopicButton}>
+                <Text style={styles.TopicButtonText}>SSH Keys</Text>
+              </Pressable>
+              <Pressable style={styles.TopicButton}>
+                <Text style={styles.TopicButtonText}>ML/AI</Text>
+              </Pressable>
+              <Pressable style={styles.TopicButton}>
+                <Text style={styles.TopicButtonText}>Vue</Text>
+              </Pressable>
+              <Pressable style={styles.TopicButton}>
+                <Text style={styles.TopicButtonText}>React Native</Text>
+              </Pressable>
+              <Pressable style={styles.TopicButton}>
+                <Text style={styles.TopicButtonText}>C# .NET</Text>
+              </Pressable>
+              <Pressable style={styles.TopicButton}>
+                <Text style={styles.TopicButtonText}> Assembly</Text>
+              </Pressable>
             </ScrollView>
           </View>
         </View>
@@ -425,8 +417,33 @@ const styles = StyleSheet.create({
   },
   allJourneysContainer: {
     flex: 1,
+    height: 300,
     backgroundColor: "#F9F6FF",
     marginTop: 10,
+  },
+
+  topicContentContainer: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    gap: 8,
+    flexWrap: "wrap",
+  },
+  TopicButton: {
+    flexDirection: "row",
     justifyContent: "flex-start",
+    gap: 15,
+    backgroundColor: "white",
+    height: 60,
+    borderRadius: 8,
+    width: 170,
+    padding: 10,
+    shadowColor: "rgba(73, 0, 108, 0.11)",
+    shadowOpacity: 0.6,
+    shadowOffset: { width: -1, height: -2 },
+  },
+  TopicButtonText: {
+    paddingTop: 5,
+    fontSize: 14,
+    fontFamily: "Stolzl Regular",
   },
 });
