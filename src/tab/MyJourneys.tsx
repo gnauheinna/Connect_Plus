@@ -14,6 +14,7 @@ import MJPostCard from "../components/MJPostCard";
 import { useSavedJourneyContext } from "../context/savedJourneyContext";
 import { useUser } from "../context/UserContext";
 import Search from "../components/search";
+import MentorCards from "../components/mentorCard";
 
 export default function MyJourneyScreen({ navigation }) {
   const db = getFirestore();
@@ -79,7 +80,7 @@ export default function MyJourneyScreen({ navigation }) {
               <TextInput style={styles.searchText} placeholder="Search" />
             </View>
           </View>
-
+          {/* Popular Container */}
           <View style={styles.journeySubTitleContainer}>
             <Text style={styles.journeySubTitle}>Popular</Text>
           </View>
@@ -113,8 +114,34 @@ export default function MyJourneyScreen({ navigation }) {
               <Text style={styles.popularButtonText}>Campus Life</Text>
             </Pressable>
           </View>
+
+          {/* Recommended Mentors */}
           <View style={styles.journeySubTitleContainer}>
-            <Text style={styles.journeySubTitle}>Featured</Text>
+            <Text style={styles.journeySubTitle}>Recommended</Text>
+            <TouchableOpacity>
+              <Text style={styles.seeAll}>View More</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.MentorCardContainer}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <View style={styles.individualMentorCard}>
+                <MentorCards />
+              </View>
+              <View style={styles.individualMentorCard}>
+                <MentorCards />
+              </View>
+              <View style={styles.individualMentorCard}>
+                <MentorCards />
+              </View>
+            </ScrollView>
+          </View>
+
+          {/* Featured Journeys */}
+          <View style={styles.journeySubTitleContainer}>
+            <Text style={styles.journeySubTitle}>Featured Journeys</Text>
+            <TouchableOpacity onPress={directToSeeAllJourneys}>
+              <Text style={styles.seeAll}>See All</Text>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.featuredJourneysContainer}>
@@ -167,9 +194,6 @@ export default function MyJourneyScreen({ navigation }) {
 
           <View style={styles.journeySubTitleContainer}>
             <Text style={styles.journeySubTitle}>Hear From Others</Text>
-            <TouchableOpacity onPress={directToSeeAllJourneys}>
-              <Text style={styles.seeAll}>See All</Text>
-            </TouchableOpacity>
           </View>
 
           <View style={styles.allJourneysContainer}>
@@ -333,13 +357,27 @@ const styles = StyleSheet.create({
     fontFamily: "Stolzl Regular",
   },
   popularContainer: {
-    marginBottom: 32,
+    marginTop: 15,
+    marginBottom: 24,
     height: 120,
     backgroundColor: "transparent",
     justifyContent: "space-evenly",
     flexDirection: "row",
     gap: 8,
     flexWrap: "wrap",
+  },
+  MentorCardContainer: {
+    marginTop: 10,
+
+    marginBottom: 32,
+    height: 400,
+    backgroundColor: "transparent",
+  },
+  individualMentorCard: {
+    marginHorizontal: 5,
+    marginBottom: 10,
+    backgroundColor: "transparent",
+    borderRadius: 15,
   },
   featuredJourneysContainer: {
     marginBottom: 32,
