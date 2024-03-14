@@ -1,11 +1,19 @@
 import { Text, View } from "../components/Themed";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { StyleSheet, ScrollView, Image, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  ScrollView,
+  Image,
+  ImageBackground,
+  Pressable,
+  TextInput,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import MJPostCard from "../components/MJPostCard";
 import { useSavedJourneyContext } from "../context/savedJourneyContext";
 import { useUser } from "../context/UserContext";
+import Search from "../components/search";
 
 export default function MyJourneyScreen({ navigation }) {
   const db = getFirestore();
@@ -59,11 +67,19 @@ export default function MyJourneyScreen({ navigation }) {
           style={styles.gradientBackground}
         >
           <View style={styles.journeyBigTitleContainer}>
-            <Text style={styles.journeyBigTitle}>My Journey</Text>
+            <Text style={styles.journeyBigTitle}>Connect+</Text>
+            <Pressable style={styles.profileButton} />
           </View>
         </ImageBackground>
 
         <View style={styles.container}>
+          <View style={styles.searchContainer}>
+            {/* Search Bar */}
+            <View style={styles.searchBar}>
+              <TextInput style={styles.searchText} placeholder="Search" />
+            </View>
+          </View>
+
           <View style={styles.journeySubTitleContainer}>
             <Text style={styles.journeySubTitle}>Featured</Text>
           </View>
@@ -180,24 +196,66 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginLeft: 20,
-    marginRight: 20,
+    marginHorizontal: 30,
     backgroundColor: "#F9F6FF",
   },
-  journeyBigTitleContainer: {
-    marginTop: 50,
+  profileButton: {
+    marginTop: 15,
+    marginLeft: 1,
+    backgroundColor: "#D9D9D9",
+    opacity: 0.5,
+    padding: 23,
+    borderRadius: 50,
+    height: 30,
+    width: 30,
+  },
+  searchContainer: {
+    flex: 1,
+    marginBottom: 10,
+    height: 40,
     backgroundColor: "transparent",
-    marginLeft: 20,
-    marginRight: 20,
+  },
+  searchBar: {
+    height: 40,
+    width: "100%",
+    borderRadius: 30,
+    backgroundColor: "#F4EFF5",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
+    padding: 10,
+    paddingLeft: 20,
+    flexDirection: "row",
+    shadowColor: "rgba(73, 0, 108, 0.11)",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 2,
+  },
+  searchText: {
+    color: "#9086A1",
+    marginLeft: 10,
+    fontSize: 15,
+    alignItems: "center",
+    fontFamily: "Stolzl Regular",
+  },
+  journeyBigTitleContainer: {
+    marginTop: 60,
+    flexDirection: "row",
+    backgroundColor: "transparent",
+    justifyContent: "space-between",
+    marginLeft: 30,
+    marginRight: 30,
     zIndex: 2,
   },
   journeyBigTitle: {
-    fontSize: 42,
+    fontSize: 34,
     color: "#453B4F",
     marginTop: 20,
     marginBottom: 16,
     justifyContent: "flex-start",
-    fontFamily: "Stolzl Bold",
+    fontFamily: "Stolzl Medium",
   },
   journeySubTitleContainer: {
     backgroundColor: "#F9F6FF",
