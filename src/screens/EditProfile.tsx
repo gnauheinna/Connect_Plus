@@ -8,16 +8,20 @@ import {
   getAuth,
 } from "firebase/auth";
 
+interface EditProfileProps {
+  close: () => void;
+  onBioUpdate: (newBio: string) => void;
+}
 
 
-
-export default function EditProfile({ close }) {
-  const [bioInput, setBioInput] = useState('');
+const EditProfile: React.FC<EditProfileProps> = (props) => {
+  const { close, onBioUpdate } = props;
   const [openToInput, setOpenToInput] = useState('');
   const [lookingForInput, setLookingForInput] = useState('');
   const [askInput, setAskInput] = useState('');
   const [year, setYear] = useState("");
   const [major, setMajor] = useState("");
+  const [bio, setBio] = useState("");
   const { user, setUser } = useUser();
   const [bioPreview, setBioPreview] = useState('');
   const [img, setImg] = useState(Image);
@@ -32,6 +36,7 @@ export default function EditProfile({ close }) {
   const [Mname, setMName] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setName] = useState("");
+  const [bioInput, setBioInput] = useState('');
   const [selected, setSelected] = React.useState("");
   const auth = getAuth();
   const openToChoices = [
@@ -46,8 +51,6 @@ export default function EditProfile({ close }) {
   const askMeAboutChoices = [
     {key:'1', value:'My Startup'},
 ]
-
-
   useEffect(() => {
     setName(user.name);
     setMajor(user.major);
@@ -57,25 +60,22 @@ export default function EditProfile({ close }) {
     setFinancial(user.financial);
     setStudentLife(user.studentLife);
     setAvatar(user.avatar);
+    setBio(user.bio);
   }, [user]);
 
-
-  useEffect(() => {
-    setMajor(user.major);
-    setYear(user.year);
-  }, [user]);
-
-  // const handleSubmit = () => {
-  //   // Handle the submit action here
-  //   close();
-  // };
+  // console.log(user);
   const handleUpdateUserBio = async (bio: string) => {
     const db = getFirestore();
-    const user = auth.currentUser;
+    console.log(user);
     try {
       if (user) {
-        const userRef = doc(db, "users", user.uid);
-        await updateDoc(userRef, { bio });
+        const userRef = doc(db, "users", user.userID);
+        const userData = {
+          bio: bio,
+        };
+        await updateDoc(userRef, userData);
+
+        props.onBioUpdate(bio);
       }
     } catch (error) {
       console.log(error);
@@ -113,7 +113,7 @@ export default function EditProfile({ close }) {
         style={styles.input}
         onChangeText={setBioInput}
         value={bioInput}
-        placeholder={"Class of " + year + ", " + major + " Major"}
+        placeholder={'Enter your bio here'}
         placeholderTextColor="#85808C"
         maxLength={35}
       />
@@ -165,8 +165,7 @@ export default function EditProfile({ close }) {
             <View>
               <Text style={[styles.userName]}>{name}</Text>
               <Text style={[styles.userIntro]}>
-                {" "}
-                Class of {year}, {major} Major{" "}
+              {bioInput ? bioInput : user.bio}
               </Text>
             </View>
           </View>
@@ -326,3 +325,5 @@ const styles = StyleSheet.create({
         width: "100%",
       }
 });
+
+export default EditProfile;

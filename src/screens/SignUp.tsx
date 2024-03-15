@@ -49,6 +49,7 @@ export default function SignUpScreen({ navigation }) {
   const [financial, setFinancial] = useState(false);
   const [studentLife, setStudentLife] = useState(false);
   const [career, setCareer] = useState(false);
+  const [bio, setBio] = useState("");
 
   const auth = getAuth();
   const curuser = auth.currentUser;
@@ -67,6 +68,7 @@ export default function SignUpScreen({ navigation }) {
     studentLife,
     userID,
     avatar,
+    bio,
   };
 
   //triggers Firebase Auth to create new user

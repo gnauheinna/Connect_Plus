@@ -42,6 +42,7 @@ export default function ProfileScreen({ navigation }) {
   const [career, setCareer] = useState(false);
   const [financial, setFinancial] = useState(false);
   const [studentLife, setStudentLife] = useState(false);
+  const [bio, setBio] = useState("");
   const { posts, loading } = usePostContext();
   const [allPosts, setAllPosts] = useState<Post[]>([]);
   const [showLineForQuestions, setshowLineForQuestions] = useState(true);
@@ -50,6 +51,7 @@ export default function ProfileScreen({ navigation }) {
   const [Mname, setMName] = useState("");
   const [img, setImg] = useState(Image);
   const [modalVisible, setModalVisible] = useState(false);
+  const [newBio, setNewBio] = useState("");
 
   // retrieve user info of viewing another user's profile
   useEffect(() => {
@@ -61,7 +63,9 @@ export default function ProfileScreen({ navigation }) {
     setFinancial(user.financial);
     setStudentLife(user.studentLife);
     setAvatar(user.avatar);
+    setBio(user.bio);
   }, [user]);
+
 
   function mentorName(Title: string) {
     switch (Title) {
@@ -131,8 +135,7 @@ export default function ProfileScreen({ navigation }) {
           <View>
             <Text style={[styles.userName]}>{name}</Text>
             <Text style={[styles.userIntro]}>
-              {" "}
-              Class of {year}, {major} Major{" "}
+              {newBio ? newBio : `Class of ${year}, ${major} Major`}
             </Text>
           </View>
         </View>
@@ -161,7 +164,7 @@ export default function ProfileScreen({ navigation }) {
                   setModalVisible(!modalVisible);
                 }}
               >
-                <EditProfile close={() => setModalVisible(false)} />
+                <EditProfile close={() => setModalVisible(false)} onBioUpdate={newBio => setNewBio(newBio)} />
               </Modal>
             </View>
           </View>

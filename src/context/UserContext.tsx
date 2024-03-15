@@ -22,6 +22,7 @@ export type UserContextType = {
     career: boolean;
     financial: boolean;
     studentLife: boolean;
+    bio: string;
   };
   setUser: (user: {
     name: string;
@@ -34,6 +35,7 @@ export type UserContextType = {
     career: boolean;
     financial: boolean;
     studentLife: boolean;
+    bio : string;
   }) => void;
 };
 
@@ -55,6 +57,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     career: false,
     financial: false,
     studentLife: false,
+    bio: "",
   });
 
   useEffect(() => {
@@ -74,6 +77,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           avatar: string;
           financial: boolean;
           studentLife: boolean;
+          bio: string;
         };
 
         setUser(userData);
@@ -90,6 +94,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           career: false,
           financial: false,
           studentLife: false,
+          bio: "",
         });
       }
     });
