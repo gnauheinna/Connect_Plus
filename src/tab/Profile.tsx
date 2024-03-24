@@ -52,6 +52,9 @@ export default function ProfileScreen({ navigation }) {
   const [img, setImg] = useState(Image);
   const [modalVisible, setModalVisible] = useState(false);
   const [newBio, setNewBio] = useState("");
+   const [openTo, setOpenTo] = useState("");
+  const [lookingFor, setLookingFor] = useState("");
+  const [askMeAbout, setAskMeAbout] = useState("");
 
   // retrieve user info of viewing another user's profile
   useEffect(() => {
@@ -64,7 +67,12 @@ export default function ProfileScreen({ navigation }) {
     setStudentLife(user.studentLife);
     setAvatar(user.avatar);
     setBio(user.bio);
+    setOpenTo(user.openTo);
+    setLookingFor(user.lookingFor);
+    setAskMeAbout(user.askMeAbout);
   }, [user]);
+
+  // console.log("userinProfile", user);
 
 
   function mentorName(Title: string) {
@@ -135,7 +143,7 @@ export default function ProfileScreen({ navigation }) {
           <View>
             <Text style={[styles.userName]}>{name}</Text>
             <Text style={[styles.userIntro]}>
-              {newBio ? newBio : `Class of ${year}, ${major} Major`}
+              {bio ? bio : `Class of ${year}, ${major} Major`}
             </Text>
           </View>
         </View>
@@ -144,8 +152,7 @@ export default function ProfileScreen({ navigation }) {
         <View style={styles.aboutMeContainer}>
           <View>
             <Text style={styles.aboutMeText}>
-              Open to Mentorship, Looking for coffee chats, ask me about my
-              startup
+              Open to {openTo}, Looking for {lookingFor}, ask me about {askMeAbout}
             </Text>
           </View>
           <View>
@@ -164,8 +171,17 @@ export default function ProfileScreen({ navigation }) {
                   setModalVisible(!modalVisible);
                 }}
               >
-                <EditProfile close={() => setModalVisible(false)} onBioUpdate={newBio => setNewBio(newBio)} />
-              </Modal>
+                <EditProfile close={() => setModalVisible(false)} 
+                  onBioUpdate={bio => {
+                    // setNewBio(newBio);
+                    setBio(bio);
+                  }}
+                  onPrefUpdate={(openTo, lookingFor, askMeAbout) => {
+                    setOpenTo(openTo);
+                    setLookingFor(lookingFor);
+                    setAskMeAbout(askMeAbout);
+                  }} />
+                </Modal>
             </View>
           </View>
         </View>

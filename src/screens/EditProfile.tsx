@@ -11,6 +11,8 @@ import {
 interface EditProfileProps {
   close: () => void;
   onBioUpdate: (newBio: string) => void;
+  onPrefUpdate: (openTo: string, lookingFor: string, askMeAbout: string) => void;
+
 }
 
 
@@ -36,8 +38,11 @@ const EditProfile: React.FC<EditProfileProps> = (props) => {
   const [Mname, setMName] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setName] = useState("");
-  const [bioInput, setBioInput] = useState('');
-  const [selected, setSelected] = React.useState("");
+  const [bioInput, setBioInput] = useState(bio);
+  const [openTo, setOpenTo] = useState("");
+  const [lookingFor, setLookingFor] = useState("");
+  const [askMeAbout, setAskMeAbout] = useState("");
+
   const auth = getAuth();
   const openToChoices = [
       {key:'1', value:'Coffee Chats'},
@@ -61,21 +66,54 @@ const EditProfile: React.FC<EditProfileProps> = (props) => {
     setStudentLife(user.studentLife);
     setAvatar(user.avatar);
     setBio(user.bio);
-  }, [user]);
+    setOpenTo(user.openTo);
+    setLookingFor(user.lookingFor);
+    setAskMeAbout(user.askMeAbout);
+  }, [user, bio, openTo, lookingFor, askMeAbout]);
 
   // console.log(user);
   const handleUpdateUserBio = async (bio: string) => {
+    // setBio(bio);
+    // console.log("before db", user);
     const db = getFirestore();
-    console.log(user);
+    // console.log("after db", user);
+    // console.log(user);
     try {
       if (user) {
         const userRef = doc(db, "users", user.userID);
         const userData = {
           bio: bio,
         };
+        console.log("userData", userData);
+        
         await updateDoc(userRef, userData);
+        setBio(bio);
+        console.log("NEWbio", bio);
 
         props.onBioUpdate(bio);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // console.log("after handleupdateuserbio", user);
+  const handleUpdateUserPref = async (openTo: string, lookingFor: string, askMeAbout: string) => {
+    // setBio(bio);
+    // console.log("before db", user);
+    const db = getFirestore();
+
+    try {
+      if (user) {
+        const userRef = doc(db, "users", user.userID);
+        const userData = {
+          openTo: openTo,
+          lookingFor: lookingFor,
+          askMeAbout: askMeAbout,
+        };
+        await updateDoc(userRef, userData);
+
+        props.onPrefUpdate(openTo, lookingFor, askMeAbout);
+
       }
     } catch (error) {
       console.log(error);
@@ -84,6 +122,7 @@ const EditProfile: React.FC<EditProfileProps> = (props) => {
   
   const handleSubmit = () => {
     handleUpdateUserBio(bioInput);
+    handleUpdateUserPref(openTo, lookingFor, askMeAbout);
     close();  
   };
   const handleCancel = () => {
@@ -113,6 +152,7 @@ const EditProfile: React.FC<EditProfileProps> = (props) => {
         style={styles.input}
         onChangeText={setBioInput}
         value={bioInput}
+        // value={user.bio}
         placeholder={'Enter your bio here'}
         placeholderTextColor="#85808C"
         maxLength={35}
@@ -125,7 +165,7 @@ const EditProfile: React.FC<EditProfileProps> = (props) => {
         fontFamily="Stolzl Regular"
         boxStyles={{width: '100%', height: 45, borderColor: "#85808C", borderWidth: 1, borderRadius: 5, marginVertical: 15}}
         dropdownStyles={{height: '35%'}}
-        setSelected={(val) => setSelected(val)} 
+        setSelected={(val) => setOpenTo(val)} 
         data={openToChoices} 
         maxHeight={55}
         save="value"
@@ -137,7 +177,7 @@ const EditProfile: React.FC<EditProfileProps> = (props) => {
         fontFamily="Stolzl Regular"
         boxStyles={{width: '100%', height: 45, borderColor: "#85808C", borderWidth: 1, borderRadius: 5, marginVertical: 15}}
         dropdownStyles={{height: '35%'}}
-        setSelected={(val) => setSelected(val)} 
+        setSelected={(val) => setLookingFor(val)} 
         data={lookingForChoices} 
         maxHeight={55}
         save="value"
@@ -148,7 +188,7 @@ const EditProfile: React.FC<EditProfileProps> = (props) => {
         fontFamily="Stolzl Regular"
         boxStyles={{width: '100%', height: 45, borderColor: "#85808C", borderWidth: 1, borderRadius: 5, marginVertical: 15}}
         dropdownStyles={{height: '35%'}}
-        setSelected={(val) => setSelected(val)} 
+        setSelected={(val) => setAskMeAbout(val)} 
         data={askMeAboutChoices} 
         maxHeight={55}
         save="value"
@@ -165,15 +205,15 @@ const EditProfile: React.FC<EditProfileProps> = (props) => {
             <View>
               <Text style={[styles.userName]}>{name}</Text>
               <Text style={[styles.userIntro]}>
-              {bioInput ? bioInput : user.bio}
+              {/* {bioInput ? bioInput : bio} */}
+              {bio}
               </Text>
             </View>
           </View>
           <View style={styles.aboutMePrevContainer}>
             <View>
               <Text style={styles.aboutMeTextPrev}>
-                Open to Mentorship, Looking for coffee chats, ask me about my
-                startup
+              Open to {openTo}, Looking for {lookingFor}, ask me about {askMeAbout}
               </Text>
             </View>
           </View>

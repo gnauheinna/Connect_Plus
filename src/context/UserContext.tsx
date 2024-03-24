@@ -23,6 +23,9 @@ export type UserContextType = {
     financial: boolean;
     studentLife: boolean;
     bio: string;
+    openTo: string;
+    lookingFor: string;
+    askMeAbout: string;
   };
   setUser: (user: {
     name: string;
@@ -36,6 +39,9 @@ export type UserContextType = {
     financial: boolean;
     studentLife: boolean;
     bio : string;
+    openTo: string;
+    lookingFor: string;
+    askMeAbout: string;
   }) => void;
 };
 
@@ -58,6 +64,9 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     financial: false,
     studentLife: false,
     bio: "",
+    openTo: "",
+    lookingFor: "",
+    askMeAbout: "",
   });
 
   useEffect(() => {
@@ -78,6 +87,9 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           financial: boolean;
           studentLife: boolean;
           bio: string;
+          openTo: string;
+          lookingFor: string;
+          askMeAbout: string;
         };
 
         setUser(userData);
@@ -95,6 +107,9 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           financial: false,
           studentLife: false,
           bio: "",
+          openTo: "",
+          lookingFor: "",
+          askMeAbout: "",
         });
       }
     });
