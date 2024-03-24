@@ -205,8 +205,7 @@ const EditProfile: React.FC<EditProfileProps> = (props) => {
             <View>
               <Text style={[styles.userName]}>{name}</Text>
               <Text style={[styles.userIntro]}>
-              {/* {bioInput ? bioInput : bio} */}
-              {bio}
+              {bioInput ? bioInput : bio}
               </Text>
             </View>
           </View>
@@ -223,25 +222,22 @@ const EditProfile: React.FC<EditProfileProps> = (props) => {
 
         <View style={styles.buttonContainer}>
         <TouchableOpacity
-            style={styles.button}
+            style={styles.cancelButton}
             onPress={handleCancel}>
-            <Text style={styles.buttonText}>Cancel</Text>
+            <Text style={styles.cancelButtonText}>Cancel</Text>
         </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={handleSubmit}
-      >
-        <Text style={styles.buttonText}>Submit</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.saveButton}
+          onPress={handleSubmit}
+        >
+          <Text style={styles.saveButtonText}>Save</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-    buttonText: {
-        
-    },
     modalView: {
         margin: 20,
         marginTop: 20,
@@ -288,16 +284,38 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
+        marginTop: 60,
+        height: 32,      
       },
-    button: {
-        borderWidth: 1, // Add this
-        borderColor: 'black', // Add this
-        borderRadius: 10,
-        backgroundColor: "#FFD465",
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '30%',
-      },
+    cancelButton: {
+      borderWidth: 1, // Add this
+      borderColor: '#724EAE', // Add this
+      borderRadius: 15,
+      // backgroundColor: "#FFD465",
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '35%',
+      // marginTop: 10,
+    },
+
+    saveButton: {
+      borderRadius: 15,
+      backgroundColor: "#FFD465",
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '35%',
+      // height: 35,
+      // marginTop: 10,
+    },
+
+    cancelButtonText: {
+      fontFamily: "Stolzl Regular",
+      color: '#724EAE',
+    },
+    saveButtonText: {
+        fontFamily: "Stolzl Regular",
+        color: 'black',
+    },
       divider: {
         height: 1,
         backgroundColor: '#85808C',
@@ -311,6 +329,7 @@ const styles = StyleSheet.create({
       },     
       previewContainer: {
         flex: 1,
+        marginTop: 25,
       },
       profileImage: {
         width: 55,
@@ -348,6 +367,8 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginRight: 20,
         backgroundColor: "#F9F6FF",
+        width: "100%",
+  
       },
       aboutMeTextPrev: {
         color: "#724EAE",
