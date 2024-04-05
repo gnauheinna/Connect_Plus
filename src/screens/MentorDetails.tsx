@@ -127,18 +127,25 @@ const MentorDetails: React.FC = () => {
                 {/* Experience Section */}
                 <View style={styles.experiencetitleContainer}>
                     <Text style={styles.experienceTitle}>Experience:</Text>
-                    <View style={styles.experienceDetailContainer}>
-                        <Text style={styles.experienceDetailTitle}>Project Manager</Text>
-                        <Text style={styles.experienceDetailDate}>2022 - Present</Text>
+                    <View style={styles.experienceBox}> 
+                        <View style={styles.experienceDetailContainer}>
+                            <Text style={styles.experienceDetailTitle}>Project Manager</Text>
+                            <Text style={styles.experienceDetailDate}>2022 - Present</Text>
+                        </View>
+                        <View style={styles.experienceDescriptionContainer}>
+                                <Text style={styles.experienceBullet}>• Led cross-functional teams to deliver projects on time and within budget.</Text>
+                                <Text style={styles.experienceBullet}>• Created and maintained project plans and timelines.</Text>
+                                <Text style={styles.experienceBullet} >• Conducted regular meetings to track progress and resolve issues.</Text>
+                        </View>
                     </View>
-                    <View style={styles.experienceDetailContainer}>
+                    {/* <View style={styles.experienceDetailContainer}>
                         <Text style={styles.experienceDetailTitle}>Marketing Intern</Text>
                         <Text style={styles.experienceDetailDate}>1 year</Text>
                     </View>
                     <View style={styles.experienceDetailContainer}>
                         <Text style={styles.experienceDetailTitle}>Production Assistant</Text>
                         <Text style={styles.experienceDetailDate}>2 Months</Text>
-                    </View>
+                    </View> */}
                 </View>
             </View>
           </View>
@@ -297,7 +304,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
     },
     experienceDetailContainer: {
-        // backgroundColor: "lightgrey",
+        backgroundColor: "orange",
         flexDirection: "row",
         justifyContent: 'space-between',
         width: "90%",
@@ -312,6 +319,20 @@ const styles = StyleSheet.create({
         fontFamily: "Stolzl Regular",
         fontSize: 10,
         color: "#8C8C8C",
+
+    },
+    experienceBox: {
+        backgroundColor: "#EDE7FF",
+    },
+    experienceBullet: {
+        fontFamily: "Stolzl Regular",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        padding: 5,
+        fontSize: 10,
+    },
+    experienceDescriptionContainer: {
+        backgroundColor: "yellow",
     },
   });
 export default MentorDetails;
