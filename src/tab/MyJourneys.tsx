@@ -124,9 +124,11 @@ export default function MyJourneyScreen({ navigation }) {
           </View>
           <View style={styles.MentorCardContainer}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <View style={styles.individualMentorCard}>
-                <MentorCards />
-              </View>
+              <TouchableOpacity onPress={() => navigation.navigate('MentorDetails')}>
+                <View style={styles.individualMentorCard}>
+                  <MentorCards />
+                </View>
+              </TouchableOpacity>
               <View style={styles.individualMentorCard}>
                 <MentorCards />
               </View>

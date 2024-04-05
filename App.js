@@ -36,6 +36,7 @@ import JourneyScreen from "./src/screens/MyJourneyPosts/JourneyScreen";
 import FeaturedJourneyScreen from "./src/screens/MyJourneyPosts/FeaturedJourneyScreen";
 import EditProfile from "./src/screens/EditProfile";
 import ViewProfile from "./src/screens/ViewProfile";
+import MentorDetails from "./src/screens/MentorDetails";
 
 // Create a Stack navigator
 const Stack = createStackNavigator();
@@ -175,6 +176,11 @@ export default function App() {
                   <Stack.Screen
                     name="ViewProfile"
                     component={ViewProfile}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="MentorDetails"
+                    component={MentorDetails}
                     options={{ headerShown: false }}
                   />
                 </Stack.Navigator>
