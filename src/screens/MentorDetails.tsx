@@ -125,27 +125,43 @@ const MentorDetails: React.FC = () => {
             </View>
             <View style={styles.experienceContainer}>
                 {/* Experience Section */}
-                <View style={styles.experiencetitleContainer}>
+                <View style={styles.expertisetitleContainer}>
                     <Text style={styles.experienceTitle}>Experience:</Text>
-                    <View style={styles.experienceBox}> 
+                </View>
+                <View style={styles.experienceBox}> 
                         <View style={styles.experienceDetailContainer}>
+                        <View style={styles.dot} />
+                        <View style={styles.verticalLine} />
                             <Text style={styles.experienceDetailTitle}>Project Manager</Text>
                             <Text style={styles.experienceDetailDate}>2022 - Present</Text>
                         </View>
                         <View style={styles.experienceDescriptionContainer}>
-                                <Text style={styles.experienceBullet}>• Led cross-functional teams to deliver projects on time and within budget.</Text>
-                                <Text style={styles.experienceBullet}>• Created and maintained project plans and timelines.</Text>
-                                <Text style={styles.experienceBullet} >• Conducted regular meetings to track progress and resolve issues.</Text>
+                            <Text style={styles.experienceBullet}>• Led cross-functional teams to deliver projects on time and within budget.</Text>
+                            <Text style={styles.experienceBullet}>• Created and maintained project plans and timelines.</Text>
+                            <Text style={styles.experienceBullet} >• Conducted regular meetings to track progress and resolve issues.</Text>
                         </View>
-                    </View>
-                    {/* <View style={styles.experienceDetailContainer}>
-                        <Text style={styles.experienceDetailTitle}>Marketing Intern</Text>
-                        <Text style={styles.experienceDetailDate}>1 year</Text>
-                    </View>
-                    <View style={styles.experienceDetailContainer}>
-                        <Text style={styles.experienceDetailTitle}>Production Assistant</Text>
-                        <Text style={styles.experienceDetailDate}>2 Months</Text>
-                    </View> */}
+                </View>
+                <View style={styles.experienceBox}> 
+                        <View style={styles.experienceDetailContainer}>
+                            <Text style={styles.experienceDetailTitle}>Marketing Intern</Text>
+                            <Text style={styles.experienceDetailDate}>2022 - Present</Text>
+                        </View>
+                        <View style={styles.experienceDescriptionContainer}>
+                            <Text style={styles.experienceBullet}>• Led cross-functional teams to deliver projects on time and within budget.</Text>
+                            <Text style={styles.experienceBullet}>• Created and maintained project plans and timelines.</Text>
+                            <Text style={styles.experienceBullet} >• Conducted regular meetings to track progress and resolve issues.</Text>
+                        </View>
+                </View>
+                <View style={styles.experienceBox}> 
+                        <View style={styles.experienceDetailContainer}>
+                            <Text style={styles.experienceDetailTitle}>Production Assistant</Text>
+                            <Text style={styles.experienceDetailDate}>2022 - Present</Text>
+                        </View>
+                        <View style={styles.experienceDescriptionContainer}>
+                            <Text style={styles.experienceBullet}>• Led cross-functional teams to deliver projects on time and within budget.</Text>
+                            <Text style={styles.experienceBullet}>• Created and maintained project plans and timelines.</Text>
+                            <Text style={styles.experienceBullet} >• Conducted regular meetings to track progress and resolve issues.</Text>
+                        </View>
                 </View>
             </View>
           </View>
@@ -290,9 +306,10 @@ const styles = StyleSheet.create({
     },
     experienceContainer: {
         marginTop: 5,
-        flexDirection: "row",
-        gap: 6,
-        marginLeft: 20,
+        // flexDirection: "row",
+        // gap: 6,
+        // marginLeft: 20,
+        // backgroundColor: "lightblue",
     },
     experiencetitleContainer: {
         marginVertical: 5,
@@ -304,35 +321,58 @@ const styles = StyleSheet.create({
         fontSize: 11,
     },
     experienceDetailContainer: {
-        backgroundColor: "orange",
+        // backgroundColor: "#FFD232",
         flexDirection: "row",
         justifyContent: 'space-between',
-        width: "90%",
+        width: "100%",
     },
     experienceDetailTitle: {
         fontFamily: "Stolzl Medium",
         fontSize: 12,
         fontWeight: "bold",
-        color: "grey",
+        color: "#4F4F4F",
     },
     experienceDetailDate: {
         fontFamily: "Stolzl Regular",
         fontSize: 10,
-        color: "#8C8C8C",
+        color: "#4F4F4F",
+        alignSelf: "flex-end",
 
     },
     experienceBox: {
         backgroundColor: "#EDE7FF",
+        width: "65%",
+        marginLeft: 100,
+        padding: 10,
     },
     experienceBullet: {
         fontFamily: "Stolzl Regular",
+        color: "#4F4F4F",
         flexDirection: "column",
         justifyContent: "space-between",
         padding: 5,
         fontSize: 10,
     },
     experienceDescriptionContainer: {
-        backgroundColor: "yellow",
+        // backgroundColor: "#FFD232",
     },
+    dot: {
+        height: 10,
+        width: 10,
+        borderRadius: 5,
+        backgroundColor: '#000',
+        position: 'absolute',
+        left: -32.5, // Position the dot to the left of the box
+        top: '15%', // Center the dot vertically
+      },
+    verticalLine: {
+            position: 'absolute',
+            left: -30, // Position the line to the left of the box
+            top: "59%",
+            bottom: 0,
+            width: 5,
+            backgroundColor: '#000',
+            height: 140,
+        },
   });
 export default MentorDetails;
