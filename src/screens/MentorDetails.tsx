@@ -8,13 +8,18 @@ import {
   Text,
   Pressable,
   ImageBackground,
-  Dimensions
+  Dimensions,
+  TouchableOpacity,
 } from "react-native";
 
 
-const MentorDetails: React.FC = () => {
+export default function MentorDetails({ navigation }) {
+    function directToMyJourneyPost(postName: string) {
+        navigation.navigate(postName);
+      }
+
     return (
-        
+        <ScrollView>
         <View style={styles.outterContainer}>
           <View style={styles.topContainer}>
             {/* top half of the card*/}
@@ -142,30 +147,51 @@ const MentorDetails: React.FC = () => {
                         </View>
                 </View>
                 <View style={styles.experienceBox}> 
+                        <View style={styles.dot2} />
+                        <View style={styles.verticalLine2} />
                         <View style={styles.experienceDetailContainer}>
                             <Text style={styles.experienceDetailTitle}>Marketing Intern</Text>
-                            <Text style={styles.experienceDetailDate}>2022 - Present</Text>
+                            <Text style={styles.experienceDetailDate}>1 year</Text>
                         </View>
                         <View style={styles.experienceDescriptionContainer}>
-                            <Text style={styles.experienceBullet}>• Led cross-functional teams to deliver projects on time and within budget.</Text>
-                            <Text style={styles.experienceBullet}>• Created and maintained project plans and timelines.</Text>
-                            <Text style={styles.experienceBullet} >• Conducted regular meetings to track progress and resolve issues.</Text>
+                            <Text style={styles.experienceBullet}>• Conducted market research and analyzed data. </Text>
+                            <Text style={styles.experienceBullet}>• Managed social media accounts and created content.</Text>
                         </View>
                 </View>
                 <View style={styles.experienceBox}> 
+                        <View style={styles.dot3} />
                         <View style={styles.experienceDetailContainer}>
                             <Text style={styles.experienceDetailTitle}>Production Assistant</Text>
-                            <Text style={styles.experienceDetailDate}>2022 - Present</Text>
+                            <Text style={styles.experienceDetailDate}>2 Months</Text>
                         </View>
                         <View style={styles.experienceDescriptionContainer}>
-                            <Text style={styles.experienceBullet}>• Led cross-functional teams to deliver projects on time and within budget.</Text>
-                            <Text style={styles.experienceBullet}>• Created and maintained project plans and timelines.</Text>
-                            <Text style={styles.experienceBullet} >• Conducted regular meetings to track progress and resolve issues.</Text>
+                            <Text style={styles.experienceBullet}>•Assisted with logistics and coordination for film/TV production. </Text>
+                            <Text style={styles.experienceBullet}>• Managed props, set dressing, and other production materials.</Text>
                         </View>
                 </View>
             </View>
+            
+            
+            <View style={styles.journeyContainer}>
+                {/* Journey Section */}
+            <View style={styles.journeytitleContainer}>
+                    <Text style={styles.journeyTitle}>Journeys:</Text>
+                </View>
+                <TouchableOpacity
+                onPress={() => directToMyJourneyPost("shatevaFeatured")}
+                style={styles.featuredJourney}
+              >
+                <Image
+                  style={styles.featuredJourneyImg}
+                  source={require("../../assets/images/featuredMyJourneyPosts/shateva.png")}
+                />
+              </TouchableOpacity>
+            </View>
+          
+          
           </View>
         </View>
+        </ScrollView>
       );
 };
 const styles = StyleSheet.create({
@@ -187,9 +213,8 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
       backgroundColor: "transparent",
-      marginTop: 90,
-  
-      marginHorizontal: 40,
+      marginTop: 60,
+      marginHorizontal: 100,
       flexDirection: "row",
       justifyContent: "space-between",
     },
@@ -235,24 +260,26 @@ const styles = StyleSheet.create({
       fontWeight: "500",
       textTransform: "capitalize",
       backgroundColor: "transparent",
+      alignItems: "center",
+      justifyContent: "center",
     },
     MentorName: {
       fontFamily: "Stolzl Medium",
-      fontSize: 21,
+      fontSize: 25,
     },
     infoText: {
       paddingTop: 3,
       fontFamily: "Stolzl Regular",
       paddingBottom: 5,
-      fontSize: 10,
+      fontSize: 12,
       color: "#8C8C8C",
-      marginLeft: 20,
+      textAlign: "center",
     },
     starContainer: {
       height: 40,
       width: 40,
-      marginLeft: 190,
-      marginTop: 15,
+      marginLeft: 320,
+      marginTop: 45,
       backgroundColor: "transparent",
     },
     verifiedIcon: {
@@ -306,10 +333,6 @@ const styles = StyleSheet.create({
     },
     experienceContainer: {
         marginTop: 5,
-        // flexDirection: "row",
-        // gap: 6,
-        // marginLeft: 20,
-        // backgroundColor: "lightblue",
     },
     experiencetitleContainer: {
         marginVertical: 5,
@@ -340,10 +363,11 @@ const styles = StyleSheet.create({
 
     },
     experienceBox: {
-        backgroundColor: "#EDE7FF",
+        backgroundColor: "#FFD232",
         width: "65%",
         marginLeft: 100,
-        padding: 10,
+        padding: 5,
+        marginBottom: 15,
     },
     experienceBullet: {
         fontFamily: "Stolzl Regular",
@@ -354,7 +378,7 @@ const styles = StyleSheet.create({
         fontSize: 10,
     },
     experienceDescriptionContainer: {
-        // backgroundColor: "#FFD232",
+        backgroundColor: "#FFD232",
     },
     dot: {
         height: 10,
@@ -363,16 +387,97 @@ const styles = StyleSheet.create({
         backgroundColor: '#000',
         position: 'absolute',
         left: -32.5, // Position the dot to the left of the box
-        top: '15%', // Center the dot vertically
-      },
+        top: '10%', // Center the dot vertically
+    },
     verticalLine: {
-            position: 'absolute',
-            left: -30, // Position the line to the left of the box
-            top: "59%",
-            bottom: 0,
-            width: 5,
-            backgroundColor: '#000',
-            height: 140,
+        position: 'absolute',
+        left: -30, // Position the line to the left of the box
+        top: "100%",
+        bottom:0,
+        width: 4,
+        backgroundColor: '#000',
+        height: 128,
+    },
+    dot2: {
+        height: 10,
+        width: 10,
+        borderRadius: 5,
+        backgroundColor: '#000',
+        position: 'absolute',
+        left: -28, // Position the dot to the left of the box
+        top: '8%', // Center the dot vertically
+    },
+    verticalLine2: {
+        position: 'absolute',
+        left: -25.5, // Position the line to the left of the box
+        top: "20%",
+        bottom: 0,
+        width: 4,
+        backgroundColor: '#000',
+        height: 120,
+    },
+    dot3: {
+        height: 10,
+        width: 10,
+        borderRadius: 5,
+        backgroundColor: '#000',
+        position: 'absolute',
+        left: -28.5, // Position the dot to the left of the box
+        top: '5%', // Center the dot vertically
+    },
+    featuredJourneysContainer: {
+        marginBottom: 32,
+        height: 220,
+        backgroundColor: "transparent",
+      },
+      overlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: "transparent",
+        marginTop: 16,
+      },
+      overlayTextContainer: {
+        position: "absolute",
+        top: 0,
+        paddingLeft: 16,
+        backgroundColor: "transparent",
+      },
+      overlayText: {
+        color: "black",
+        fontWeight: "bold",
+        fontSize: 22,
+        lineHeight: 25,
+        marginTop: 10,
+        width: 130,
+      },
+      featuredJourney: {
+        borderRadius: 15,
+        marginTop: 10,
+        marginLeft: 3,
+        marginBottom: 5,
+        marginRight: 14,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 1,
+          // borderRadius: 15,
         },
+        shadowOpacity: 0.08,
+        shadowRadius: 10,
+      },
+      featuredJourneyImg: {
+        maxWidth: 300,
+        maxHeight: 200,
+        borderRadius: 15,
+      },
+      journeyContainer: {
+        marginTop: 5,
+    },
+    journeytitleContainer: {
+        marginVertical: 5,
+        marginLeft: 20,
+      },
+    journeyTitle: {
+        fontFamily: "Stolzl Medium",
+        fontSize: 11,
+    },
   });
-export default MentorDetails;
