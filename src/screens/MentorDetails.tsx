@@ -392,7 +392,7 @@ const styles = StyleSheet.create({
     verticalLine: {
         position: 'absolute',
         left: -30, // Position the line to the left of the box
-        top: "100%",
+        top: "90%",
         bottom:0,
         width: 4,
         backgroundColor: '#000',
@@ -410,11 +410,11 @@ const styles = StyleSheet.create({
     verticalLine2: {
         position: 'absolute',
         left: -25.5, // Position the line to the left of the box
-        top: "20%",
+        top: "25%",
         bottom: 0,
         width: 4,
         backgroundColor: '#000',
-        height: 120,
+        height: 89,
     },
     dot3: {
         height: 10,
@@ -452,7 +452,7 @@ const styles = StyleSheet.create({
       featuredJourney: {
         borderRadius: 15,
         marginTop: 10,
-        marginLeft: 3,
+        marginLeft: 20,
         marginBottom: 5,
         marginRight: 14,
         shadowColor: "#000",
@@ -469,7 +469,7 @@ const styles = StyleSheet.create({
         maxHeight: 200,
         borderRadius: 15,
       },
-      journeyContainer: {
+    journeyContainer: {
         marginTop: 5,
     },
     journeytitleContainer: {
