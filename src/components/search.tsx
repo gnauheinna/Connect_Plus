@@ -29,7 +29,7 @@ export default function Search({ navigation }) {
 
   // Navigate to individual chat screen
   const directToChatBox = () => {
-    navigation.navigate("IndividualChat", { ChatID: "chatID" });
+    navigation.navigate("IndividualChat", { ChatID: "chatID" }); // TODO NEED TO UPDATE THIS TO PASS CORRECT CHAT INFO
   };
 
   // Handle search button press

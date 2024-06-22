@@ -37,23 +37,25 @@ type Chats = {
 };
 export default function IndividualChatScreen({ navigation, route }) {
   const chatID = route.params.chatID;
-  const ChatUserId = route.params.ChatUserId;
+  const chatUserName = route.params.chatUserName;
+  const chatUserAvatar = route.params.chatUserAvatar;
+  const chatUserId = route.params.chatUserId;
+  console.log("All route params:", route.params);
   const db = getFirestore();
   const { user, setUser } = useUser();
-  // userData is the other user's userdata
-  const [userData, setUserData] = useState({
+  // chatUser is the other user's chatUser
+  const [chatUser, setchatUser] = useState({
     name: "",
-    email: "",
-    major: "",
-    year: "",
     userID: "",
-    academic: false,
-    career: false,
     avatar: "",
-    financial: false,
-    studentLife: false,
   });
-
+  useEffect(() => {
+    setchatUser({
+      name: chatUserName,
+      userID: chatUserId,
+      avatar: chatUserAvatar,
+    });
+  }, [chatUserName, chatUserId, chatUserAvatar]); // Dependencies that, when changed, should re-trigger this effect
   const currentUserID = user.userID;
   const [chats, setChats] = useState<Chats[]>([]);
   const [inputText, setInputText] = useState("");
@@ -69,36 +71,10 @@ export default function IndividualChatScreen({ navigation, route }) {
     avatar8: require("../../assets/images/avatars/avatar8.png"),
     avatar9: require("../../assets/images/avatars/avatar9.png"),
   };
-
-  useEffect(() => {
-    const updateUser = async () => {
-      const usersCollection = collection(db, "users");
-      console.log("updateuser userId in", ChatUserId);
-      const userInfo = await getDoc(doc(db, "users", ChatUserId));
-      const userDatafb = userInfo.data() as {
-        name: string;
-        email: string;
-        major: string;
-        year: string;
-        userID: string;
-        academic: boolean;
-        career: boolean;
-        avatar: string;
-        financial: boolean;
-        studentLife: boolean;
-      };
-      console.log(
-        "userData after updating everything from individual chat",
-        userData
-      );
-      await setUserData(userDatafb);
-    };
-    updateUser();
-  }, []);
-
   // fetches the correct chat
   useEffect(() => {
     // fetches chat again everytime there is a new message
+    console.log("chatUser name", chatUser.name);
     const userChatDocRef = doc(db, "chats", chatID);
     const fetchUserChat = async () => {
       const userChatDocSnapshot = await getDoc(userChatDocRef);
@@ -122,9 +98,9 @@ export default function IndividualChatScreen({ navigation, route }) {
             date: Timestamp.now(),
             lastMessage: "boohoo",
             userInfo: {
-              name: userData.name,
-              avatar: userData.avatar,
-              userID: ChatUserId,
+              name: chatUser.name,
+              avatar: chatUser.avatar,
+              userID: chatUser.userID,
             },
           },
         };
@@ -141,10 +117,10 @@ export default function IndividualChatScreen({ navigation, route }) {
           },
         };
         try {
-          console.log("user.userID", userData.userID);
+          console.log("user.userID", chatUser.userID);
           // creates new user chat
           const chatsref = await doc(db, "userChats", user.userID);
-          const otherchatsref = await doc(db, "userChats", ChatUserId);
+          const otherchatsref = await doc(db, "userChats", chatUser.userID);
           await setDoc(chatsref, newField, { merge: true });
           await setDoc(otherchatsref, othernewField, { merge: true });
           console.log("New chat document created");
@@ -171,27 +147,34 @@ export default function IndividualChatScreen({ navigation, route }) {
   }, [chatID, user.name]);
 
   const handleSend = async () => {
-    const randomString = Math.random().toString(36).substring(7);
-    await updateDoc(doc(db, "chats", chatID), {
-      messages: arrayUnion({
-        chatID: randomString,
-        text: inputText,
-        senderID: user.userID,
-        date: Timestamp.now(),
-      }),
-    });
+    if (inputText.trim()) {
+      // Ensure there's text to send
+      try {
+        const randomString = Math.random().toString(36).substring(7);
+        await updateDoc(doc(db, "chats", chatID), {
+          messages: arrayUnion({
+            chatID: randomString,
+            text: inputText,
+            senderID: user.userID,
+            date: Timestamp.now(),
+          }),
+        });
 
-    await updateDoc(doc(db, "userChats", user.userID), {
-      [chatID + ".lastMessage"]: inputText.toString(),
-      [chatID + ".date"]: serverTimestamp(),
-    });
+        await updateDoc(doc(db, "userChats", user.userID), {
+          [chatID + ".lastMessage"]: inputText.toString(),
+          [chatID + ".date"]: serverTimestamp(),
+        });
 
-    await updateDoc(doc(db, "userChats", ChatUserId), {
-      [chatID + ".lastMessage"]: inputText.toString(),
-      [chatID + ".date"]: serverTimestamp(),
-    });
-
-    setInputText("");
+        await updateDoc(doc(db, "userChats", chatUser.userID), {
+          [chatID + ".lastMessage"]: inputText.toString(),
+          [chatID + ".date"]: serverTimestamp(),
+        });
+        setInputText(""); // Clear the input after sending
+        console.log("Input should be cleared, current inputText:", inputText);
+      } catch (error) {
+        console.error("Failed to send message:", error);
+      }
+    }
   };
   const goToMessageScreen = async () => {
     navigation.navigate("Tabs", { screen: "Message" });
@@ -224,9 +207,12 @@ export default function IndividualChatScreen({ navigation, route }) {
           <View style={styles.recipientContainer}>
             <Image
               style={styles.recipientImg}
-              source={avatarImages[userData.avatar]}
+              source={avatarImages[chatUser.avatar]}
+              onError={(e) =>
+                console.log("Failed to load image:", e.nativeEvent.error)
+              }
             />
-            <Text style={styles.recipient}>{userData.name}</Text>
+            <Text style={styles.recipient}>{chatUser.name}</Text>
           </View>
         </View>
 
@@ -295,17 +281,20 @@ export default function IndividualChatScreen({ navigation, route }) {
     </KeyboardAvoidingView>
   );
 }
-
 const styles = StyleSheet.create({
   outermostContainer: {
     flex: 1,
   },
   topPortionContainer: {
     flexDirection: "row",
-    marginTop: 52,
+    marginTop: 60,
     marginLeft: 20,
     marginRight: 20,
-    justifyContent: "space-between",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 5,
+    height: 60,
+    position: "relative",
   },
   container: {
     marginTop: 20,
@@ -314,13 +303,10 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   backBtnContainer: {
-    alignSelf: "flex-start",
-    justifyContent: "center",
-  },
-  backBtn: {
-    padding: 5,
-    resizeMode: "contain",
-    justifyContent: "center",
+    position: "absolute", // Positions the back button absolutely
+    left: 20, // Adjust as needed for spacing from the left edge
+    top: "50%", // Centers the button vertically
+    transform: [{ translateY: -10 }],
   },
   backBtnImg: {
     width: 20,
@@ -328,21 +314,21 @@ const styles = StyleSheet.create({
   },
   recipientContainer: {
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
-    paddingLeft: 40,
-    paddingRight: 120,
+    padding: 5,
+    height: "100%",
   },
   recipient: {
     color: "black",
     fontSize: 24,
     fontFamily: "Stolzl Medium",
     textAlign: "center",
+    marginLeft: 15, // Reduced margin for closer proximity to the image
   },
   recipientImg: {
-    width: 30,
-    height: 30,
-    marginRight: 10,
+    width: 50,
+    height: 50,
+    marginLeft: 5, // Adjust as needed to control spacing
   },
   greyDividerLine: {
     marginTop: 20,

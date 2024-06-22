@@ -191,6 +191,8 @@ export default function ProfileScreen({ navigation, route }) {
               navigation={navigation}
               chatID={chatID}
               ChatUserId={viewedUser.userID}
+              chatUserName={viewedUser.name}
+              avatar={viewedUser.avatar}
             />
           </View>
           {/* Display the user's interests */}
