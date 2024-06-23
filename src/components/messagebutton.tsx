@@ -4,7 +4,7 @@ import { useState } from "react";
 function MessageButton({
   navigation,
   chatID,
-  ChatUserId,
+  chatUserId,
   chatUserName,
   avatar,
 }) {
@@ -14,7 +14,7 @@ function MessageButton({
     setIsClicked(!isClicked);
     navigation.navigate("IndividualChat", {
       chatID: chatID,
-      ChatUserId: ChatUserId,
+      chatUserId: chatUserId,
       chatUserName: chatUserName,
       chatUserAvatar: avatar,
     });
