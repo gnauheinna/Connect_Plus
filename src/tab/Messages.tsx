@@ -69,22 +69,25 @@ export default function MessageScreen({ navigation }) {
   async function directToChatBox(
     chatID: string,
     name: string,
-    userID: string,
+    chatUserId: string,
     avatar: string
   ) {
     try {
-      // passes the state to CurrentChatContext
-      // Save currentChatID to AsyncStorage
-      await AsyncStorage.setItem("currentChatID", chatID);
-      await AsyncStorage.setItem("currentChatName", name);
-      await AsyncStorage.setItem("currentChatUserID", userID);
-
-      setCurrentChatID(chatID);
-      setCurrentChatName(name);
-      setCurrentChatUserID(userID);
-      setCurrentChatAvatar(avatar);
-
-      navigation.navigate("IndividualChat", { chatID: chatID });
+      // passes the state to CurrentChatContex
+      // console.log(
+      //   "direct to chatBox: ",
+      //   chatID,
+      //   "name: ",
+      //   name,
+      //   "ID",
+      //   chatUserId
+      // );
+      navigation.navigate("IndividualChat", {
+        chatID: chatID,
+        chatUserName: name,
+        chatUserAvatar: avatar,
+        chatUserId: chatUserId,
+      });
     } catch (error) {
       // Handle errors if any
       console.error("Error while setting AsyncStorage:", error);
@@ -117,6 +120,7 @@ export default function MessageScreen({ navigation }) {
             userChatsData.sort((a, b) => b.date.toMillis() - a.date.toMillis());
           }
         }
+        console.log("userChatsData: ", userChatsData);
         setAllMessages(userChatsData);
       } catch (error) {
         console.error("Error fetching user chats: ", error);
@@ -174,7 +178,7 @@ export default function MessageScreen({ navigation }) {
           style={styles.messagesContainer}
           showsVerticalScrollIndicator={false}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
+          renderItem={({ item }: { item: UserChat }) => (
             <TouchableOpacity
               style={styles.individualMessageContainer}
               onPress={() =>

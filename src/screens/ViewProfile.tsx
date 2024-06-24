@@ -199,7 +199,9 @@ export default function ProfileScreen({ navigation, route }) {
             <MessageButton
               navigation={navigation}
               chatID={chatID}
-              ChatUserId={viewedUser.userID}
+              chatUserId={viewedUser.userID}
+              chatUserName={viewedUser.name}
+              avatar={viewedUser.avatar}
             />
           </View>
           {/* create "Schedule a Meeting" button if calendly link exists */}
