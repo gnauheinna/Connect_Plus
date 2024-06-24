@@ -8,8 +8,10 @@ import React, {
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { initializeApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDoc, doc } from "firebase/firestore";
-
+// always import app and firebaseConfig so we can use firebase
 import { app, firebaseConfig } from "../../firebase";
+
+// STEP 1: define types for the context
 export type UserContextType = {
   user: {
     name: string;
@@ -37,8 +39,10 @@ export type UserContextType = {
   }) => void;
 };
 
+// STEP 2: define the user context as follows
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
+// STEP 3: define userProvider (class)
 const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const auth = getAuth();
 
@@ -105,6 +109,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   );
 };
 
+// helper function to easily access user
 const useUser = (): UserContextType => {
   const context = useContext(UserContext);
   if (context === undefined) {

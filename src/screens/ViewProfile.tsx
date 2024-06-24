@@ -24,6 +24,7 @@ import { Post, usePostContext } from "../context/postContext";
 import MJPostCard from "../components/MJPostCard";
 import FollowButton from "../components/followButton";
 import MessageButton from "../components/messagebutton";
+import ScheduleMeeting from "../components/scheduleMeeting";
 
 import { useSavedJourneyContext } from "../context/savedJourneyContext";
 import { Title } from "react-native-paper";
@@ -55,6 +56,7 @@ export default function ProfileScreen({ navigation, route }) {
     avatar: "",
     financial: false,
     studentLife: false,
+    calendly: "",
   });
   const [chatID, setchatID] = useState("");
 
@@ -78,7 +80,14 @@ export default function ProfileScreen({ navigation, route }) {
           avatar: string;
           financial: boolean;
           studentLife: boolean;
+          calendly: string;
         };
+        // test
+        if (userData.calendly !== "" && userData.calendly !== undefined) {
+          console.log("calendly not empty")
+        } else {
+          console.log("calendly empty")
+        }
         await setViewedUser(userData);
       } else {
         console.error("User is not found");
@@ -193,6 +202,13 @@ export default function ProfileScreen({ navigation, route }) {
               ChatUserId={viewedUser.userID}
             />
           </View>
+          {/* create "Schedule a Meeting" button if calendly link exists */}
+          {viewedUser.calendly !== "" && viewedUser.calendly !== undefined && (
+            <View style={styles.buttonContainer}>
+              <ScheduleMeeting userCalendlyLink={viewedUser.calendly}>
+              </ScheduleMeeting>
+            </View>
+          )}
           {/* Display the user's interests */}
           <View style={styles.interestsContainer}>
             {user && user.academic && (
