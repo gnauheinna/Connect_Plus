@@ -12,8 +12,8 @@ import {
 } from "react-native";
 import { TextInput } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import * as FileSystem from "expo-file-system";
 
-import firebase from "firebase/app";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -21,8 +21,9 @@ import {
   signInWithPopup,
   User,
 } from "firebase/auth";
-import { getApps } from "firebase/app";
+import firebase, { getApps } from "firebase/app";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import "firebase/storage";
 import {
   getFirestore,
   doc,
@@ -92,6 +93,24 @@ export default function SignUpScreen({ navigation }) {
         });
     });
   }
+
+  const uriToBlob = async () => {
+    const { uri } = await FileSystem.getInfoAsync(avatar);
+    const blob: Blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = () => {
+        resolve(xhr.response);
+      };
+      xhr.onerror = (e) => {
+        reject(new TypeError("Profile picture network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
+    });
+    return blob;
+  };
+
   // saves user data to firestore
   const handleNewUserEmail = async () => {
     // get a instance of Firebase db
@@ -115,18 +134,11 @@ export default function SignUpScreen({ navigation }) {
         await setDoc(doc(db, "userSavedANS", user.uid), { saved: [] });
 
         // upload profile picture to storage
-        const storageRef = ref(storage, `users/${user.uid}/profilePicture`);
-        const imageResponse = await fetch(avatar);
-        const imageBlob = await imageResponse.blob();
-        // try {
-        //   await uploadBytes(storageRef, imageBlob).then(async (snapshot) => {
-        //     console.log("Snapshot:", snapshot);
-        //     const url = await getDownloadURL(storageRef);
-        //     console.log("URL:", url);
-        //   });
-        // } catch (err) {
-        //   console.log(err);
-        // }
+        const pfpRef = ref(storage, `profilePictures/${userID}.jpg`);
+        const blob = await uriToBlob();
+        await uploadBytes(pfpRef, blob).then((snapshot) => {
+          console.log("Uploaded file", snapshot);
+        });
       }
     } catch (error) {
       console.log(error);
