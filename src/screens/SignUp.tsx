@@ -36,6 +36,8 @@ import { useUser } from "../context/UserContext";
 export default function SignUpScreen({ navigation }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [handle, setHandle] = useState("");
+  const [calendly, setCalendly] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -56,6 +58,7 @@ export default function SignUpScreen({ navigation }) {
   // create new object
   const newUser = {
     email,
+    handle,
     password,
     timestamp: serverTimestamp(),
     name,
@@ -67,6 +70,7 @@ export default function SignUpScreen({ navigation }) {
     studentLife,
     userID,
     avatar,
+    calendly,
   };
 
   //triggers Firebase Auth to create new user
@@ -106,8 +110,15 @@ export default function SignUpScreen({ navigation }) {
         await setDoc(doc(db, "userChats", user.uid), {});
         // create empty savedJourneys
         await setDoc(doc(db, "savedJourneys", user.uid), { savedjourneys: [] });
-        //create empty following on firestore
+        // create empty liked post list
+        await setDoc(doc(db, "userLike", user.uid), { likes: [] });
+        // create empty following on firestore
         await setDoc(doc(db, "following", user.uid), {});
+        // set user handle
+        await updateDoc(newUserRef, { handle: handle })
+        // map user handle to user id
+        const userHandleRef = doc(db, "userlist", handle);
+        await setDoc(userHandleRef, { userID });
       }
     } catch (error) {
       console.log(error);
@@ -199,6 +210,22 @@ export default function SignUpScreen({ navigation }) {
                 style={[styles.input]}
                 value={email}
                 onChangeText={(email) => setEmail(email)}
+                placeholderTextColor="#A3A3A3"
+              />
+            </View>
+          </View>
+
+          <View style={{ marginTop: 3 }}>
+            <View style={[styles.inputContainer]}>
+              <Image
+                style={[styles.signUpIcons]}
+                source={require("../../assets/images/signUpIcons/email.png")} // placeholder
+              />
+              <TextInput
+                placeholder="User Handle"
+                style={[styles.input]}
+                value={handle}
+                onChangeText={(handle) => setHandle(handle)}
                 placeholderTextColor="#A3A3A3"
               />
             </View>

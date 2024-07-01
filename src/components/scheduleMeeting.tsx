@@ -1,15 +1,10 @@
 import { View, Text, Pressable, StyleSheet, Image } from "react-native";
-import { useState, useEffect } from "react";
-import { getFirestore } from "firebase/firestore";
-import { useUser } from "../context/UserContext";
 
 // only works if user has Calendly link; bring user to Calendly page when clicked
 function ScheduleMeeting({ userCalendlyLink }) {
-  const db = getFirestore();
-  const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = () => {
-    window.location.href = userCalendlyLink;
+    window.location.href = userCalendlyLink; // fix for phone
   };
 
   return (
@@ -18,6 +13,7 @@ function ScheduleMeeting({ userCalendlyLink }) {
     </Pressable>
   );
 }
+
 
 const styles = StyleSheet.create({
   button: {
