@@ -8,12 +8,15 @@ import React, {
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { initializeApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDoc, doc } from "firebase/firestore";
-
+// always import app and firebaseConfig so we can use firebase
 import { app, firebaseConfig } from "../../firebase";
+
+// STEP 1: define types for the context
 export type UserContextType = {
   user: {
     name: string;
     email: string;
+    handle: string;
     major: string;
     year: string;
     userID: string;
@@ -22,10 +25,12 @@ export type UserContextType = {
     career: boolean;
     financial: boolean;
     studentLife: boolean;
+    calendly: string;
   };
   setUser: (user: {
     name: string;
     email: string;
+    handle: string;
     major: string;
     year: string;
     userID: string;
@@ -34,11 +39,14 @@ export type UserContextType = {
     career: boolean;
     financial: boolean;
     studentLife: boolean;
+    calendly: string;
   }) => void;
 };
 
+// STEP 2: define the user context as follows
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
+// STEP 3: define userProvider (class)
 const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const auth = getAuth();
 
@@ -47,10 +55,12 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState({
     name: "",
     email: "",
+    handle: "",
     major: "",
     year: "",
     userID: "",
     avatar: "",
+    calendly: "",
     academic: false,
     career: false,
     financial: false,
@@ -66,6 +76,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         const userData = userInfo.data() as {
           name: string;
           email: string;
+          handle: string;
           major: string;
           year: string;
           userID: string;
@@ -74,6 +85,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           avatar: string;
           financial: boolean;
           studentLife: boolean;
+          calendly: string;
         };
 
         setUser(userData);
@@ -82,10 +94,12 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         setUser({
           name: "",
           email: "",
+          handle: "",
           major: "",
           year: "",
           userID: "",
           avatar: "",
+          calendly: "",
           academic: false,
           career: false,
           financial: false,
@@ -105,6 +119,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   );
 };
 
+// helper function to easily access user
 const useUser = (): UserContextType => {
   const context = useContext(UserContext);
   if (context === undefined) {

@@ -54,8 +54,26 @@ const LikeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   useEffect(() => {
     // Your logic to fetch and update likeArr from Firestore
     // ...
+    const loadLikes = async () => {
+      try {
+        const likes = collection(db, "likes");
+        const querySnapshot = await getDocs(likes);
+        const likeData: Like[] = [];
+        querySnapshot.forEach((like) => {
+          const data = like.data(); 
+          if (data) {
+            likeData.push(data as Like); // equivalent to list.append in python
+          }
+        });
+        setLoading(false); // Set loading to false when data fetching is complete
+        setLikeArr(likeData);
+      } catch (error) {
+        console.error("Error fetching likes:", error);
+        setLoading(false);
+      }
+    };
+    loadLikes();
 
-    setLoading(false); // Set loading to false when data fetching is complete
   }, []); // Empty dependency array means this effect runs only once on component mount
 
   const contextValue: LikeContextValue = {
