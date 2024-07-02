@@ -14,6 +14,9 @@ import {
   Timestamp,
   doc,
   getDoc,
+  arrayUnion,
+  updateDoc,
+  arrayRemove,
 } from "firebase/firestore";
 import { FontAwesome5, Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -26,6 +29,7 @@ import { PostIdContext } from "../context/PostIDContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Font from "expo-font";
 import { useNavigation } from "@react-navigation/native";
+import { useSavedPostsContext } from "../context/savedPostsContext";
 
 interface IndividualPostProps {
   postId: string;
@@ -37,6 +41,7 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
   navigation,
 }) => {
   const [likePressed, setlikePressed] = useState(false);
+  const [postSaved, setPostSaved] = useState(false);
 
   function viewPostDetails(postId: string) {
     AsyncStorage.setItem("curPostID", postId);
@@ -52,12 +57,18 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
   const post = posts.find((post) => post.postID === postId);
   //use PostIDContext
   const { curPostID, setCurPostID } = useContext(PostIdContext);
-
   useEffect(() => {
     if (post) {
       setTag(post.tag);
     }
   }, [posts, postId]);
+
+  const { savedPostArr, setSavedPostArr } = useSavedPostsContext();
+  // on bootup, determine whether this post was previously saved and
+  // should start with the save button active
+  useEffect(() => {
+    setPostSaved(savedPostArr.map((post) => post.postID).includes(postId));
+  }, [savedPostArr]);
 
   const avatarImages: { [key: string]: any } = {
     avatar1: require("../../assets/images/avatars/avatar1.png"),
@@ -73,6 +84,30 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
 
   const handleLikePress = async () => {
     setlikePressed(!likePressed);
+  };
+
+  const handleSavePress = async () => {
+    setPostSaved(!postSaved);
+    const db = getFirestore();
+    const savedRef = doc(db, "userSavedANS/", user.userID);
+    if (!postSaved) {
+      setPostSaved(true);
+      let newSPA = savedPostArr.slice();
+      newSPA.push({ postID: postId });
+      setSavedPostArr(newSPA);
+      await updateDoc(savedRef, {
+        saved: arrayUnion(postId),
+      }).catch((err) => console.log(err));
+    } else {
+      setPostSaved(false);
+      let newSPA = savedPostArr
+        .slice()
+        .filter((post) => post.postID !== postId);
+      setSavedPostArr(newSPA);
+      await updateDoc(savedRef, {
+        saved: arrayRemove(postId),
+      }).catch((err) => console.log(err));
+    }
   };
 
   return (
@@ -152,6 +187,20 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
               likePressed
                 ? require("../../assets/images/icons/filledHeart.png")
                 : require("../../assets/images/icons/unfilledHeart.png")
+            }
+          />
+        </TouchableOpacity>
+        {/* Display the save button */}
+        <TouchableOpacity
+          style={styles.postLikesContainer}
+          onPress={() => handleSavePress()}
+        >
+          <Image
+            style={styles.postLikesImg}
+            source={
+              postSaved
+                ? require("../../assets/images/icons/journeySaved.png")
+                : require("../../assets/images/icons/journeyUnsaved.png")
             }
           />
         </TouchableOpacity>

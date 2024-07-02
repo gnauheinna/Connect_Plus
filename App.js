@@ -36,6 +36,7 @@ import JourneyScreen from "./src/screens/MyJourneyPosts/JourneyScreen";
 import FeaturedJourneyScreen from "./src/screens/MyJourneyPosts/FeaturedJourneyScreen";
 import EditProfile from "./src/screens/EditProfile";
 import ViewProfile from "./src/screens/ViewProfile";
+import { SavedPostsProvider } from "./src/context/savedPostsContext";
 
 // Create a Stack navigator
 const Stack = createStackNavigator();
@@ -72,113 +73,115 @@ export default function App() {
         <PostProvider>
           <CurrentChatContextProvider>
             <SavedJourneyProvider>
-              <NavigationContainer>
-                <Stack.Navigator initialRouteName="Login">
-                  <Stack.Screen
-                    name="Login"
-                    component={LoginScreen}
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="SignUp"
-                    component={SignUpScreen}
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="Interest"
-                    component={InterestScreen}
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="AddAvatar"
-                    component={AddAvatarScreen}
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="PostDetails"
-                    component={PostDetailsScreen}
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="Tabs"
-                    component={MyTabs}
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="Post"
-                    component={PostScreen}
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="IndividualChat"
-                    component={IndividualChatScreen}
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="SeeAllJourneys"
-                    component={SeeAllJourneysScreen}
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="neri"
-                    component={JourneyScreen}
-                    options={{ headerShown: false }}
-                    initialParams={{ user: "1" }}
-                  />
-                  <Stack.Screen
-                    name="bailey"
-                    component={FeaturedJourneyScreen}
-                    options={{ headerShown: false }}
-                    initialParams={{ user: "2" }}
-                  />
-                  <Stack.Screen
-                    name="nana"
-                    component={FeaturedJourneyScreen}
-                    options={{ headerShown: false }}
-                    initialParams={{ user: "3" }}
-                  />
-                  <Stack.Screen
-                    name="julia"
-                    component={JourneyScreen}
-                    options={{ headerShown: false }}
-                    initialParams={{ user: "4" }}
-                  />
-                  <Stack.Screen
-                    name="rachel"
-                    component={JourneyScreen}
-                    options={{ headerShown: false }}
-                    initialParams={{ user: "5" }}
-                  />
-                  <Stack.Screen
-                    name="rachelFeatured"
-                    component={JourneyScreen}
-                    options={{ headerShown: false }}
-                    initialParams={{ user: "6" }}
-                  />
-                  <Stack.Screen
-                    name="shateva"
-                    component={JourneyScreen}
-                    options={{ headerShown: false }}
-                    initialParams={{ user: "7" }}
-                  />
-                  <Stack.Screen
-                    name="shatevaFeatured"
-                    component={FeaturedJourneyScreen}
-                    options={{ headerShown: false }}
-                    initialParams={{ user: "8" }}
-                  />
-                  <Stack.Screen
-                    name="EditProfile"
-                    component={EditProfile}
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="ViewProfile"
-                    component={ViewProfile}
-                    options={{ headerShown: false }}
-                  />
-                </Stack.Navigator>
-              </NavigationContainer>
+              <SavedPostsProvider>
+                <NavigationContainer>
+                  <Stack.Navigator initialRouteName="Login">
+                    <Stack.Screen
+                      name="Login"
+                      component={LoginScreen}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="SignUp"
+                      component={SignUpScreen}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="Interest"
+                      component={InterestScreen}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="AddAvatar"
+                      component={AddAvatarScreen}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="PostDetails"
+                      component={PostDetailsScreen}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="Tabs"
+                      component={MyTabs}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="Post"
+                      component={PostScreen}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="IndividualChat"
+                      component={IndividualChatScreen}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="SeeAllJourneys"
+                      component={SeeAllJourneysScreen}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="neri"
+                      component={JourneyScreen}
+                      options={{ headerShown: false }}
+                      initialParams={{ user: "1" }}
+                    />
+                    <Stack.Screen
+                      name="bailey"
+                      component={FeaturedJourneyScreen}
+                      options={{ headerShown: false }}
+                      initialParams={{ user: "2" }}
+                    />
+                    <Stack.Screen
+                      name="nana"
+                      component={FeaturedJourneyScreen}
+                      options={{ headerShown: false }}
+                      initialParams={{ user: "3" }}
+                    />
+                    <Stack.Screen
+                      name="julia"
+                      component={JourneyScreen}
+                      options={{ headerShown: false }}
+                      initialParams={{ user: "4" }}
+                    />
+                    <Stack.Screen
+                      name="rachel"
+                      component={JourneyScreen}
+                      options={{ headerShown: false }}
+                      initialParams={{ user: "5" }}
+                    />
+                    <Stack.Screen
+                      name="rachelFeatured"
+                      component={JourneyScreen}
+                      options={{ headerShown: false }}
+                      initialParams={{ user: "6" }}
+                    />
+                    <Stack.Screen
+                      name="shateva"
+                      component={JourneyScreen}
+                      options={{ headerShown: false }}
+                      initialParams={{ user: "7" }}
+                    />
+                    <Stack.Screen
+                      name="shatevaFeatured"
+                      component={FeaturedJourneyScreen}
+                      options={{ headerShown: false }}
+                      initialParams={{ user: "8" }}
+                    />
+                    <Stack.Screen
+                      name="EditProfile"
+                      component={EditProfile}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="ViewProfile"
+                      component={ViewProfile}
+                      options={{ headerShown: false }}
+                    />
+                  </Stack.Navigator>
+                </NavigationContainer>
+              </SavedPostsProvider>
             </SavedJourneyProvider>
           </CurrentChatContextProvider>
         </PostProvider>
