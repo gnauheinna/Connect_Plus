@@ -55,8 +55,6 @@ export default function AskNShareScreen({ navigation }) {
   // use PostIDContext
   const { curPostID, setCurPostID } = useContext(PostIdContext);
   // like context
-  
-
   function directToPost() {
     navigation.navigate("Post");
   }
