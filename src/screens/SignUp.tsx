@@ -11,8 +11,9 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { TextInput } from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import * as FileSystem from "expo-file-system";
 
-import firebase from "firebase/app";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -20,7 +21,9 @@ import {
   signInWithPopup,
   User,
 } from "firebase/auth";
-import { getApps } from "firebase/app";
+import firebase, { getApps } from "firebase/app";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import "firebase/storage";
 import {
   getFirestore,
   doc,
@@ -32,6 +35,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { Image } from "react-native";
 import { useUser } from "../context/UserContext";
+import { app, storage } from "../../firebase";
 
 export default function SignUpScreen({ navigation }) {
   const [name, setName] = useState("");
@@ -89,6 +93,24 @@ export default function SignUpScreen({ navigation }) {
         });
     });
   }
+
+  const uriToBlob = async () => {
+    const { uri } = await FileSystem.getInfoAsync(avatar);
+    const blob: Blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = () => {
+        resolve(xhr.response);
+      };
+      xhr.onerror = (e) => {
+        reject(new TypeError("Profile picture network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
+    });
+    return blob;
+  };
+
   // saves user data to firestore
   const handleNewUserEmail = async () => {
     // get a instance of Firebase db
@@ -108,6 +130,15 @@ export default function SignUpScreen({ navigation }) {
         await setDoc(doc(db, "savedJourneys", user.uid), { savedjourneys: [] });
         //create empty following on firestore
         await setDoc(doc(db, "following", user.uid), {});
+        // create empty saved ANS posts
+        await setDoc(doc(db, "userSavedANS", user.uid), { saved: [] });
+
+        // upload profile picture to storage
+        const pfpRef = ref(storage, `profilePictures/${userID}.jpg`);
+        const blob = await uriToBlob();
+        await uploadBytes(pfpRef, blob).then((snapshot) => {
+          console.log("Uploaded file", snapshot);
+        });
       }
     } catch (error) {
       console.log(error);
@@ -125,6 +156,21 @@ export default function SignUpScreen({ navigation }) {
     setTimeout(() => {
       setShowSuccessMessage(false);
     }, 3000);
+  };
+
+  const handleProfilePicture = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    // console.log(result);
+
+    if (!result.canceled) {
+      setAvatar(result.assets[0].uri);
+    }
   };
 
   const handleSignup = async () => {
@@ -269,8 +315,23 @@ export default function SignUpScreen({ navigation }) {
               />
             </View>
           </View>
-        </View>
 
+          <View style={{ marginTop: 3 }}>
+            {avatar !== "" && (
+              <Image
+                style={{ width: 50, height: 50 }}
+                source={{ uri: avatar }}
+              />
+            )}
+            <TouchableOpacity
+              onPress={handleProfilePicture}
+              style={[styles.inputContainer]}
+            >
+              <Text style={[styles.subTitle]}>Choose profile picture</Text>
+            </TouchableOpacity>
+          </View>
+          {/* Add a react-native ImagePicker for uploading avatars */}
+        </View>
         <View style={styles.nextButtonContainer}>
           <TouchableOpacity style={styles.nextButton} onPress={handleSignup}>
             <Text style={styles.nextButtonText}>Next</Text>

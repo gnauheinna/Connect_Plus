@@ -32,9 +32,11 @@ import {
 import { useUser } from "../context/UserContext";
 import * as Font from "expo-font";
 import { app } from "../../firebase";
+import { SavedPost, useSavedPostsContext } from "../context/savedPostsContext";
 
 export default function LoginScreen({ navigation }) {
   const db = getFirestore();
+  const { setSavedPostArr } = useSavedPostsContext();
   const { user, setUser } = useUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -88,6 +90,25 @@ export default function LoginScreen({ navigation }) {
     navigation.navigate("SignUp");
   }
 
+  const fetchSavedPosts = async (userID?: string) => {
+    const db = getFirestore();
+    let uid;
+    if (userID) {
+      uid = userID;
+    } else {
+      uid = user.userID;
+    }
+    let savedPosts = await getDoc(doc(db, "userSavedANS", uid));
+    setSavedPostArr(
+      savedPosts.data()["saved"].map((pid: string) => {
+        let post: SavedPost = {
+          postID: pid,
+        };
+        return post;
+      })
+    );
+  };
+
   useEffect(() => {
     const updateUser = async () => {
       const usersCollection = collection(db, "users");
@@ -106,6 +127,7 @@ export default function LoginScreen({ navigation }) {
           studentLife: boolean;
         };
         setUser(userData);
+        fetchSavedPosts(userID);
       } else {
         console.error("User is not logged in");
       }

@@ -35,6 +35,7 @@ import { useUser } from "../context/UserContext";
 import { Post, PostProvider, usePostContext } from "../context/postContext";
 import { PostIdContext } from "../context/PostIDContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SavedPost, useSavedPostsContext } from "../context/savedPostsContext";
 
 export default function AskNShareScreen({ navigation }) {
   if (getApps() == null) {
@@ -42,6 +43,7 @@ export default function AskNShareScreen({ navigation }) {
   }
 
   const { posts, setPosts, loading, setLoading } = usePostContext();
+  const { savedPostArr, setSavedPostArr } = useSavedPostsContext();
 
   const db = getFirestore();
   const auth = getAuth();

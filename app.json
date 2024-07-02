@@ -25,7 +25,15 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-font"],
+    "plugins": [
+      "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Connect Plus accesses your photos to let you pick your avatar."
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "08422169-ea0c-480b-acd7-db0651dd2010"
