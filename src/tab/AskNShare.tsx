@@ -31,6 +31,7 @@ import { initializeApp, getApps } from "firebase/app";
 import { firebaseConfig } from "../../firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useUser } from "../context/UserContext";
+import { LikeContext, useLikeContext } from "../context/likeContext";
 // import postQuestions from "../post";
 import { Post, PostProvider, usePostContext } from "../context/postContext";
 import { PostIdContext } from "../context/PostIDContext";
@@ -53,8 +54,9 @@ export default function AskNShareScreen({ navigation }) {
   // Set the initially selected tag to be All
   const [selectedTag, setSelectedTag] = useState("All");
   const [selectedAll, setSelectedAll] = useState(true);
-  //use PostIDContext
+  // use PostIDContext
   const { curPostID, setCurPostID } = useContext(PostIdContext);
+  // like context
   function directToPost() {
     navigation.navigate("Post");
   }

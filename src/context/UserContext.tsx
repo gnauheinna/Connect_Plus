@@ -16,6 +16,7 @@ export type UserContextType = {
   user: {
     name: string;
     email: string;
+    handle: string;
     major: string;
     year: string;
     userID: string;
@@ -24,10 +25,12 @@ export type UserContextType = {
     career: boolean;
     financial: boolean;
     studentLife: boolean;
+    calendly: string;
   };
   setUser: (user: {
     name: string;
     email: string;
+    handle: string;
     major: string;
     year: string;
     userID: string;
@@ -36,6 +39,7 @@ export type UserContextType = {
     career: boolean;
     financial: boolean;
     studentLife: boolean;
+    calendly: string;
   }) => void;
 };
 
@@ -51,10 +55,12 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState({
     name: "",
     email: "",
+    handle: "",
     major: "",
     year: "",
     userID: "",
     avatar: "",
+    calendly: "",
     academic: false,
     career: false,
     financial: false,
@@ -70,6 +76,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         const userData = userInfo.data() as {
           name: string;
           email: string;
+          handle: string;
           major: string;
           year: string;
           userID: string;
@@ -78,6 +85,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           avatar: string;
           financial: boolean;
           studentLife: boolean;
+          calendly: string;
         };
 
         setUser(userData);
@@ -86,10 +94,12 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         setUser({
           name: "",
           email: "",
+          handle: "",
           major: "",
           year: "",
           userID: "",
           avatar: "",
+          calendly: "",
           academic: false,
           career: false,
           financial: false,

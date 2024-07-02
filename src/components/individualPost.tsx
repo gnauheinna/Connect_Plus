@@ -17,6 +17,7 @@ import {
   arrayUnion,
   updateDoc,
   arrayRemove,
+  Firestore,
 } from "firebase/firestore";
 import { FontAwesome5, Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -84,6 +85,12 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
 
   const handleLikePress = async () => {
     setlikePressed(!likePressed);
+    // const db = getFirestore();
+    // if (likePressed) {
+      
+    // } else {
+
+    // }
   };
 
   const handleSavePress = async () => {
