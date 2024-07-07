@@ -39,6 +39,7 @@ export default function PostScreen({ navigation }) {
   const [FButtonVisible, setFButtonVisible] = useState(true);
   const [CButtonVisible, setCButtonVisible] = useState(true);
   const [SButtonVisible, setSButtonVisible] = useState(true);
+  const [RButtonVisible, setRButtonVisible] = useState(true);
   const [CrossButtonVisible, setCrossButtonVisible] = useState(false);
   const [isPostCompleted, setIsPostCompleted] = useState(false);
   const { posts, setPosts, loading, setLoading } = usePostContext();
@@ -133,6 +134,15 @@ export default function PostScreen({ navigation }) {
     setFButtonVisible(false);
     setCButtonVisible(false);
     setSButtonVisible(false);
+    setRButtonVisible(false);
+  };
+  const RIsSelected = () => {
+    setTag("Academic");
+    setCrossButtonVisible(true);
+    setFButtonVisible(false);
+    setCButtonVisible(false);
+    setSButtonVisible(false);
+    setAButtonVisible(false);
   };
 
   const FIsSelected = () => {
@@ -141,6 +151,7 @@ export default function PostScreen({ navigation }) {
     setAButtonVisible(false);
     setCButtonVisible(false);
     setSButtonVisible(false);
+    setRButtonVisible(false);
   };
 
   const CIsSelected = () => {
@@ -149,6 +160,7 @@ export default function PostScreen({ navigation }) {
     setAButtonVisible(false);
     setFButtonVisible(false);
     setSButtonVisible(false);
+    setRButtonVisible(false);
   };
 
   const StuLifeIsSelected = () => {
@@ -157,6 +169,7 @@ export default function PostScreen({ navigation }) {
     setAButtonVisible(false);
     setCButtonVisible(false);
     setFButtonVisible(false);
+    setRButtonVisible(false);
   };
 
   const makeAllTagsAppear = () => {
@@ -165,6 +178,7 @@ export default function PostScreen({ navigation }) {
     setCButtonVisible(true);
     setFButtonVisible(true);
     setSButtonVisible(true);
+    setRButtonVisible(true);
     setTag("");
   };
 
@@ -267,7 +281,41 @@ export default function PostScreen({ navigation }) {
                 )}
               </View>
             )}
-
+            {RButtonVisible && (
+              <View style={CrossButtonVisible && styles.crossBtnContainer}>
+                <TouchableOpacity
+                  style={
+                    CrossButtonVisible
+                      ? styles.addTagBtnActive
+                      : styles.addTagBtn
+                  }
+                  onPress={AIsSelected}
+                >
+                  <Text
+                    style={
+                      CrossButtonVisible
+                        ? styles.addTagTextActive
+                        : styles.addTagText
+                    }
+                  >
+                    Resource
+                  </Text>
+                </TouchableOpacity>
+                {CrossButtonVisible && (
+                  <View style={styles.crossBtnSubContainer}>
+                    <TouchableOpacity
+                      style={styles.crossBtn}
+                      onPress={makeAllTagsAppear}
+                    >
+                      <Image
+                        style={styles.crossIcon}
+                        source={require("../../assets/images/cross.png")}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </View>
+            )}
             {FButtonVisible && (
               <View style={CrossButtonVisible && styles.crossBtnContainer}>
                 <TouchableOpacity
