@@ -125,6 +125,8 @@ export default function LoginScreen({ navigation }) {
           avatar: string;
           financial: boolean;
           studentLife: boolean;
+          calendly: string;
+          handle: string;
         };
         setUser(userData);
         fetchSavedPosts(userID);
@@ -163,18 +165,18 @@ export default function LoginScreen({ navigation }) {
   }
 
   // checks if the user is already logged in and skips the login page
-  useEffect(() => {
-    const autoLogin = async () => {
-      const storedToken = await AsyncStorage.getItem("userUID");
-      console.log("Stored Token: ", storedToken);
-      if (storedToken) {
-        setIsLoggedIn(true);
-        nextpage();
-      }
-    };
+  // useEffect(() => {
+  //   const autoLogin = async () => {
+  //     const storedToken = await AsyncStorage.getItem("userUID");
+  //     console.log("Stored Token: ", storedToken);
+  //     if (storedToken) {
+  //       setIsLoggedIn(true);
+  //       nextpage();
+  //     }
+  //   };
 
-    autoLogin();
-  }, []);
+  //   autoLogin();
+  // }, []);
 
   function GoogleLogin() {
     signInWithPopup(auth, provider)
