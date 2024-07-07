@@ -22,8 +22,8 @@ import { useUser } from "./UserContext";
 // Represents the shape of the context value
 export type Like = {
   postID: string;
-  user: string;
-  userID: string;
+  // user: string;
+  // userID: string;
 };
 
 interface LikeContextValue {
@@ -40,7 +40,9 @@ const LikeContext = createContext<LikeContextValue | undefined>({
   setLoading: () => {},
 });
 
-const LikeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+const LikeProvider: React.FC<{ children: ReactNode }> = ({ 
+  children
+ }) => {
   const db = getFirestore();
 
   // Check if Firebase app is not initialized
@@ -53,7 +55,6 @@ const LikeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     // Your logic to fetch and update likeArr from Firestore
-    // ...
     const loadLikes = async () => {
       try {
         const likes = collection(db, "likes");
@@ -62,7 +63,7 @@ const LikeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         querySnapshot.forEach((like) => {
           const data = like.data(); 
           if (data) {
-            likeData.push(data as Like); // equivalent to list.append in python
+            likeData.push(data as Like);
           }
         });
         setLoading(false); // Set loading to false when data fetching is complete

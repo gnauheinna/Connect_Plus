@@ -31,6 +31,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Font from "expo-font";
 import { useNavigation } from "@react-navigation/native";
 import { useSavedPostsContext } from "../context/savedPostsContext";
+import { useLikeContext } from "../context/likeContext";
 
 interface IndividualPostProps {
   postId: string;
@@ -65,11 +66,15 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
   }, [posts, postId]);
 
   const { savedPostArr, setSavedPostArr } = useSavedPostsContext();
+  const { likeArr, setLikeArr } = useLikeContext();
   // on bootup, determine whether this post was previously saved and
   // should start with the save button active
   useEffect(() => {
+    console.log(postId)
+    console.log(savedPostArr.map((post) => post.postID).includes(postId))
     setPostSaved(savedPostArr.map((post) => post.postID).includes(postId));
-  }, [savedPostArr]);
+    setlikePressed(likeArr.map((post) => post.postID).includes(postId));
+  }, [savedPostArr, likeArr]);
 
   const avatarImages: { [key: string]: any } = {
     avatar1: require("../../assets/images/avatars/avatar1.png"),
@@ -85,12 +90,26 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
 
   const handleLikePress = async () => {
     setlikePressed(!likePressed);
-    // const db = getFirestore();
-    // if (likePressed) {
-      
-    // } else {
-
-    // }
+    const db = getFirestore();
+    const savedRef = doc(db, "userLike/", user.userID);
+    if (!likePressed) {
+      setlikePressed(true);
+      let newLikesArr = likeArr.slice();
+      newLikesArr.push({ postID: postId });
+      setLikeArr(newLikesArr);
+      await updateDoc(savedRef, {
+        likes: arrayUnion(postId),
+      }).catch((err) => console.log(err));
+    } else {
+      setlikePressed(false);
+      let newLikesArr = likeArr
+        .slice()
+        .filter((post) => post.postID !== postId);
+      setLikeArr(newLikesArr);
+      await updateDoc(savedRef, {
+        likes: arrayRemove(postId),
+      }).catch((err) => console.log(err));
+    }
   };
 
   const handleSavePress = async () => {
