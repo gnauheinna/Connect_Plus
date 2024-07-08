@@ -115,6 +115,10 @@ export default function LoginScreen({ navigation }) {
     );
   };
 
+  function naviNewPage() {
+    navigation.navigate("SuccessSignUp");
+  }
+
   useEffect(() => {
     const updateUser = async () => {
       const usersCollection = collection(db, "users");
@@ -278,11 +282,11 @@ export default function LoginScreen({ navigation }) {
           </View>
 
           {/* Switch to Login Option */}
-          <View style={styles.switchToSignUp}>
-            <Text style={styles.switchToSignUpText}>
+          <View style={styles.switchToLogIn}>
+            <Text style={styles.switchToLogInText}>
               Already have an account?{" "}
             </Text>
-            <TouchableOpacity onPress={createUser}>
+            <TouchableOpacity onPress={naviNewPage}>
               <Text style={{ fontFamily: "Stolzl Medium", fontSize: 16 }}>
                 Log In
               </Text>
@@ -446,13 +450,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  switchToSignUp: {
+  switchToLogIn: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     fontSize: 16,
   },
-  switchToSignUpText: {
+  switchToLogInText: {
     fontSize: 16,
     fontFamily: "Stolzl Regular",
   },
