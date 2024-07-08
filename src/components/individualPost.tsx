@@ -87,7 +87,7 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
     setlikePressed(!likePressed);
     // const db = getFirestore();
     // if (likePressed) {
-      
+
     // } else {
 
     // }

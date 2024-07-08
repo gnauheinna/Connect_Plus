@@ -6,6 +6,7 @@ import {
   Pressable,
   TouchableOpacity,
   ImageBackground,
+  Dimensions,
 } from "react-native";
 import { Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -307,7 +308,7 @@ const styles = StyleSheet.create({
   gradientBackground: {
     flex: 1,
     width: "100%",
-    height: "100%",
+    height: "101%", // has to be 101% to fill the entire window
   },
   container: {
     flex: 1,
