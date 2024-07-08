@@ -8,6 +8,7 @@ import { useSavedJourneyContext } from "../context/savedJourneyContext";
 import { getDoc, doc, getFirestore } from "firebase/firestore";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
+import MessageButton from "../components/messagebutton";
 
 export default function MentorProfileScreen({ navigation, route }) {
   const db = getFirestore();
@@ -128,17 +129,24 @@ export default function MentorProfileScreen({ navigation, route }) {
           }}
           style={styles.mentorPictureFade}
         />
+        {/* <View style={styles.backButton}>
+          <TouchableOpacity>
+            <Image
+              style={styles.buttonImage}
+              source={require("../../assets/images/icons/blackBack.png")}
+            />
+          </TouchableOpacity>
+        </View> */}
       </View>
       <ScrollView style={styles.mentorScrollView}>
         <View style={styles.mentorButtonsContainer}>
-          <View style={styles.mentorButton}>
-            <TouchableOpacity>
-              <Image
-                source={buttonIcons["message"]}
-                style={styles.buttonImage}
-              />
-            </TouchableOpacity>
-          </View>
+          <MessageButton
+            navigation={navigation}
+            chatID={chatID}
+            chatUserId={viewedUser.userID}
+            chatUserName={viewedUser.name}
+            avatar={viewedUser.avatar}
+          />
         </View>
         <View style={styles.mentorDescriptionContainer}>
           <View style={styles.mentorTitleContainer}>
@@ -209,7 +217,7 @@ const styles = StyleSheet.create({
   mentorPictureContainer: {
     width: "100%",
     height: 600,
-    marginTop: 60,
+    marginTop: 40,
     position: "absolute",
     top: 0,
     left: 0,
@@ -219,6 +227,13 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   mentorPictureFade: {
+    height: 40,
+    width: "100%",
+    position: "absolute",
+    top: 0,
+    left: 0,
+  },
+  backButton: {
     height: 40,
     width: "100%",
     position: "absolute",
@@ -246,7 +261,7 @@ const styles = StyleSheet.create({
   },
   mentorDescriptionContainer: {
     shadowColor: "#585858",
-    shadowOffset: { width: 0, height: -2 },
+    shadowOffset: { width: 0, height: -5 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
     backgroundColor: "white",
@@ -261,6 +276,7 @@ const styles = StyleSheet.create({
     fontFamily: "Stolzl Medium",
     fontSize: 40,
     textAlign: "center",
+    paddingBottom: 5,
   },
   mentorSubtitle: {
     fontFamily: "Stolzl Regular",
@@ -291,12 +307,15 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   adviceTopic: {
+    height: 39,
     marginRight: 10,
     marginBottom: 10,
-    borderRadius: 15,
+    borderRadius: 45,
     paddingVertical: 8,
     paddingHorizontal: 12,
     backgroundColor: "#F0E7FE",
+    justifyContent: "center",
+    alignItems: "center",
   },
   adviceText: {
     fontFamily: "Stolzl Regular",
