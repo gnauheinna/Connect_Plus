@@ -146,7 +146,7 @@ export default function SignUpScreen({ navigation }) {
           console.log("Uploaded file", snapshot);
         });
         // set user handle
-        await updateDoc(newUserRef, { handle: handle })
+        await updateDoc(newUserRef, { handle: handle });
         // map user handle to user id
         const userHandleRef = doc(db, "userlist", handle);
         await setDoc(userHandleRef, { userID });
