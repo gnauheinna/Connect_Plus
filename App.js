@@ -36,6 +36,7 @@ import JourneyScreen from "./src/screens/MyJourneyPosts/JourneyScreen";
 import FeaturedJourneyScreen from "./src/screens/MyJourneyPosts/FeaturedJourneyScreen";
 import EditProfile from "./src/screens/EditProfile";
 import ViewProfile from "./src/screens/ViewProfile";
+import ViewMentor from "./src/screens/ViewMentor";
 import { SavedPostsProvider } from "./src/context/savedPostsContext";
 
 // Create a Stack navigator
@@ -176,7 +177,7 @@ export default function App() {
                     />
                     <Stack.Screen
                       name="ViewProfile"
-                      component={ViewProfile}
+                      component={ViewMentor}
                       options={{ headerShown: false }}
                     />
                   </Stack.Navigator>

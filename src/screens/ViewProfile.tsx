@@ -84,9 +84,9 @@ export default function ProfileScreen({ navigation, route }) {
         };
         // test
         if (userData.calendly !== "" && userData.calendly !== undefined) {
-          console.log("calendly not empty")
+          console.log("calendly not empty");
         } else {
-          console.log("calendly empty")
+          console.log("calendly empty");
         }
         await setViewedUser(userData);
       } else {
@@ -207,8 +207,9 @@ export default function ProfileScreen({ navigation, route }) {
           {/* create "Schedule a Meeting" button if calendly link exists */}
           {viewedUser.calendly !== "" && viewedUser.calendly !== undefined && (
             <View style={styles.buttonContainer}>
-              <ScheduleMeeting userCalendlyLink={viewedUser.calendly}>
-              </ScheduleMeeting>
+              <ScheduleMeeting
+                userCalendlyLink={viewedUser.calendly}
+              ></ScheduleMeeting>
             </View>
           )}
           {/* Display the user's interests */}
