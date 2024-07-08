@@ -21,6 +21,7 @@ import InterestScreen from "./src/screens/Interest";
 import AddAvatarScreen from "./src/screens/AddAvatar";
 import PostDetailsScreen from "./src/screens/PostDetails";
 import SuccessSignUpScreen from "./src/screens/SuccessSignUp";
+import TellUsMore1Screen from "./src/screens/TellUsMore1";
 import MyTabs from "./src/tab/Tab";
 import PostScreen from "./src/screens/post";
 import IndividualChatScreen from "./src/screens/IndividualChat";
@@ -90,6 +91,11 @@ export default function App() {
                     <Stack.Screen
                       name="SignUp"
                       component={SignUpScreen}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="TellUsMore1"
+                      component={TellUsMore1Screen}
                       options={{ headerShown: false }}
                     />
                     <Stack.Screen
