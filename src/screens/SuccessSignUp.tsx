@@ -12,7 +12,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { FontFamily, Color, Border } from "../../styles/GlobalStyles";
 export default function SuccessSignUpScreen({ navigation }) {
   function NextPage() {
-    navigation.navigate("Login");
+    navigation.navigate("TellUsMore1");
   }
   return (
     <View style={styles.outterMostContainer}>
