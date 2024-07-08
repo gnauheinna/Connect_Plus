@@ -174,6 +174,19 @@ export default function AskNShareScreen({ navigation }) {
                 >
                   <Text style={styles.categoryText}>Career</Text>
                 </TouchableOpacity>
+                <TouchableOpacity
+                  style={
+                    selectedTag === "Resource"
+                      ? styles.horizontalSubNavSelected
+                      : styles.horizontalSubNav
+                  }
+                  onPress={() => {
+                    setSelectedTag("Resource");
+                    setSelectedAll(false);
+                  }}
+                >
+                  <Text style={styles.categoryText}>Resource</Text>
+                </TouchableOpacity>
               </ScrollView>
             </View>
           </View>

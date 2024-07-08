@@ -45,6 +45,12 @@ export default function LoginScreen({ navigation }) {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userID, setUserID] = useState("");
+  const [isClicked, setIsClicked] = useState(false);
+
+  // Remember me
+  const handlePress = () => {
+    setIsClicked(!isClicked);
+  };
 
   useEffect(() => {
     const checkStoredUser = async () => {
@@ -109,6 +115,10 @@ export default function LoginScreen({ navigation }) {
     );
   };
 
+  function naviNewPage() {
+    navigation.navigate("SuccessSignUp");
+  }
+
   useEffect(() => {
     const updateUser = async () => {
       const usersCollection = collection(db, "users");
@@ -125,6 +135,8 @@ export default function LoginScreen({ navigation }) {
           avatar: string;
           financial: boolean;
           studentLife: boolean;
+          calendly: string;
+          handle: string;
         };
         setUser(userData);
         fetchSavedPosts(userID);
@@ -163,18 +175,18 @@ export default function LoginScreen({ navigation }) {
   }
 
   // checks if the user is already logged in and skips the login page
-  useEffect(() => {
-    const autoLogin = async () => {
-      const storedToken = await AsyncStorage.getItem("userUID");
-      console.log("Stored Token: ", storedToken);
-      if (storedToken) {
-        setIsLoggedIn(true);
-        nextpage();
-      }
-    };
+  // useEffect(() => {
+  //   const autoLogin = async () => {
+  //     const storedToken = await AsyncStorage.getItem("userUID");
+  //     console.log("Stored Token: ", storedToken);
+  //     if (storedToken) {
+  //       setIsLoggedIn(true);
+  //       nextpage();
+  //     }
+  //   };
 
-    autoLogin();
-  }, []);
+  //   autoLogin();
+  // }, []);
 
   function GoogleLogin() {
     signInWithPopup(auth, provider)
@@ -208,95 +220,80 @@ export default function LoginScreen({ navigation }) {
   return (
     <View style={styles.outterMostContainer}>
       <ImageBackground
-        source={require("../../assets/images/gradient/whiteGradientAskNShare.png")}
+        source={require("../../assets/images/signUpGradientBackground.png")}
         resizeMode="cover"
         style={styles.gradientBackground}
       >
+        {/* Logo */}
         <View style={styles.logoContainer}>
           <Image
             style={styles.connectPlusLogo}
             source={require("../../assets/images/connectPlusLogo.png")}
           />
         </View>
-      </ImageBackground>
-
-      <View style={styles.container}>
-        {/* ConnectPlus Logo */}
-        {/* <Image
-          style={styles.connectPlusLogo}
-          source={require("../assets/images/connectPlusLogo.png")}
-        /> */}
 
         {/* Welcome Message */}
         <View style={styles.welcomeMessageContainer}>
           <Text style={styles.welcomeMessage}>Welcome to Connect+</Text>
+          <Text style={styles.Subtitle}>Let's get started</Text>
         </View>
 
-        <View style={[styles.inputContainer]}>
-          <Text style={styles.inputTitle}>Email</Text>
-          <TextInput
-            style={styles.input}
-            value={email}
-            onChangeText={(email) => setEmail(email)}
-          />
-        </View>
-
-        <View style={[styles.inputContainer]}>
-          <Text style={styles.inputTitle}>Password</Text>
-          <TextInput
-            style={[styles.input]}
-            secureTextEntry
-            value={password}
-            onChangeText={(password) => setPassword(password)}
-          />
-        </View>
-
-        {/* Sign In Button */}
-        <View style={styles.signInBtn}>
-          <TouchableOpacity onPress={LogIn}>
-            <Text style={styles.createAccountText}>Sign In</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Divider for 3rd Party Login Options */}
-        <View style={styles.orDivider}>
-          <View style={styles.line1}></View>
-          <Text style={styles.orText}>OR</Text>
-          <View style={styles.line2}></View>
-        </View>
-
-        <View style={styles.thirdPartyLogIn}>
-          {/* Google Login Button */}
-          <View>
-            <TouchableOpacity onPress={GoogleLogin}>
+        {/* Bottom Container */}
+        <View style={styles.container}>
+          {/* Email */}
+          <View style={[styles.inputContainer]}>
+            <Text style={styles.inputTitle}>Email</Text>
+            <TextInput
+              style={styles.input}
+              value={email}
+              onChangeText={(email) => setEmail(email)}
+            />
+          </View>
+          {/* Password */}
+          <View style={[styles.inputContainer]}>
+            <Text style={styles.inputTitle}>Password</Text>
+            <TextInput
+              style={[styles.input]}
+              secureTextEntry
+              value={password}
+              onChangeText={(password) => setPassword(password)}
+            />
+          </View>
+          {/* Remember Me */}
+          <View style={styles.rememberMeContainer}>
+            <TouchableOpacity onPress={handlePress}>
               <Image
-                source={require("../../assets/images/googleLogo.png")}
-                style={[styles.thirdPartyIcon]}
+                source={
+                  isClicked
+                    ? require("../../assets/images/remembermecheck.png")
+                    : require("../../assets/images/RememberMeUncheck.png")
+                }
+                resizeMode="cover"
+                style={styles.rememberMeImage}
               />
             </TouchableOpacity>
+            <Text style={styles.rememberMeText}>Remember Me</Text>
           </View>
-          <View style={{ width: 50 }}></View>
-          {/* Kerberos Login Button */}
-          <View>
-            <TouchableOpacity>
-              <Image
-                source={require("../../assets/images/kerberosLogo.png")}
-                style={[styles.thirdPartyIcon]}
-              />
+          {/* Sign In Button */}
+          <View style={styles.signInBtn}>
+            <TouchableOpacity onPress={LogIn}>
+              <Text style={styles.createAccountText}>Sign Up</Text>
             </TouchableOpacity>
           </View>
-        </View>
 
-        {/* Switch to Sign Up Option */}
-        <View style={styles.switchToSignUp}>
-          <Text style={styles.switchToSignUpText}>Don't have an account? </Text>
-          <TouchableOpacity onPress={createUser}>
-            <Text style={{ fontFamily: "Stolzl Medium", fontSize: 16 }}>
-              Sign Up
+          {/* Switch to Login Option */}
+          <View style={styles.switchToLogIn}>
+            <Text style={styles.switchToLogInText}>
+              Already have an account?{" "}
             </Text>
-          </TouchableOpacity>
+            <TouchableOpacity onPress={naviNewPage}>
+              <Text style={{ fontFamily: "Stolzl Medium", fontSize: 16 }}>
+                Log In
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </ImageBackground>
     </View>
   );
 }
@@ -304,86 +301,107 @@ export default function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   outterMostContainer: {
     flex: 1,
-    backgroundColor: "#F9F6FF",
     justifyContent: "center",
     alignItems: "center",
   },
   gradientBackground: {
+    flex: 1,
     width: "100%",
-    height: 220,
-    zIndex: 1,
+    height: "100%",
   },
   container: {
     flex: 1,
-    marginLeft: 40,
-    marginRight: 40,
-    backgroundColor: "#F9F6FF",
+    borderRadius: 22,
+    marginHorizontal: "8%",
+    padding: 30,
+    backgroundColor: "white",
+    marginBottom: 80,
     zIndex: 2,
   },
   logoContainer: {
     zIndex: 2,
-    marginTop: 48,
+    marginTop: 120,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4.65,
+    elevation: 8,
+    width: 131,
+    height: 131,
+    marginHorizontal: "35%",
+    borderRadius: 100,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
   },
   connectPlusLogo: {
-    height: 120,
-    width: 140,
+    height: 90,
+    width: 90,
     justifyContent: "center",
     alignSelf: "center",
     resizeMode: "contain",
-    marginTop: 24,
   },
   welcomeMessageContainer: {
-    marginBottom: 32,
+    marginTop: 40,
+    marginBottom: 60,
   },
+
   welcomeMessage: {
     fontSize: 24,
     color: "#453b4f",
     textAlign: "center",
     fontFamily: "Stolzl Bold",
   },
-  inputTitle: {
-    color: "black",
-    fontSize: 14,
-    marginBottom: 2,
+  Subtitle: {
+    fontSize: 15,
+    color: "rgba(69, 59, 79, 0.5)",
+    paddingTop: 5,
+    textAlign: "center",
     fontFamily: "Stolzl Regular",
   },
-  inputContainer: {},
+  inputTitle: {
+    color: "black",
+    fontSize: 16,
+    marginBottom: 2,
+    fontFamily: "Stolzl Medium",
+  },
+  inputContainer: {
+    marginTop: 5,
+  },
   input: {
-    borderRadius: 10,
+    borderRadius: 12,
     width: "100%",
     paddingLeft: 16,
     height: 42,
     marginVertical: 10,
     backgroundColor: "white",
-    borderBottomWidth: 0,
-    borderColor: "#E3E3E3",
+    borderWidth: 1.5,
+    borderColor: "#CACACA",
     fontSize: 16,
     fontFamily: "Stolzl Regular",
-    shadowColor: "#49006C",
-    shadowOffset: {
-      width: -2,
-      height: 4,
-    },
-    shadowOpacity: 0.06,
-    shadowRadius: 10,
   },
-  // rememberMeContainer: {
-  //   flexDirection: "row",
-  //   justifyContent: "flex-end",
-  //   alignItems: "center",
-  // },
-  // rememberMeText: {
-  //   color: "#9b9b9b",
-  //   fontSize: 14,
-  // },
-  // checkboxContainer: {
-  //   marginRight: 0,
-  // },
+  rememberMeContainer: {
+    flexDirection: "row",
+    marginTop: 5,
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
+  rememberMeText: {
+    color: "#9b9b9b",
+    fontSize: 14,
+  },
+  rememberMeImage: {
+    width: 21,
+    height: 21,
+
+    marginLeft: 2,
+    marginRight: 10,
+  },
   signInBtn: {
     backgroundColor: "#FFC940",
     marginTop: 48,
     marginBottom: 48,
-    width: 320,
+    width: 278,
     height: 48,
     borderRadius: 25,
     paddingVertical: 12,
@@ -432,13 +450,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  switchToSignUp: {
+  switchToLogIn: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     fontSize: 16,
   },
-  switchToSignUpText: {
+  switchToLogInText: {
     fontSize: 16,
     fontFamily: "Stolzl Regular",
   },

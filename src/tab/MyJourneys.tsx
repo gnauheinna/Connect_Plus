@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     height: 50,
     borderRadius: 8,
-    width: 180,
+    width: "48.5%",
     padding: 10,
     shadowColor: "rgba(73, 0, 108, 0.11)",
     shadowOpacity: 0.6,
@@ -351,16 +351,16 @@ const styles = StyleSheet.create({
   popularContainer: {
     marginTop: 15,
     marginBottom: 24,
-    height: 120,
+    height: 120, // Increase height to fit two rows of elements
     backgroundColor: "transparent",
-    justifyContent: "space-evenly",
+    justifyContent: "center", // Align items to the center
+    alignItems: "center", // Center items along the cross axis
     flexDirection: "row",
-    gap: 8,
     flexWrap: "wrap",
+    gap: 8,
   },
   MentorCardContainer: {
     marginTop: 10,
-
     marginBottom: 32,
     height: 400,
     backgroundColor: "transparent",
