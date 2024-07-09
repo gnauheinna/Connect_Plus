@@ -20,6 +20,10 @@ import SignUpScreen from "./src/screens/SignUp";
 import InterestScreen from "./src/screens/Interest";
 import AddAvatarScreen from "./src/screens/AddAvatar";
 import PostDetailsScreen from "./src/screens/PostDetails";
+import SuccessSignUpScreen from "./src/screens/SuccessSignUp";
+import TellUsMore1Screen from "./src/screens/TellUsMore1";
+import TellUsMore2Screen from "./src/screens/TellUsMore2";
+import TellUsMore3Screen from "./src/screens/TellUsMore3";
 import MyTabs from "./src/tab/Tab";
 import PostScreen from "./src/screens/post";
 import IndividualChatScreen from "./src/screens/IndividualChat";
@@ -36,6 +40,7 @@ import JourneyScreen from "./src/screens/MyJourneyPosts/JourneyScreen";
 import FeaturedJourneyScreen from "./src/screens/MyJourneyPosts/FeaturedJourneyScreen";
 import EditProfile from "./src/screens/EditProfile";
 import ViewProfile from "./src/screens/ViewProfile";
+import ViewMentor from "./src/screens/ViewMentor";
 import { SavedPostsProvider } from "./src/context/savedPostsContext";
 
 // Create a Stack navigator
@@ -82,8 +87,28 @@ export default function App() {
                       options={{ headerShown: false }}
                     />
                     <Stack.Screen
+                      name="SuccessSignUp"
+                      component={SuccessSignUpScreen}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
                       name="SignUp"
                       component={SignUpScreen}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="TellUsMore1"
+                      component={TellUsMore1Screen}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="TellUsMore2"
+                      component={TellUsMore2Screen}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="TellUsMore3"
+                      component={TellUsMore3Screen}
                       options={{ headerShown: false }}
                     />
                     <Stack.Screen
@@ -176,7 +201,7 @@ export default function App() {
                     />
                     <Stack.Screen
                       name="ViewProfile"
-                      component={ViewProfile}
+                      component={ViewMentor}
                       options={{ headerShown: false }}
                     />
                   </Stack.Navigator>

@@ -21,26 +21,27 @@ function MessageButton({
   };
 
   return (
-    <Pressable style={styles.button} onPress={handlePress}>
-      <Text style={styles.buttonText}>Message</Text>
-      <Image
-        source={require("../../assets/images/MessageButton.png")}
-        style={styles.icon}
-      />
+    <Pressable onPress={handlePress}>
+      <View style={styles.button}>
+        <Image
+          source={require("../../assets/images/icons/MentorMessage.png")}
+          style={styles.buttonImage}
+        />
+      </View>
     </Pressable>
   );
 }
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "white",
-    borderColor: "#8E71BE",
-    padding: 8,
-    borderRadius: 20,
-    borderWidth: 2,
-    width: 152,
+    width: 60,
+    height: 60,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
+  },
+  buttonImage: {
+    height: "100%",
+    width: "100%",
   },
   buttonText: {
     color: "#8E71BE",

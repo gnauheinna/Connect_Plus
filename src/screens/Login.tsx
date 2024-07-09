@@ -6,6 +6,7 @@ import {
   Pressable,
   TouchableOpacity,
   ImageBackground,
+  Dimensions,
 } from "react-native";
 import { Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -114,6 +115,10 @@ export default function LoginScreen({ navigation }) {
       })
     );
   };
+
+  function naviNewPage() {
+    navigation.navigate("SuccessSignUp");
+  }
 
   useEffect(() => {
     const updateUser = async () => {
@@ -278,11 +283,11 @@ export default function LoginScreen({ navigation }) {
           </View>
 
           {/* Switch to Login Option */}
-          <View style={styles.switchToSignUp}>
-            <Text style={styles.switchToSignUpText}>
+          <View style={styles.switchToLogIn}>
+            <Text style={styles.switchToLogInText}>
               Already have an account?{" "}
             </Text>
-            <TouchableOpacity onPress={createUser}>
+            <TouchableOpacity onPress={naviNewPage}>
               <Text style={{ fontFamily: "Stolzl Medium", fontSize: 16 }}>
                 Log In
               </Text>
@@ -303,7 +308,7 @@ const styles = StyleSheet.create({
   gradientBackground: {
     flex: 1,
     width: "100%",
-    height: "100%",
+    height: "101%", // has to be 101% to fill the entire window
   },
   container: {
     flex: 1,
@@ -446,13 +451,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  switchToSignUp: {
+  switchToLogIn: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     fontSize: 16,
   },
-  switchToSignUpText: {
+  switchToLogInText: {
     fontSize: 16,
     fontFamily: "Stolzl Regular",
   },
