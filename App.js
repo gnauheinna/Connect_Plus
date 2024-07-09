@@ -22,6 +22,8 @@ import AddAvatarScreen from "./src/screens/AddAvatar";
 import PostDetailsScreen from "./src/screens/PostDetails";
 import SuccessSignUpScreen from "./src/screens/SuccessSignUp";
 import TellUsMore1Screen from "./src/screens/TellUsMore1";
+import TellUsMore2Screen from "./src/screens/TellUsMore2";
+import TellUsMore3Screen from "./src/screens/TellUsMore3";
 import MyTabs from "./src/tab/Tab";
 import PostScreen from "./src/screens/post";
 import IndividualChatScreen from "./src/screens/IndividualChat";
@@ -97,6 +99,16 @@ export default function App() {
                     <Stack.Screen
                       name="TellUsMore1"
                       component={TellUsMore1Screen}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="TellUsMore2"
+                      component={TellUsMore2Screen}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="TellUsMore3"
+                      component={TellUsMore3Screen}
                       options={{ headerShown: false }}
                     />
                     <Stack.Screen

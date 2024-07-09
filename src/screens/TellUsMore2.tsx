@@ -13,42 +13,44 @@ import { useUser } from "../context/UserContext";
 import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 import { FontFamily, Color, Border } from "../../styles/GlobalStyles";
 
-// type identity = {
-//     firstgen: boolean;
-//     gender: string[];
-// }
-export default function TellUsMore1Screen({ navigation }) {
+type identity = {
+  firstgen: boolean;
+  gender: string[];
+};
+export default function TellUsMore2Screen({ navigation }) {
   const db = getFirestore();
   const { user, setUser } = useUser();
-  //   const [newIdentity, setNewIdentity] = useState<identity | null>(null);
+  const [newIdentity, setNewIdentity] = useState<identity | null>(null);
   const [newlocation, setNewLocation] = useState<string[]>([
-    "Boston",
-    "Greater Boston",
-    "Massachusetts",
+    "Hispanic/Latino",
+    "Mexican",
+    "American",
   ]);
   const [newstudies, setNewStudies] = useState<string[]>([
-    "College of Fine Arts",
-    "Art",
-    "Senior",
+    "First Gen",
+    "LGBTQ",
+    "INFP",
   ]);
   const [newInterest, setNewInterest] = useState<string[]>([
-    "Career Advice",
-    "UI/UX",
-    "Financial Literacy",
+    "BU Spark",
+    "BU Forge",
   ]);
   const nextPage = async () => {
     try {
       //   await updateData();
-      await navigation.navigate("TellUsMore2");
+      await navigation.navigate("TellUsMore3");
     } catch (error) {
       console.error("Error going to next page:", error);
     }
   };
 
   const lastPage = () => {
-    navigation.navigate("TellUsMore2");
+    navigation.navigate("TellUsMore1");
   };
 
+  const skipButton = () => {
+    navigation.navigate("TellUsMore3");
+  };
   const updateData = async () => {
     try {
       await setDoc(doc(db, "location", user.userID), { location: newlocation });
@@ -62,63 +64,72 @@ export default function TellUsMore1Screen({ navigation }) {
 
   return (
     <View style={styles.outterMostContainer}>
-      <ScrollView style={styles.informationContainer}>
-        <View style={styles.header}>
-          <Text style={styles.pageTitle}>Help us get to know you better</Text>
-          <Text style={styles.pageDescription}>
-            Enhance your matching experience
-          </Text>
-        </View>
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Location *</Text>
-          <View style={styles.itemsContainer}>
-            {newlocation.map((location) => (
-              <View style={styles.itemChip}>
-                <Text style={styles.itemText}>{location}</Text>
-              </View>
-            ))}
-          </View>
-          <Pressable style={styles.addButton}>
-            <Image
-              source={require("../../assets/images/icons/AddPlus.png")}
-              style={styles.addPlus}
-            />
-            <Text style={styles.addText}>Add</Text>
+      <ScrollView style={styles.mainContainer}>
+        <View style={styles.skipbtnbox}>
+          <Pressable style={styles.skipbtn} onPress={skipButton}>
+            <Text style={styles.skipText}>Skip</Text>
           </Pressable>
         </View>
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Studies *</Text>
-          <View style={styles.itemsContainer}>
-            {newstudies.map((study) => (
-              <View style={styles.itemChip}>
-                <Text style={styles.itemText}>{study}</Text>
-              </View>
-            ))}
+        <View style={styles.informationContainer}>
+          <View style={styles.header}>
+            <Text style={styles.pageTitle}>
+              How would you describe yourself?
+            </Text>
+            <Text style={styles.pageDescription}>
+              Demographics remain private
+            </Text>
           </View>
-          <Pressable style={styles.addButton}>
-            <Image
-              source={require("../../assets/images/icons/AddPlus.png")}
-              style={styles.addPlus}
-            />
-            <Text style={styles.addText}>Add</Text>
-          </Pressable>
-        </View>
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Interested in *</Text>
-          <View style={styles.itemsContainer}>
-            {newInterest.map((interest) => (
-              <View style={styles.itemChip}>
-                <Text style={styles.itemText}>{interest}</Text>
-              </View>
-            ))}
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionTitle}>Cultural identity</Text>
+            <View style={styles.itemsContainer}>
+              {newlocation.map((location) => (
+                <View style={styles.itemChip}>
+                  <Text style={styles.itemText}>{location}</Text>
+                </View>
+              ))}
+            </View>
+            <Pressable style={styles.addButton}>
+              <Image
+                source={require("../../assets/images/icons/AddPlus.png")}
+                style={styles.addPlus}
+              />
+              <Text style={styles.addText}>Add</Text>
+            </Pressable>
           </View>
-          <Pressable style={styles.addButton}>
-            <Image
-              source={require("../../assets/images/icons/AddPlus.png")}
-              style={styles.addPlus}
-            />
-            <Text style={styles.addText}>Add</Text>
-          </Pressable>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionTitle}>Self Identifiers</Text>
+            <View style={styles.itemsContainer}>
+              {newstudies.map((study) => (
+                <View style={styles.itemChip}>
+                  <Text style={styles.itemText}>{study}</Text>
+                </View>
+              ))}
+            </View>
+            <Pressable style={styles.addButton}>
+              <Image
+                source={require("../../assets/images/icons/AddPlus.png")}
+                style={styles.addPlus}
+              />
+              <Text style={styles.addText}>Add</Text>
+            </Pressable>
+          </View>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionTitle}>Extra Curriculars</Text>
+            <View style={styles.itemsContainer}>
+              {newInterest.map((interest) => (
+                <View style={styles.itemChip}>
+                  <Text style={styles.itemText}>{interest}</Text>
+                </View>
+              ))}
+            </View>
+            <Pressable style={styles.addButton}>
+              <Image
+                source={require("../../assets/images/icons/AddPlus.png")}
+                style={styles.addPlus}
+              />
+              <Text style={styles.addText}>Add</Text>
+            </Pressable>
+          </View>
         </View>
       </ScrollView>
       <View style={styles.bottomBar}>
@@ -138,13 +149,34 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F9F6FF",
   },
+  skipbtnbox: {
+    marginTop: 20,
+    alignItems: "flex-end",
+  },
+  skipbtn: {
+    width: 123,
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: 20,
+  },
+  skipText: {
+    fontFamily: "Stolzl Regular",
+    fontSize: 20,
+    color: "#9C93A4",
+  },
   informationContainer: {
-    marginTop: 60,
-    padding: 50,
+    marginHorizontal: 25,
+  },
+  mainContainer: {
+    paddingTop: 20,
+    marginTop: 50,
+    margin: 10,
   },
   header: {
-    paddingTop: 70,
+    paddingTop: 55,
     paddingBottom: 10,
+    marginHorizontal: 10,
   },
   pageTitle: {
     fontFamily: "Stolzl Bold",
