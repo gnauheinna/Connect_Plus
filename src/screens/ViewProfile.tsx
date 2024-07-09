@@ -57,6 +57,7 @@ export default function ProfileScreen({ navigation, route }) {
     financial: false,
     studentLife: false,
     calendly: "",
+    handle: "",
   });
   const [chatID, setchatID] = useState("");
 
@@ -81,6 +82,7 @@ export default function ProfileScreen({ navigation, route }) {
           financial: boolean;
           studentLife: boolean;
           calendly: string;
+          handle: string;
         };
         // test
         if (userData.calendly !== "" && userData.calendly !== undefined) {

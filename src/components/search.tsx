@@ -35,29 +35,29 @@ export default function Search({ navigation }) {
   // Handle search button press
   const handleSearch = async () => {
     // Handles substring search
-    const nameSubstrings = inputName.split(" ");
-    console.log("nameSubstrings: " + nameSubstrings);
-    // Searches for target user from database
-    const q = query(
-      collection(db, "users"),
-      where("nameSubstrings", "array-contains-any", nameSubstrings[0])
-    );
-    try {
-      const querySnapshot = await getDocs(q);
-      if (querySnapshot.empty) {
-        // User not found
-        setErr(true);
-      } else {
-        // Search User exists
-        querySnapshot.forEach((doc) => {
-          setSearchUser(doc.data());
-        });
+    if (inputName !== "") {
+      const nameSubstrings = inputName.split(" ");
+      // console.log("nameSubstrings: " + nameSubstrings);
+      // Searches for target user from database
+  
+      try {
+        const userDocRef = doc(db, "userlist", nameSubstrings[0]);
+        const userDocSnap = await getDoc(userDocRef);
+    
+        if (userDocSnap.exists()) {
+          const data = userDocSnap.data()
+          console.log(data.userID)
+          // return { searchUser, ...userDocSnap.data() };
+        } else {
+          console.log("user not found")
+          // return null; // User handle not found
+        }
+      } catch (error) {
+        console.error("Error searching for user handle:", error);
+        throw error;
       }
-    } catch (err) {
-      // Searched user doesn't exist
-      setErr(true);
-    }
-  };
+    };
+  }
 
   // Load chat data when search user changes
   useEffect(() => {

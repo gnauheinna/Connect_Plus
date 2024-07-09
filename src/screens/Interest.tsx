@@ -46,6 +46,7 @@ export default function InterestScreen({ navigation }) {
     const newUser = {
       name: user.name,
       email: user.email,
+      handle: user.handle,
       major: user.major,
       year: user.year,
       userID: user.userID,
@@ -54,6 +55,7 @@ export default function InterestScreen({ navigation }) {
       career: CIsChecked,
       financial: FIsChecked,
       studentLife: SIsChecked,
+      calendly: user.calendly,
     };
     setUser(newUser);
     navigation.navigate("Tabs");
