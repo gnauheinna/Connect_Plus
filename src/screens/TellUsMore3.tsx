@@ -21,23 +21,16 @@ export default function TellUsMore2Screen({ navigation }) {
   const db = getFirestore();
   const { user, setUser } = useUser();
   const [newIdentity, setNewIdentity] = useState<identity | null>(null);
-  const [newlocation, setNewLocation] = useState<string[]>([
-    "Hispanic/Latino",
-    "Mexican",
-    "American",
+  const [newexperience, setNewExperience] = useState<string[]>([
+    "Interview Help",
+    "Internships",
+    "Academic Advise",
+    "Startups",
   ]);
-  const [newstudies, setNewStudies] = useState<string[]>([
-    "First Gen",
-    "LGBTQ",
-    "INFP",
-  ]);
-  const [newInterest, setNewInterest] = useState<string[]>([
-    "BU Spark",
-    "BU Forge",
-  ]);
+
   const nextPage = async () => {
     try {
-      await updateData();
+      //await updateData();
       await navigation.navigate("Login"); // change to tellusMore2
     } catch (error) {
       console.error("Error going to next page:", error);
@@ -53,10 +46,9 @@ export default function TellUsMore2Screen({ navigation }) {
   };
   const updateData = async () => {
     try {
-      await setDoc(doc(db, "location", user.userID), { location: newlocation });
-      await setDoc(doc(db, "studies", user.userID), { studies: newstudies });
-      // await setDoc(doc(db, "identity", user.userID), {firstgen: newIdentity.firstgen, gender: newIdentity.gender});
-      await setDoc(doc(db, "interest", user.userID), { interest: newInterest });
+      await setDoc(doc(db, "experience", user.userID), {
+        location: newexperience,
+      });
     } catch (error) {
       console.error("Error updating firebase:", error);
     }
@@ -72,53 +64,16 @@ export default function TellUsMore2Screen({ navigation }) {
         </View>
         <View style={styles.informationContainer}>
           <View style={styles.header}>
-            <Text style={styles.pageTitle}>
-              How would you describe yourself?
-            </Text>
+            <Text style={styles.pageTitle}>Any experience or expertises?</Text>
             <Text style={styles.pageDescription}>
-              Demographics remain private
+              Bonus info for your peers
             </Text>
           </View>
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionTitle}>Cultural identity</Text>
             <View style={styles.itemsContainer}>
-              {newlocation.map((location) => (
+              {newexperience.map((experience) => (
                 <View style={styles.itemChip}>
-                  <Text style={styles.itemText}>{location}</Text>
-                </View>
-              ))}
-            </View>
-            <Pressable style={styles.addButton}>
-              <Image
-                source={require("../../assets/images/icons/AddPlus.png")}
-                style={styles.addPlus}
-              />
-              <Text style={styles.addText}>Add</Text>
-            </Pressable>
-          </View>
-          <View style={styles.sectionContainer}>
-            <Text style={styles.sectionTitle}>Self Identifiers</Text>
-            <View style={styles.itemsContainer}>
-              {newstudies.map((study) => (
-                <View style={styles.itemChip}>
-                  <Text style={styles.itemText}>{study}</Text>
-                </View>
-              ))}
-            </View>
-            <Pressable style={styles.addButton}>
-              <Image
-                source={require("../../assets/images/icons/AddPlus.png")}
-                style={styles.addPlus}
-              />
-              <Text style={styles.addText}>Add</Text>
-            </Pressable>
-          </View>
-          <View style={styles.sectionContainer}>
-            <Text style={styles.sectionTitle}>Extra Curriculars</Text>
-            <View style={styles.itemsContainer}>
-              {newInterest.map((interest) => (
-                <View style={styles.itemChip}>
-                  <Text style={styles.itemText}>{interest}</Text>
+                  <Text style={styles.itemText}>{experience}</Text>
                 </View>
               ))}
             </View>
@@ -174,7 +129,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   header: {
-    paddingTop: 55,
+    paddingTop: 35,
     paddingBottom: 10,
     marginHorizontal: 10,
   },
@@ -188,7 +143,7 @@ const styles = StyleSheet.create({
     paddingTop: 8,
   },
   sectionContainer: {
-    paddingTop: 30,
+    paddingTop: 20,
   },
   sectionTitle: {
     fontFamily: "Stolzl Medium",
@@ -202,6 +157,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     alignSelf: "flex-start",
+    marginBottom: 10,
   },
   itemChip: {
     height: 42,
