@@ -36,6 +36,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Image } from "react-native";
 import { useUser } from "../context/UserContext";
 import { app, storage } from "../../firebase";
+import { BorderlessButton } from "react-native-gesture-handler";
 
 export default function SignUpScreen({ navigation }) {
   const [name, setName] = useState("");
@@ -183,7 +184,9 @@ export default function SignUpScreen({ navigation }) {
       setAvatar(result.assets[0].uri);
     }
   };
-
+  const naviSuccessPage = async () => {
+    navigation.navigate("SuccessSignUp")
+  }
   const handleSignup = async () => {
     try {
       if (password === confirmPassword) {
@@ -227,140 +230,62 @@ export default function SignUpScreen({ navigation }) {
         </ImageBackground>
         <View style={styles.container}>
           <Text style={[styles.title]}>Create Your Account</Text>
-          <Text style={[styles.subTitle]}>
-            Begin your journey here at Connect+
-          </Text>
-          <View style={[styles.inputContainer]}>
-            <Image
-              style={[styles.signUpIcons]}
-              source={require("../../assets/images/signUpIcons/name.png")}
-            />
-            <TextInput
-              placeholder="Name"
-              style={styles.input}
-              value={name}
-              onChangeText={(name) => setName(name)}
-              placeholderTextColor="#A3A3A3"
-            />
-          </View>
-          {/* </View> */}
-
-          <View style={{ marginTop: 3 }}>
+          <Text style={[styles.subTitle]}>  First, the basics</Text>
+          <View style={styles.inputBoxContainer}>
+            <Text style={[styles.inputquery]}> Full Name *</Text>
             <View style={[styles.inputContainer]}>
-              <Image
-                style={[styles.signUpIcons]}
-                source={require("../../assets/images/signUpIcons/email.png")}
-              />
               <TextInput
-                placeholder="Email"
-                style={[styles.input]}
-                value={email}
-                onChangeText={(email) => setEmail(email)}
+                placeholder="ex. Rachel Li"
+                style={styles.input}
+                value={name}
+                onChangeText={(name) => setName(name)}
                 placeholderTextColor="#A3A3A3"
               />
             </View>
-          </View>
-
-          <View style={{ marginTop: 3 }}>
-            <View style={[styles.inputContainer]}>
-              <Image
-                style={[styles.signUpIcons]}
-                source={require("../../assets/images/signUpIcons/email.png")} // placeholder
-              />
-              <TextInput
-                placeholder="User Handle"
-                style={[styles.input]}
-                value={handle}
-                onChangeText={(handle) => setHandle(handle)}
-                placeholderTextColor="#A3A3A3"
-              />
+            <View style={{ marginTop: 3 }}>
+              <Text style={styles.inputquery}> Pronouns</Text>
+              <View style={[styles.inputContainer]}>
+                <TextInput
+                  placeholder="ex. She/Her"
+                  style={[styles.input]}
+                  value={handle}
+                  onChangeText={(handle) => setHandle(handle)}
+                  placeholderTextColor="#A3A3A3"
+                />
+              </View>
             </View>
-          </View>
 
-          <View style={{ marginTop: 3 }}>
-            <View style={[styles.inputContainer]}>
-              <Image
-                style={[styles.signUpIcons]}
-                source={require("../../assets/images/signUpIcons/password.png")}
-              />
-              <TextInput
-                placeholder="Password"
-                style={[styles.input]}
-                value={password}
-                onChangeText={(password) => setPassword(password)}
-                placeholderTextColor="#A3A3A3"
-              />
+            <View style={{ marginTop: 3 }}>
+              <Text style={styles.inputquery}> Username *</Text>
+              <View style={[styles.inputContainer]}>
+                <TextInput
+                  placeholder="ex. lirachel25"
+                  style={[styles.input]}
+                  value={handle}
+                  onChangeText={(handle) => setHandle(handle)}
+                  placeholderTextColor="#A3A3A3"
+                />
+              </View>
             </View>
-          </View>
 
-          <View style={{ marginTop: 3 }}>
-            <View style={[styles.inputContainer]}>
-              <Image
-                style={[styles.signUpIcons]}
-                source={require("../../assets/images/signUpIcons/password.png")}
-              />
-              <TextInput
-                placeholder="Confirm Password"
-                style={[styles.input]}
-                value={confirmPassword}
-                onChangeText={(confirmPassword) =>
-                  setConfirmPassword(confirmPassword)
-                }
-                placeholderTextColor="#A3A3A3"
-              />
+            <View style={{ marginTop: 3 }}>
+              {avatar !== "" && (
+                <Image
+                  style={{ width: 50, height: 50 }}
+                  source={{ uri: avatar }}
+                />
+              )}
+              <Text style={styles.inputquery}> Profile Picture </Text>
+              <TouchableOpacity style={styles.pfpbutton} onPress={handleProfilePicture}>
+                <Text style={styles.pfpbuttontext}>Upload Image</Text>
+              </TouchableOpacity>
             </View>
-          </View>
-
-          <View style={{ marginTop: 3 }}>
-            <View style={[styles.inputContainer]}>
-              <Image
-                style={[styles.signUpIcons]}
-                source={require("../../assets/images/signUpIcons/major.png")}
-              />
-              <TextInput
-                placeholder="Major"
-                style={[styles.input]}
-                value={major}
-                onChangeText={(major) => setMajor(major)}
-                placeholderTextColor="#A3A3A3"
-              />
-            </View>
-          </View>
-
-          <View style={{ marginTop: 3 }}>
-            <View style={[styles.inputContainer]}>
-              <Image
-                style={[styles.signUpIcons]}
-                source={require("../../assets/images/signUpIcons/year.png")}
-              />
-              <TextInput
-                placeholder="Year"
-                style={[styles.input]}
-                value={year}
-                onChangeText={(year) => setYear(year)}
-                placeholderTextColor="#A3A3A3"
-              />
-            </View>
-          </View>
-
-          <View style={{ marginTop: 3 }}>
-            {avatar !== "" && (
-              <Image
-                style={{ width: 50, height: 50 }}
-                source={{ uri: avatar }}
-              />
-            )}
-            <TouchableOpacity
-              onPress={handleProfilePicture}
-              style={[styles.inputContainer]}
-            >
-              <Text style={[styles.subTitle]}>Choose profile picture</Text>
-            </TouchableOpacity>
           </View>
           {/* Add a react-native ImagePicker for uploading avatars */}
         </View>
         <View style={styles.nextButtonContainer}>
-          <TouchableOpacity style={styles.nextButton} onPress={handleSignup}>
+        {/* <TouchableOpacity style={styles.nextButton} onPress={handleSignup}> */}
+          <TouchableOpacity style={styles.nextButton} onPress={naviSuccessPage}>
             <Text style={styles.nextButtonText}>Next</Text>
           </TouchableOpacity>
         </View>
@@ -372,6 +297,7 @@ export default function SignUpScreen({ navigation }) {
 const styles = StyleSheet.create({
   outterMostContainer: {
     backgroundColor: "#F9F6FF",
+    justifyContent: "center",
     flex: 1,
   },
   container: {
@@ -401,8 +327,9 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   title: {
+    marginTop: 30,
     fontSize: 28,
-    fontFamily: "Stolzl Medium",
+    fontFamily: "Stolzl Bold",
     marginBottom: 8,
     color: "#453B4F",
     zIndex: 2,
@@ -427,15 +354,19 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
   },
+  inputBoxContainer: {
+    marginLeft: 12,
+    marginRight: 12,
+  },
   input: {
-    borderRadius: 10,
-    paddingLeft: 48,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    paddingLeft: 15,
     width: "100%",
     height: 42,
     marginVertical: 10,
     backgroundColor: "white",
-    borderBottomWidth: 0,
-    borderColor: "#E3E3E3",
+    borderColor: "#A3A3A3",
     fontSize: 16,
     fontFamily: "Stolzl Regular",
     shadowColor: "#49006C",
@@ -446,14 +377,35 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.06,
     shadowRadius: 10,
   },
+  inputquery: {
+    marginTop: 10,
+    fontFamily: "Stolzl Medium",
+  },
+  pfpbutton: {
+    borderWidth: 3,
+    borderColor: "#754EAD",
+    marginTop: 10,
+    width: 165,
+    borderRadius: 30,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+  },
+  pfpbuttontext: {
+    width: "100%",
+    borderRadius: 25,
+    fontSize: 16,
+    alignSelf: "center",
+    fontFamily: "Stolzl Medium",
+    color: "#724EAD",
+  },
   nextButtonContainer: {
-    marginLeft: 40,
+    marginLeft: 240,
     marginRight: 40,
     marginTop: 24,
   },
   nextButton: {
     backgroundColor: "#FFC940",
-    marginTop: 20,
+    marginTop: 60,
     width: "100%",
     borderRadius: 25,
     paddingVertical: 12,
@@ -463,6 +415,6 @@ const styles = StyleSheet.create({
   nextButtonText: {
     fontSize: 18,
     alignSelf: "center",
-    fontFamily: "Stolzl Regular",
+    fontFamily: "Stolzl Medium",
   },
 });
