@@ -23,7 +23,7 @@ export default function SuccessSignUpScreen({ navigation }) {
       >
         {/* Modal Container */}
         <View style={styles.container}>
-          <Text style={styles.title}>Signed Up Successful!</Text>
+          <Text style={styles.title}>Sign Up Successful!</Text>
           <View style={styles.textbox}>
             <Text style={styles.span1}>
               The next few steps are only for the purpose of making your

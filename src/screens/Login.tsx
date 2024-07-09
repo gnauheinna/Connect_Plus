@@ -117,7 +117,7 @@ export default function LoginScreen({ navigation }) {
   };
 
   function naviNewPage() {
-    navigation.navigate("SuccessSignUp");
+    navigation.navigate("SignUp");
   }
 
   useEffect(() => {
