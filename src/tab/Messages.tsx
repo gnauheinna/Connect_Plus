@@ -1,13 +1,14 @@
 import { Text, View } from "../components/Themed";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { Image } from "expo-image";
-import { StyleSheet, ScrollView, ImageBackground } from "react-native";
+import { StyleSheet, ScrollView, ImageBackground, Pressable, Animated, Modal } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { FontSize, Color, FontFamily } from "../../styles/GlobalStyles";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Search from "../components/search";
+import Compose from "../screens/compose"
 import "react-native-get-random-values";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -52,6 +53,8 @@ type UserChat = {
 };
 
 export default function MessageScreen({ navigation }) {
+  const [composeVisible, setComposeVisible] = useState(false); // State for visibility
+  const slideAnim = useRef(new Animated.Value(0)).current; // Initial value for sliding animation
   const [allMessage, setAllMessages] = useState<UserChat[] | null>(null);
   const { user, setUser } = useUser();
   const currentUserID = user.userID;
@@ -154,12 +157,25 @@ export default function MessageScreen({ navigation }) {
             {/* Includes the title 'Chat' and the write button */}
             <View style={styles.titleContainer}>
               <Text style={styles.chatBigTitle}>Chat</Text>
-              <TouchableOpacity>
+              <Pressable onPress={() => setComposeVisible(true)}>
                 <Image
                   style={styles.startAChatButton}
                   source={require("../../assets/images/edit.png")}
+                  
                 />
-              </TouchableOpacity>
+              </Pressable>
+              </View>
+              <View>
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={composeVisible}
+                  onRequestClose={() => {
+                    setComposeVisible(!composeVisible);
+                  }}
+                >
+                  <Compose navigation={navigation} close={() => setComposeVisible(false)} />
+                </Modal>
             </View>
             {/* Search Bar */}
             <Search navigation={navigation} />
