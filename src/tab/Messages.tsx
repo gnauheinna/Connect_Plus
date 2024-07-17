@@ -1,13 +1,13 @@
 import { Text, View } from "../components/Themed";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { Image } from "expo-image";
-import { StyleSheet, ScrollView, ImageBackground, Pressable, Animated, Modal } from "react-native";
+import { StyleSheet, ScrollView, ImageBackground, Pressable, Animated, Modal, TextInput } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { FontSize, Color, FontFamily } from "../../styles/GlobalStyles";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { useState, useEffect, useRef } from "react";
-import Search from "../components/search";
+// import Search from "../components/search";
 import Compose from "../screens/compose"
 import "react-native-get-random-values";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -55,7 +55,8 @@ type UserChat = {
 export default function MessageScreen({ navigation }) {
   const [composeVisible, setComposeVisible] = useState(false); // State for visibility
   const slideAnim = useRef(new Animated.Value(0)).current; // Initial value for sliding animation
-  const [allMessage, setAllMessages] = useState<UserChat[] | null>(null);
+  const [Messages, setMessages] = useState<UserChat[] | null>(null);
+  const [allChats, setAllChats] = useState<UserChat[] | null>(null);
   const { user, setUser } = useUser();
   const currentUserID = user.userID;
   const db = getFirestore();
@@ -97,6 +98,22 @@ export default function MessageScreen({ navigation }) {
     }
   }
 
+  const handleEmpty = async () => {
+    setMessages(allChats);
+  }
+
+  const handleSearch = async (prefix: string) => {
+    setMessages([]);
+    if (!allChats) return;
+
+    const lowercasedPrefix = prefix.toLowerCase();
+    const filtered = allChats.filter(chat =>
+      chat.userInfo.name.toLowerCase().startsWith(lowercasedPrefix) ||
+      chat.userInfo.userID.toLowerCase().startsWith(lowercasedPrefix)
+    );
+    setMessages(filtered);
+  }
+
   useEffect(() => {
     const fetchUserChats = async () => {
       try {
@@ -124,7 +141,8 @@ export default function MessageScreen({ navigation }) {
           }
         }
         console.log("userChatsData: ", userChatsData);
-        setAllMessages(userChatsData);
+        setMessages(userChatsData);
+        setAllChats(userChatsData);
       } catch (error) {
         console.error("Error fetching user chats: ", error);
       }
@@ -176,9 +194,22 @@ export default function MessageScreen({ navigation }) {
                 >
                   <Compose navigation={navigation} close={() => setComposeVisible(false)} />
                 </Modal>
+              <View style={styles.searchBar}>
+                <Image
+                  style={styles.searchIcon}
+                  source={require("../../assets/images/search.png")}
+                />
+                <TextInput
+                  style={styles.searchText}
+                  placeholder="Search"
+                  onChangeText={handleSearch}
+                  onSubmitEditing={handleEmpty}
+                  // onEndEditing={handleSearch}
+                />
+              </View>
             </View>
             {/* Search Bar */}
-            <Search navigation={navigation} />
+            {/* <Search navigation={navigation} /> */}
           </View>
         </ImageBackground>
       </View>
@@ -190,7 +221,7 @@ export default function MessageScreen({ navigation }) {
       <View style={styles.messagesMainContainer}>
         {/* Message Box */}
         <FlatList
-          data={allMessage}
+          data={Messages}
           style={styles.messagesContainer}
           showsVerticalScrollIndicator={false}
           keyExtractor={(item, index) => index.toString()}
@@ -340,6 +371,40 @@ const styles = StyleSheet.create({
     color: "#777777",
     fontSize: 12,
     position: "absolute",
+    fontFamily: "Stolzl Regular",
+  },
+  searchBar: {
+    marginTop: 0,
+    height: 45,
+    width: "100%",
+    borderRadius: 30,
+    backgroundColor: "white",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
+    // opacity: 0.8,
+    padding: 10,
+    paddingLeft: 20,
+    flexDirection: "row",
+    //justifyCenter: "center",
+    shadowColor: "rgba(73, 0, 108, 0.11)",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 4,
+  },
+  searchIcon: {
+    width: 22,
+    height: 22,
+    marginRight: 15,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  searchText: {
+    color: "#777777",
+    fontSize: 16,
+    alignItems: "center",
     fontFamily: "Stolzl Regular",
   },
 });
